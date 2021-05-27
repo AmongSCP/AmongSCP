@@ -7,5 +7,8 @@ namespace AmongSCP
     {
         [Description("Is the plugin enabled?")]
         public bool IsEnabled { get; set; } = true;
+
+        [Description("Number of imposters for every 5 people")]
+        public int ImposterRatio { get; set; } = 1;
     }
 }
