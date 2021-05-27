@@ -1,9 +1,13 @@
-﻿using System;
-using Exiled.API.Enums;
-using Exiled.API.Features;
-
-namespace AmongSCP
+﻿namespace AmongSCP
 {
+    using System;
+    using Exiled.API.Enums;
+    using Exiled.API.Features;
+    
+    using PlayerEvent = Exiled.Events.Handlers.Player;
+    using ServerEvent = Exiled.Events.Handlers.Server;
+    using MapEvent = Exiled.Events.Handlers.Map;
+    
     public class AmongSCP : Plugin<Config>
     {
         public override string Name { get; } = "AmongSCP";
