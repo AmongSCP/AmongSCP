@@ -37,7 +37,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Assembly-CSharp">
-      <HintPath>..\..\..\scpsl\SCPSL_Data\Managed\Assembly-CSharp.dll</HintPath>
+      <HintPath>lib\Assembly-CSharp.dll</HintPath>
     </Reference>
     <Reference Include="Exiled.API, Version=2.8.0.0, Culture=neutral, processorArchitecture=AMD64">
       <HintPath>..\packages\EXILED.2.8.0\lib\net472\Exiled.API.dll</HintPath>
