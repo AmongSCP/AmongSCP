@@ -1,6 +1,4 @@
-﻿using System.Diagnostics.Eventing;
-
-namespace AmongSCP
+﻿namespace AmongSCP
 {
     using System;
     using Exiled.API.Enums;
