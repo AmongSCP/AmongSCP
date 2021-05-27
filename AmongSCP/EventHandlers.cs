@@ -1,17 +1,8 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using Exiled.API.Features;
-using Exiled.API.Enums;
-using Exiled.Events.EventArgs;
-using System.Linq;
-using UnityEngine;
-using Random = System.Random;
-using CustomPlayerEffects;
-using Mirror;
-using Exiled.API.Extensions;
-
-namespace AmongSCP
+﻿namespace AmongSCP
 {
+    using Exiled.API.Extensions;
+    using Exiled.API.Features;
+    
     public class EventHandlers
     {
         private readonly AmongSCP _plugin;
@@ -20,7 +11,7 @@ namespace AmongSCP
         {
             _plugin = plugin;
         }
-        
+
         public void OnGameStart()
         {
             foreach(var ply in Player.List)
@@ -30,7 +21,7 @@ namespace AmongSCP
             }
         }
 
-        private void MakePlayerImposter(Player ply)
+        private static void MakePlayerImposter(Player ply)
         {
             ply.SetRole(RoleType.Scp049);
             ply.ChangeAppearance(RoleType.NtfLieutenant);
