@@ -91,7 +91,7 @@ namespace AmongSCP
 
         private void MakePlayerCrewmate(Player ply)
         {
-            ply.SetRole(RoleType.Scp049);
+            ply.SetRole(RoleType.NtfLieutenant);
         }
 
         private void MakePlayerImposter(Player ply)
