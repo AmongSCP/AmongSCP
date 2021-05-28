@@ -9,6 +9,6 @@ namespace AmongSCP
         public bool IsEnabled { get; set; } = true;
 
         [Description("Number of imposters for every 5 people")]
-        public int ImposterRatio { get; set; } = 1;
+        public int Imposters { get; set; } = 2;
     }
 }

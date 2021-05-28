@@ -2,10 +2,14 @@
 {
     using Exiled.API.Extensions;
     using Exiled.API.Features;
-    
+    using System.Collections.Generic;
+    using System.Linq;
+
     public class EventHandlers
     {
         private readonly AmongSCP _plugin;
+        private List<Player> _imposters = new List<Player>();  
+
 
         public EventHandlers(AmongSCP plugin)
         {
@@ -14,17 +18,18 @@
 
         public void OnGameStart()
         {
-            foreach(var ply in Player.List)
-            {
-                MakePlayerImposter(ply);
-                break;
-            }
+            
         }
 
-        private static void MakePlayerImposter(Player ply)
+        private void ChangeOutfit(Player ply, RoleType type)
         {
-            ply.SetRole(RoleType.Scp049);
-            ply.ChangeAppearance(RoleType.NtfLieutenant);
+            foreach (var target in Player.List.Where(x => x != ply))
+            {
+                if(_imposters.Contains(ply))
+                {
+                    MirrorExtensions.SendFakeSyncVar(target, ply.ReferenceHub.networkIdentity, typeof(CharacterClassManager), nameof(CharacterClassManager.NetworkCurClass), (sbyte)type);
+                }
+            }
         }
     }
 }
