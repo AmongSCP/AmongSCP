@@ -41,6 +41,20 @@ namespace AmongSCP
         {
            Log.Debug($"Someone died at: {ev.Target.Position.x}, {ev.Target.Position.y}, {ev.Target.Position.z}");
         }
+
+        public void OnRoleChanging(ChangingRoleEventArgs ev)
+        {
+            if (ev.NewRole == RoleType.Tutorial) return;
+
+            if ((ev.NewRole != _plugin.Config.CrewmateRole || _playerManager.Crewmates.Contains(ev.Player)) && (ev.NewRole != _plugin.Config.ImposterRole || _playerManager.Imposters.Contains(ev.Player))) return;
+
+            ev.IsEscaped = false;
+            ev.NewRole = ev.Player.Role;
+            ev.ShouldPreservePosition = true;
+
+            ev.Items.Clear();
+            ev.Items.AddRange(ev.Player.Items.Select(item => item.id));
+        }
         
         public void OnGameStart()
         {

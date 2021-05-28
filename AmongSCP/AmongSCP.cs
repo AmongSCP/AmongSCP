@@ -43,6 +43,7 @@
             PlayerEvent.PickingUpItem += _eventHandlers.OnPickupItem;
             PlayerEvent.Verified += _eventHandlers.OnJoin;
             PlayerEvent.Left += _eventHandlers.OnLeave;
+            PlayerEvent.ChangingRole += _eventHandlers.OnRoleChanging;
         }
 
         private void UnRegisterEvents()
@@ -53,6 +54,7 @@
             PlayerEvent.PickingUpItem -= _eventHandlers.OnPickupItem;
             PlayerEvent.Verified -= _eventHandlers.OnJoin;
             PlayerEvent.Left -= _eventHandlers.OnLeave;
+            PlayerEvent.ChangingRole -= _eventHandlers.OnRoleChanging;
         }
     }
 }
