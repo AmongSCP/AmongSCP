@@ -52,6 +52,5 @@
             PlayerEvent.Verified -= _eventHandlers.OnJoin;
             PlayerEvent.Left -= _eventHandlers.OnLeave;
         }
-        
     }
 }

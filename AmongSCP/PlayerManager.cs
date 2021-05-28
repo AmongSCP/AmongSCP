@@ -61,5 +61,29 @@ namespace AmongSCP
 
             return output.ToArray();
         }
+
+        public void ClearQueued()
+        {
+            foreach (var player in _players)
+            {
+                player.Role = RoleType.Spectator;
+            }
+        }
+        
+        public void ClearImposters()
+        {
+            foreach (var player in Imposters)
+            {
+                player.Role = RoleType.Spectator;
+            }
+        }
+        
+        public void ClearCrewmates()
+        {
+            foreach (var player in Crewmates)
+            {
+                player.Role = RoleType.Spectator;
+            }
+        }
     }
 }
