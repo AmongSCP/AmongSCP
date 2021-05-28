@@ -12,9 +12,10 @@ namespace AmongSCP
     {
         private readonly AmongSCP _plugin;
 
-        private List<Player> _imposters = new List<Player>();  
+        private List<Player> _imposters = new List<Player>();
+        private List<Player> _crewmates = new List<Player>();
         
-        private readonly Queue _queue = new Queue();
+        private readonly PlayerManager _playerManager = new PlayerManager();
 
         public EventHandlers(AmongSCP plugin)
         {
@@ -25,9 +26,9 @@ namespace AmongSCP
         {
             Timing.CallDelayed(.2f, () =>
             {
-                _queue.UpdateQueueNoWait();
+                _playerManager.UpdateQueueNoWait();
 
-                var players = _queue.PickPlayers();
+                var players = _playerManager.PickPlayers();
                 players.ShuffleList();
                 
                 for (var i = 0; i < players.Length; i++)
@@ -48,14 +49,14 @@ namespace AmongSCP
         {
             if (!RoundSummary.RoundInProgress()) return;
 
-            _queue.UpdateQueue();
+            _playerManager.UpdateQueue();
         }
 
         public void OnLeave(LeftEventArgs ev)
         {
             if (!RoundSummary.RoundInProgress()) return;
 
-            _queue.UpdateQueue();
+            _playerManager.UpdateQueue();
         }
 
         private void ChangeOutfit(Player ply, RoleType type)

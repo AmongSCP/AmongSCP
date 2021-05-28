@@ -6,7 +6,7 @@ using MEC;
 
 namespace AmongSCP
 {
-    public class Queue
+    public class PlayerManager
     {
         private List<Player> _players = new List<Player>();
 
