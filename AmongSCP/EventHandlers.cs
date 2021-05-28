@@ -76,7 +76,8 @@ namespace AmongSCP
 
         private void MakePlayerImposter(Player ply)
         {
-            
+            ply.SetRole(RoleType.Scp049);
+            Timing.CallDelayed(0.1f, () => ChangeOutfit(ply, RoleType.NtfLieutenant));
         }
     }
 }
