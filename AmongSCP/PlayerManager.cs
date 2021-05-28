@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Exiled.API.Features;
 using MEC;
+using UnityEngine;
 
 namespace AmongSCP
 {
@@ -12,6 +13,7 @@ namespace AmongSCP
         
         public List<Player> Imposters = new List<Player>();
         public List<Player> Crewmates = new List<Player>();
+        public Dictionary<Player, Vector3> DeadPlayers = new Dictionary<Player, Vector3>();
 
         public void UpdateQueue()
         {

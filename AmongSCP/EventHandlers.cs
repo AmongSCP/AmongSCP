@@ -15,6 +15,8 @@ namespace AmongSCP
 
         private readonly PlayerManager _playerManager = new PlayerManager();
 
+        private int _emergencyMeetings;
+
         public EventHandlers(AmongSCP plugin)
         {
             _plugin = plugin;
@@ -28,21 +30,13 @@ namespace AmongSCP
             }
         }
 
-        //TODO - Work on voting
-        private void StartVoting()
-        {
-            
-        }
-
-        //TODO - Figure out how to report bodies
-        public void ReportBody()
-        {
-            
-        }
-
         public void OnDied(DiedEventArgs ev)
         {
            Log.Debug($"Someone died at: {ev.Target.Position.x}, {ev.Target.Position.y}, {ev.Target.Position.z}");
+            if(!_playerManager.Imposters.Contains(ev.Target))
+            {
+                _playerManager.DeadPlayers.Add(ev.Target, ev.Target.Position);
+            }
         }
 
         public void OnRoleChanging(ChangingRoleEventArgs ev)
@@ -125,5 +119,20 @@ namespace AmongSCP
                 }
             }
         }
+
+        //TODO - Work on voting
+        private void StartVoting()
+        {
+
+        }
+
+        //TODO - Figure out how to report bodies
+        public void ReportBody()
+        {
+
+        }
+
+
+
     }
 }
