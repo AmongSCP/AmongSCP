@@ -12,9 +12,6 @@ namespace AmongSCP
     {
         private readonly AmongSCP _plugin;
 
-        private List<Player> _imposters = new List<Player>();
-        private List<Player> _crewmates = new List<Player>();
-        
         private readonly PlayerManager _playerManager = new PlayerManager();
 
         public EventHandlers(AmongSCP plugin)
@@ -30,6 +27,8 @@ namespace AmongSCP
 
                 var players = _playerManager.PickPlayers();
                 players.ShuffleList();
+                
+                _playerManager.UpdateQueueNoWait();
                 
                 for (var i = 0; i < players.Length; i++)
                 {
@@ -63,7 +62,7 @@ namespace AmongSCP
         {
             foreach (var target in Player.List.Where(x => x != ply))
             {
-                if(_imposters.Contains(ply))
+                if(_playerManager.Imposters.Contains(ply))
                 {
                     MirrorExtensions.SendFakeSyncVar(target, ply.ReferenceHub.networkIdentity, typeof(CharacterClassManager), nameof(CharacterClassManager.NetworkCurClass), (sbyte)type);
                 }

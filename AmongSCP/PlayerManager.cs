@@ -9,6 +9,9 @@ namespace AmongSCP
     public class PlayerManager
     {
         private List<Player> _players = new List<Player>();
+        
+        public List<Player> Imposters = new List<Player>();
+        public List<Player> Crewmates = new List<Player>();
 
         public void UpdateQueue()
         {
@@ -32,6 +35,20 @@ namespace AmongSCP
                 if (player != null && Player.List.Contains(player)) continue;
 
                 _players.Remove(player);
+            }
+            
+            foreach (var player in Imposters.ToList())
+            {
+                if (player != null && Player.List.Contains(player)) continue;
+
+                Imposters.Remove(player);
+            }
+            
+            foreach (var player in Crewmates.ToList())
+            {
+                if (player != null && Player.List.Contains(player)) continue;
+
+                Crewmates.Remove(player);
             }
         }
 
