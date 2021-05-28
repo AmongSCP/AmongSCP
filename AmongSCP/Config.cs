@@ -13,5 +13,11 @@ namespace AmongSCP
 
         [Description("Maximum amount of players in a game.")]
         public int MaxPlayers { get; set; } = 10;
+        
+        [Description("The role of the imposter.")]
+        public RoleType ImposterRole { get; set; } = RoleType.Scp049;
+        
+        [Description("The role of the crewmate.")]
+        public RoleType CrewmateRole { get; set; } = RoleType.NtfCommander;
     }
 }

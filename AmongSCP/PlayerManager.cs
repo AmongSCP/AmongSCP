@@ -52,9 +52,9 @@ namespace AmongSCP
             }
         }
 
-        public Player[] PickPlayers()
+        public Player[] PickPlayers(int num)
         {
-            var count = Math.Min(_players.Count, 8);
+            var count = Math.Min(_players.Count, num);
             
             var output = _players.Take(count);
             _players.RemoveRange(0, count);

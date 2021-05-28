@@ -43,7 +43,7 @@ namespace AmongSCP
             {
                 _playerManager.UpdateQueueNoWait();
 
-                var players = _playerManager.PickPlayers();
+                var players = _playerManager.PickPlayers(_plugin.Config.MaxPlayers);
 
                 _playerManager.ClearQueued();
 
@@ -90,13 +90,13 @@ namespace AmongSCP
 
         private void MakePlayerCrewmate(Player ply)
         {
-            ply.SetRole(RoleType.Scp049);
+            ply.SetRole(_plugin.Config.ImposterRole);
         }
 
         private void MakePlayerImposter(Player ply)
         {
-            ply.SetRole(RoleType.Scp049);
-            Timing.CallDelayed(0.1f, () => ChangeOutfit(ply, RoleType.NtfLieutenant));
+            ply.SetRole(_plugin.Config.ImposterRole);
+            Timing.CallDelayed(0.1f, () => ChangeOutfit(ply, _plugin.Config.CrewmateRole));
         }
     }
 }
