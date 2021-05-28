@@ -56,18 +56,31 @@ namespace AmongSCP
                 
                 Log.Info(players);
                 Log.Info(players.Length);
+                
+                _playerManager.Crewmates.Clear();
+                _playerManager.Imposters.Clear();
 
                 for (var i = 0; i < players.Length; i++)
                 {
                     if (i % 5 < _plugin.Config.ImposterRatio)
                     {
-                        MakePlayerImposter(players[i]);
+                        players[i].SetRole(_plugin.Config.ImposterRole);
+                        _playerManager.Imposters.Add(players[i]);
                     }
                     else
                     {
-                        MakePlayerCrewmate(players[i]);
+                        players[i].SetRole(_plugin.Config.CrewmateRole);
+                        _playerManager.Crewmates.Add(players[i]);
                     }
                 }
+
+                Timing.CallDelayed(.1f, () =>
+                {
+                    foreach (var imposter in _playerManager.Imposters)
+                    {
+                        ChangeOutfit(imposter, _plugin.Config.CrewmateRole);
+                    }
+                });
             });
         }
 
@@ -87,25 +100,13 @@ namespace AmongSCP
 
         private void ChangeOutfit(Player ply, RoleType type)
         {
-            Log.Debug(ply.Nickname + " is an SCP!");
-            foreach (var target in Player.List.Where(x => x != ply))
+            foreach (var target in Player.List)
             {
-                if(_playerManager.Imposters.Contains(ply))
+                if(!_playerManager.Imposters.Contains(ply))
                 {
                     MirrorExtensions.SendFakeSyncVar(target, ply.ReferenceHub.networkIdentity, typeof(CharacterClassManager), nameof(CharacterClassManager.NetworkCurClass), (sbyte)type);
                 }
             }
-        }
-
-        private void MakePlayerCrewmate(Player ply)
-        {
-            ply.SetRole(_plugin.Config.CrewmateRole);
-        }
-
-        private void MakePlayerImposter(Player ply)
-        {
-            ply.SetRole(_plugin.Config.ImposterRole);
-            Timing.CallDelayed(.1f, () => ChangeOutfit(ply, _plugin.Config.CrewmateRole));
         }
     }
 }
