@@ -16,10 +16,7 @@
         public override PluginPriority Priority { get; } = PluginPriority.First;
 
         private EventHandlers _eventHandlers;
-        
-        //TODO - Use this to mark items for TODO and make comments on it
-        //BUG - Use this to mark bugs with short description
-        
+
         public override void OnEnabled()
         {
             _eventHandlers = new EventHandlers(this);
@@ -41,15 +38,17 @@
         private void RegisterEvents()
         {
             ServerEvent.RoundStarted += _eventHandlers.OnGameStart;
-            
-            Log.Info("Registered Events");
+
+            PlayerEvent.Verified += _eventHandlers.OnJoin;
+            PlayerEvent.Left += _eventHandlers.OnLeave;
         }
 
         private void UnRegisterEvents()
         {
             ServerEvent.RoundStarted -= _eventHandlers.OnGameStart;
             
-            Log.Info("Unregistered Events");
+            PlayerEvent.Verified -= _eventHandlers.OnJoin;
+            PlayerEvent.Left -= _eventHandlers.OnLeave;
         }
         
     }
