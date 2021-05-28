@@ -56,10 +56,10 @@ namespace AmongSCP
         {
             var count = Math.Min(_players.Count, num);
             
-            var output = _players.Take(count);
+            var output = _players.Take(count).ToArray();
             _players.RemoveRange(0, count);
 
-            return output.ToArray();
+            return output;
         }
 
         public void ClearQueued()
