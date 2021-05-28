@@ -48,6 +48,9 @@ namespace AmongSCP
                 _playerManager.ClearQueued();
 
                 players.ShuffleList();
+                
+                Log.Info(players);
+                Log.Info(players.Length);
 
                 for (var i = 0; i < players.Length; i++)
                 {
@@ -79,6 +82,7 @@ namespace AmongSCP
 
         private void ChangeOutfit(Player ply, RoleType type)
         {
+            Log.Debug(ply.Nickname + " is an SCP!");
             foreach (var target in Player.List.Where(x => x != ply))
             {
                 if(_playerManager.Imposters.Contains(ply))
