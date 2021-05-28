@@ -18,7 +18,7 @@ namespace AmongSCP
         {
             _plugin = plugin;
         }
-
+        
         //TODO - Item pickup events
         public void OnPickupItem(PickingUpItemEventArgs ev)
         {
@@ -32,9 +32,14 @@ namespace AmongSCP
         }
 
         //TODO - Figure out how to report bodies
-        private void ReportBody()
+        public void ReportBody()
         {
             
+        }
+
+        public void OnDied(DiedEventArgs ev)
+        {
+           Log.Debug($"Someone died at: {ev.Target.Position.x}, {ev.Target.Position.y}, {ev.Target.Position.z}");
         }
         
         public void OnGameStart()
@@ -100,7 +105,7 @@ namespace AmongSCP
         private void MakePlayerImposter(Player ply)
         {
             ply.SetRole(_plugin.Config.ImposterRole);
-            Timing.CallDelayed(0.1f, () => ChangeOutfit(ply, _plugin.Config.CrewmateRole));
+            Timing.CallDelayed(1f, () => ChangeOutfit(ply, _plugin.Config.CrewmateRole));
         }
     }
 }
