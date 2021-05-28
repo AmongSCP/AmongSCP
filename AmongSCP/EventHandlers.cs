@@ -1,4 +1,5 @@
-﻿using Exiled.Events.EventArgs;
+﻿using AmongSCP.Map;
+using Exiled.Events.EventArgs;
 using MEC;
 
 namespace AmongSCP
@@ -19,10 +20,12 @@ namespace AmongSCP
             _plugin = plugin;
         }
         
-        //TODO - Item pickup events
         public void OnPickupItem(PickingUpItemEventArgs ev)
         {
-
+            if (ev.Pickup.gameObject.TryGetComponent<InteractableBehavior>(out var component))
+            {
+                ev.IsAllowed = component.Interactable.OnInteract(ev.Player);
+            }
         }
 
         //TODO - Work on voting

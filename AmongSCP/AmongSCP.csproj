@@ -98,6 +98,8 @@
     <Compile Include="AmongSCP.cs" />
     <Compile Include="Config.cs" />
     <Compile Include="EventHandlers.cs" />
+    <Compile Include="Map\Interactable.cs" />
+    <Compile Include="Map\InteractableBehavior.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PlayerManager.cs" />
   </ItemGroup>
