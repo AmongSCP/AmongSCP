@@ -19,6 +19,24 @@ namespace AmongSCP
             _plugin = plugin;
         }
 
+        //TODO - Item pickup events
+        public void OnPickupItem(PickingUpItemEventArgs ev)
+        {
+
+        }
+
+        //TODO - Work on voting
+        private void StartVoting()
+        {
+            
+        }
+
+        //TODO - Figure out how to report bodies
+        private void ReportBody()
+        {
+            
+        }
+        
         public void OnGameStart()
         {
             Timing.CallDelayed(.2f, () =>

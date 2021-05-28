@@ -39,6 +39,7 @@
         {
             ServerEvent.RoundStarted += _eventHandlers.OnGameStart;
 
+            PlayerEvent.PickingUpItem += _eventHandlers.OnPickupItem;
             PlayerEvent.Verified += _eventHandlers.OnJoin;
             PlayerEvent.Left += _eventHandlers.OnLeave;
         }
@@ -47,6 +48,7 @@
         {
             ServerEvent.RoundStarted -= _eventHandlers.OnGameStart;
             
+            PlayerEvent.PickingUpItem += _eventHandlers.OnPickupItem;
             PlayerEvent.Verified -= _eventHandlers.OnJoin;
             PlayerEvent.Left -= _eventHandlers.OnLeave;
         }
