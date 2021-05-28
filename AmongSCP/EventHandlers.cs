@@ -102,7 +102,7 @@ namespace AmongSCP
         {
             foreach (var target in Player.List)
             {
-                if(!_playerManager.Imposters.Contains(ply))
+                if(!_playerManager.Imposters.Contains(target))
                 {
                     MirrorExtensions.SendFakeSyncVar(target, ply.ReferenceHub.networkIdentity, typeof(CharacterClassManager), nameof(CharacterClassManager.NetworkCurClass), (sbyte)type);
                 }
