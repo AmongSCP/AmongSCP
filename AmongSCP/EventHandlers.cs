@@ -48,6 +48,9 @@ namespace AmongSCP
                 _playerManager.ClearQueued();
 
                 players.ShuffleList();
+                
+                Log.Info(players);
+                Log.Info(players.Length);
 
                 for (var i = 0; i < players.Length; i++)
                 {
@@ -90,7 +93,7 @@ namespace AmongSCP
 
         private void MakePlayerCrewmate(Player ply)
         {
-            ply.SetRole(_plugin.Config.ImposterRole);
+            ply.SetRole(_plugin.Config.CrewmateRole);
         }
 
         private void MakePlayerImposter(Player ply)
