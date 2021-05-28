@@ -105,7 +105,7 @@ namespace AmongSCP
         private void MakePlayerImposter(Player ply)
         {
             ply.SetRole(_plugin.Config.ImposterRole);
-            Timing.CallDelayed(1f, () => ChangeOutfit(ply, _plugin.Config.CrewmateRole));
+            Timing.CallDelayed(.1f, () => ChangeOutfit(ply, _plugin.Config.CrewmateRole));
         }
     }
 }
