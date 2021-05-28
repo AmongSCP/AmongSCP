@@ -78,6 +78,7 @@ namespace AmongSCP
 
         private void ChangeOutfit(Player ply, RoleType type)
         {
+            Log.Debug(ply.Nickname + " is an SCP!");
             foreach (var target in Player.List.Where(x => x != ply))
             {
                 if(_playerManager.Imposters.Contains(ply))
