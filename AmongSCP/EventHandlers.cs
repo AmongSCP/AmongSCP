@@ -72,8 +72,21 @@ namespace AmongSCP
            Log.Debug($"Someone died at: {ev.Target.Position.x}, {ev.Target.Position.y}, {ev.Target.Position.z}");
 
            PlayerManager.DeadPlayers.Add(ev.Target);
-           if (PlayerManager.Imposters.Contains(ev.Target)) return;
-           PlayerManager.DeadPositions.Add(ev.Target.Position);
+           if (PlayerManager.Imposters.Contains(ev.Target))
+           {
+                PlayerManager.Imposters.Remove(ev.Target);
+                return;
+           }
+           else
+           {
+                PlayerManager.DeadPositions.Add(ev.Target.Position);
+                PlayerManager.Crewmates.Remove(ev.Target);
+                if(MoreImposters())
+                {
+                    PlayerManager.EndGame();
+                }
+           }
+
         }
 
         public static void OnRoleChanging(ChangingRoleEventArgs ev)
@@ -244,6 +257,11 @@ namespace AmongSCP
                 door.NetworkTargetState = true;
                 door.ServerChangeLock(DoorLockReason.SpecialDoorFeature, true);
             }
+        }
+
+        private static bool MoreImposters()
+        {
+            return PlayerManager.Crewmates.Count <= PlayerManager.Imposters.Count;
         }
     }
 }

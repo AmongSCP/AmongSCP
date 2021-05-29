@@ -108,6 +108,7 @@
     <Compile Include="PointManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PlayerManager.cs" />
+    <Compile Include="Tasks.cs" />
     <Compile Include="Util.cs" />
     <Compile Include="Venting.cs" />
   </ItemGroup>
