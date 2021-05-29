@@ -21,7 +21,18 @@ namespace AmongSCP
 
         public readonly List<Player> CalledEmergencyMeeting = new List<Player>();
 
+        public readonly Dictionary<Player, DateTime> LastShot = new Dictionary<Player, DateTime>();
 
+        public void EndGame()
+        {
+            Imposters.Clear();
+            Crewmates.Clear();
+            DeadPlayers.Clear();
+            DeadPositions.Clear();
+            CalledEmergencyMeeting.Clear();
+            LastShot.Clear();
+        }
+        
         public void UpdateQueue()
         {
             Timing.CallDelayed(.1f, () =>

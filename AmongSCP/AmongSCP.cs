@@ -50,6 +50,7 @@ namespace AmongSCP
         private void RegisterEvents()
         {
             ServerEvent.RoundStarted += EventHandlers.OnGameStart;
+            ServerEvent.RoundEnded += EventHandlers.OnGameEnd;
 
             PlayerEvent.Died += EventHandlers.OnDied;
             PlayerEvent.PickingUpItem += EventHandlers.OnPickupItem;
@@ -59,12 +60,14 @@ namespace AmongSCP
             PlayerEvent.Dying += EventHandlers.OnDying;
             PlayerEvent.DroppingItem += EventHandlers.OnItemDrop;
             PlayerEvent.Shot += EventHandlers.OnPlayerShoot;
+            PlayerEvent.Shooting += EventHandlers.OnPlayerShooting;
             PlayerEvent.InteractingElevator += EventHandlers.OnElevatorUsed;
         }
 
         private void UnRegisterEvents()
         {
             ServerEvent.RoundStarted -= EventHandlers.OnGameStart;
+            ServerEvent.RoundEnded -= EventHandlers.OnGameEnd;
             
             PlayerEvent.Died -= EventHandlers.OnDied;
             PlayerEvent.PickingUpItem -= EventHandlers.OnPickupItem;
@@ -74,6 +77,7 @@ namespace AmongSCP
             PlayerEvent.Dying -= EventHandlers.OnDying;
             PlayerEvent.DroppingItem -= EventHandlers.OnItemDrop;
             PlayerEvent.Shot -= EventHandlers.OnPlayerShoot;
+            PlayerEvent.Shooting -= EventHandlers.OnPlayerShooting;
             PlayerEvent.InteractingElevator -= EventHandlers.OnElevatorUsed;
 
         }
