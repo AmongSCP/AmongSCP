@@ -2,10 +2,10 @@
 {
     using MEC;
     using Exiled.API.Features;
-    
-    class Venting
+
+    public class Venting
     {
-        private static void PlayerVent(Player ply)
+        public static void PlayerVent(Player ply)
         {
             ply.IsInvisible = true;
             EventHandlers.ImposterCanKill = false;
@@ -14,10 +14,6 @@
                 ply.IsInvisible = false;
                 Timing.CallDelayed(AmongSCP.Singleton.Config.VentKillCooldown, () => EventHandlers.ImposterCanKill = true);
             });
-            
-            /*DoorVariant CurDooor = Exiled.API.Features.Map.GetDoorByName(door);
-            Vector3 doorPos = CurDooor.transform.position;
-            ply.Position = doorPos; */
         }
     }
 }

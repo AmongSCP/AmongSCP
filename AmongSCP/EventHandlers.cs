@@ -18,6 +18,8 @@ namespace AmongSCP
         private static int _emergencyMeetings;
 
         public static bool ImposterCanKill;
+
+        private static Vector3 _votingPosition = new Vector3();
         
         public static void Reset() 
         {
@@ -35,7 +37,11 @@ namespace AmongSCP
         //TODO - Work on voting
         private static void StartVoting()
         {
-            
+            _votingPosition = new Vector3(AmongSCP.Singleton.Config.VotePosition.x, AmongSCP.Singleton.Config.VotePosition.y, AmongSCP.Singleton.Config.VotePosition.z);
+            foreach (var ply in Player.List)
+            {
+                ply.Position = _votingPosition;
+            }
         }
 
         //TODO - Figure out how to report bodies

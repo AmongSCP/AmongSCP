@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel;
 using Exiled.API.Interfaces;
+using UnityEngine;
 
 namespace AmongSCP
 {
@@ -31,5 +32,9 @@ namespace AmongSCP
 
         [Description("Time after an imposter vents that they cannot kill")]
         public float VentKillCooldown = 5;
+
+        //I think this should work?
+        [Description("Location when someone calls a emergency meeting or voting starts")]
+        public Vector3 VotePosition = new Vector3(54, 1020, -45);
     }
 }
