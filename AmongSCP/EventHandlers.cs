@@ -51,15 +51,9 @@ namespace AmongSCP
         {
            Log.Debug($"Someone died at: {ev.Target.Position.x}, {ev.Target.Position.y}, {ev.Target.Position.z}");
 
-           if(!PlayerManager.Imposters.Contains(ev.Target))
-           { 
-               PlayerManager.DeadPlayers.Add(ev.Target); 
-               PlayerManager.DeadPositions.Add(ev.Target.Position);
-           }
-           else
-           { 
-               PlayerManager.DeadPlayers.Add(ev.Target);
-           }
+           PlayerManager.DeadPlayers.Add(ev.Target);
+           if (PlayerManager.Imposters.Contains(ev.Target)) return;
+           PlayerManager.DeadPositions.Add(ev.Target.Position);
         }
 
         public static void OnRoleChanging(ChangingRoleEventArgs ev)
