@@ -80,10 +80,7 @@ namespace AmongSCP
                 PlayerManager.ClearQueued();
 
                 players.ShuffleList();
-                
-                Log.Info(players);
-                Log.Info(players.Length);
-                
+
                 PlayerManager.Crewmates.Clear();
                 PlayerManager.Imposters.Clear();
 
@@ -110,6 +107,16 @@ namespace AmongSCP
 
                         ChangeOutfit(imposter, AmongSCP.Singleton.Config.CrewmateRole);
                     }
+                    
+                    foreach (var crewmate in PlayerManager.Crewmates)
+                    {
+                        ChangeOutfit(crewmate, AmongSCP.Singleton.Config.CrewmateRole);
+                    }
+
+                    Timing.CallDelayed(.1f, () =>
+                    {
+                        PointManager.SpawnPlayers(players);
+                    });
                 });
             });
         }
