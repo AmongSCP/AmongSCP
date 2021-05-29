@@ -14,15 +14,9 @@ namespace AmongSCP
     {
         internal static PlayerManager PlayerManager = new PlayerManager();
 
-<<<<<<< HEAD
-        public static void Reset()
-=======
-        private readonly PlayerManager _playerManager = new PlayerManager();
+        private static int _emergencyMeetings;
 
-        private int _emergencyMeetings;
-
-        public EventHandlers(AmongSCP plugin)
->>>>>>> 9e8c8b4980164feb537c306a1cd6d41a036d23da
+        public static void Reset() 
         {
             PlayerManager = new PlayerManager();
         }
@@ -34,8 +28,7 @@ namespace AmongSCP
                 ev.IsAllowed = component.Interactable.OnInteract(ev.Player);
             }
         }
-
-<<<<<<< HEAD
+        
         //TODO - Work on voting
         private static void StartVoting()
         {
@@ -52,19 +45,14 @@ namespace AmongSCP
         {
             ev.Target.Items.Clear();
         }
-
+        
         public static void OnDied(DiedEventArgs ev)
         {
-            Log.Debug($"Someone died at: {ev.Target.Position.x}, {ev.Target.Position.y}, {ev.Target.Position.z}");
-=======
-        public void OnDied(DiedEventArgs ev)
-        {
            Log.Debug($"Someone died at: {ev.Target.Position.x}, {ev.Target.Position.y}, {ev.Target.Position.z}");
-            if(!_playerManager.Imposters.Contains(ev.Target))
+            if(!PlayerManager.Imposters.Contains(ev.Target))
             {
-                _playerManager.DeadPlayers.Add(ev.Target, ev.Target.Position);
+                PlayerManager.DeadPlayers.Add(ev.Target, ev.Target.Position);
             }
->>>>>>> 9e8c8b4980164feb537c306a1cd6d41a036d23da
         }
 
         public static void OnRoleChanging(ChangingRoleEventArgs ev)
@@ -170,20 +158,5 @@ namespace AmongSCP
                 }
             }
         }
-
-        //TODO - Work on voting
-        private void StartVoting()
-        {
-
-        }
-
-        //TODO - Figure out how to report bodies
-        public void ReportBody()
-        {
-
-        }
-
-
-
     }
 }
