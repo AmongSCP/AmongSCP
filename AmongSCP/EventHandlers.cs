@@ -16,14 +16,14 @@ namespace AmongSCP
     {
         internal static PlayerManager PlayerManager = new PlayerManager();
 
-        private static int _emergencyMeetings;
-
         public static bool ImposterCanKill;
 
         private static Vector3 _votingPosition = new Vector3();
         
         private static bool _starting = false;
-        
+
+        internal static TaskManager TaskManager = new TaskManager();
+
         public static void Reset() 
         {
             PlayerManager = new PlayerManager();
@@ -81,7 +81,7 @@ namespace AmongSCP
            {
                 PlayerManager.DeadPositions.Add(ev.Target.Position);
                 PlayerManager.Crewmates.Remove(ev.Target);
-                if(MoreImposters())
+                if(PlayerManager.Crewmates.Count <= PlayerManager.Imposters.Count)
                 {
                     PlayerManager.EndGame();
                 }
@@ -257,11 +257,6 @@ namespace AmongSCP
                 door.NetworkTargetState = true;
                 door.ServerChangeLock(DoorLockReason.SpecialDoorFeature, true);
             }
-        }
-
-        private static bool MoreImposters()
-        {
-            return PlayerManager.Crewmates.Count <= PlayerManager.Imposters.Count;
         }
     }
 }
