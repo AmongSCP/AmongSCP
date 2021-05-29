@@ -104,6 +104,7 @@
     <Compile Include="Patches\SyncCurItemUniqPatch.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PlayerManager.cs" />
+    <Compile Include="Venting.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
