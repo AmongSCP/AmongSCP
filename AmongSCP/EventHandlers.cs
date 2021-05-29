@@ -49,10 +49,10 @@ namespace AmongSCP
         public static void OnDied(DiedEventArgs ev)
         {
            Log.Debug($"Someone died at: {ev.Target.Position.x}, {ev.Target.Position.y}, {ev.Target.Position.z}");
-            if(!PlayerManager.Imposters.Contains(ev.Target))
+            /*if(!PlayerManager.Imposters.Contains(ev.Target))
             {
                 PlayerManager.DeadPlayers.Add(ev.Target, ev.Target.Position);
-            }
+            }*/
         }
 
         public static void OnRoleChanging(ChangingRoleEventArgs ev)

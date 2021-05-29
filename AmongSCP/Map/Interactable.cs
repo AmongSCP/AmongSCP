@@ -15,16 +15,18 @@ namespace AmongSCP.Map
         private bool destroyOnInteract = false;
         private bool pickupOnInteract = false;
 
-        public Interactable(ItemType item, Vector3 pos, Quaternion rot, Action<Player> onInteract, bool destroyOnInteract = false, bool pickupOnInteract = false)
+        public Interactable(ItemData data, Action<Player> onInteract, bool destroyOnInteract = false, bool pickupOnInteract = false)
         {
             _action = onInteract;
 
             var gameObject = UnityEngine.Object.Instantiate<GameObject>(Server.Host.Inventory.pickupPrefab);
+
+            gameObject.transform.localScale = data.scale;
             
             NetworkServer.Spawn(gameObject);
             
             var pickup = gameObject.GetComponent<Pickup>();
-            pickup.SetupPickup(item, 0, Server.Host.Inventory.gameObject, new Pickup.WeaponModifiers(true, 0, 0, 0), pos, rot);
+            pickup.SetupPickup(data.item, 0, Server.Host.Inventory.gameObject, new Pickup.WeaponModifiers(true, 0, 0, 0), data.pos, data.rot);
 
             _pickup = pickup;
             _interactable = gameObject.AddComponent<InteractableBehavior>();
