@@ -69,23 +69,26 @@ namespace AmongSCP
         
         public static void OnDied(DiedEventArgs ev)
         {
-           Log.Debug($"Someone died at: {ev.Target.Position.x}, {ev.Target.Position.y}, {ev.Target.Position.z}");
+            
+            Log.Debug($"Someone died at: {ev.Target.Position.x}, {ev.Target.Position.y}, {ev.Target.Position.z}");
 
            PlayerManager.DeadPlayers.Add(ev.Target);
            if (PlayerManager.Imposters.Contains(ev.Target))
            {
-                PlayerManager.Imposters.Remove(ev.Target);
-                return;
-           }
+                if (PlayerManager.Crewmates.Count <= PlayerManager.Imposters.Count || PlayerManager.Imposters.Count == 0)
+                {
+                    PlayerManager.EndGame();
+                    return;
+                }
+            }
            else
            {
                 PlayerManager.DeadPositions.Add(ev.Target.Position);
-                PlayerManager.Crewmates.Remove(ev.Target);
-                if(PlayerManager.Crewmates.Count <= PlayerManager.Imposters.Count)
+                if (PlayerManager.Crewmates.Count <= PlayerManager.Imposters.Count || PlayerManager.Imposters.Count == 0)
                 {
                     PlayerManager.EndGame();
                 }
-           }
+            }
 
         }
 
