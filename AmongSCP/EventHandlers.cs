@@ -1,4 +1,5 @@
-﻿using AmongSCP.Map;
+﻿using System;
+using AmongSCP.Map;
 using Exiled.API.Enums;
 using Exiled.Events.EventArgs;
 using MEC;
@@ -157,6 +158,36 @@ namespace AmongSCP
             if (!PlayerManager.Imposters.Contains(ev.Player) || ev.Item.id != ItemType.GunUSP) return;
             
             ev.IsAllowed = false;
+        }
+
+        public static void OnGameEnd(RoundEndedEventArgs ev)
+        {
+            PlayerManager.EndGame();
+        }
+
+        public static void OnPlayerShooting(ShootingEventArgs ev)
+        {
+            if (!PlayerManager.Imposters.Contains(ev.Shooter))
+            {
+                ev.IsAllowed = false;
+                return;
+            }
+
+            var seconds = 0;
+
+            if (PlayerManager.LastShot.TryGetValue(ev.Shooter, out var time))
+            {
+                seconds = (int) DateTime.Now.Subtract(time).TotalSeconds;
+            }
+
+            if (!(seconds < 30))
+            {
+                PlayerManager.LastShot[ev.Shooter] = DateTime.Now;
+                return;
+            }
+
+            ev.IsAllowed = false;
+            ev.Shooter.ShowHint("You are still on cooldown. " + (30 - seconds) + " seconds left.");
         }
 
         public static void OnPlayerShoot(ShotEventArgs ev)
