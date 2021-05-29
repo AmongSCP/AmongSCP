@@ -183,10 +183,10 @@ namespace AmongSCP
 
         private static void SetUpDoors()
         {
-            foreach(DoorVariant Door in Exiled.API.Features.Map.Doors)
+            foreach(var door in Exiled.API.Features.Map.Doors)
             {
-                Door.NetworkTargetState = true;
-                Door.ServerChangeLock(DoorLockReason.None, true);
+                door.NetworkTargetState = true;
+                door.ServerChangeLock(DoorLockReason.None, true);
             }
         }
     }
