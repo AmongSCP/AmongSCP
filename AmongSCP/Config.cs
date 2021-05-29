@@ -36,5 +36,8 @@ namespace AmongSCP
         //I think this should work?
         [Description("Location when someone calls a emergency meeting or voting starts")]
         public Vector3 VotePosition = new Vector3(54, 1020, -45);
+
+        [Description("The distance you have to be from a body to be able to trigger a report")]
+        public float MaxReportDistance = 2f;
     }
 }
