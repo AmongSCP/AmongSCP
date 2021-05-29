@@ -9,13 +9,18 @@ namespace AmongSCP
 {
     public class PlayerManager
     {
-        private List<Player> _players = new List<Player>();
+        private readonly List<Player> _players = new List<Player>();
         
-        public List<Player> Imposters = new List<Player>();
-        public List<Player> Crewmates = new List<Player>();
+        public readonly List<Player> Imposters = new List<Player>();
+        
+        public readonly List<Player> Crewmates = new List<Player>();
+        
+        public readonly List<Player> DeadPlayers = new List<Player>();
+        
+        public readonly List<Vector3> DeadPositions = new List<Vector3>();
 
-        public List<Player> CalledEmergencyMeeting = new List<Player>();
-        //public Dictionary<Player, Vector3> DeadPlayers = new Dictionary<Player, Vector3>();
+        public readonly List<Player> CalledEmergencyMeeting = new List<Player>();
+
 
         public void UpdateQueue()
         {
