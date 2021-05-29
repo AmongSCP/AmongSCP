@@ -104,13 +104,11 @@ namespace AmongSCP
                     {
                         imposter.Ammo[(int) AmmoType.Nato9] = 999;
                         imposter.Inventory.AddNewItem(ItemType.GunUSP);
-
-                        ChangeOutfit(imposter, AmongSCP.Singleton.Config.CrewmateRole);
                     }
-                    
-                    foreach (var crewmate in PlayerManager.Crewmates)
+
+                    foreach (var player in players)
                     {
-                        ChangeOutfit(crewmate, AmongSCP.Singleton.Config.CrewmateRole);
+                        ChangeOutfit(player, AmongSCP.Singleton.Config.CrewmateRole);
                     }
 
                     Timing.CallDelayed(.1f, () =>
@@ -159,9 +157,14 @@ namespace AmongSCP
         {
             foreach (var target in Player.List)
             {
+                //If the target is not an imposter, show the fake role, otherwise show the true role.
                 if(!PlayerManager.Imposters.Contains(target))
                 {
-                    MirrorExtensions.SendFakeSyncVar(target, ply.ReferenceHub.networkIdentity, typeof(CharacterClassManager), nameof(CharacterClassManager.NetworkCurClass), (sbyte)type);
+                    MirrorExtensions.SendFakeSyncVar(target, ply.ReferenceHub.networkIdentity, typeof(CharacterClassManager), nameof(CharacterClassManager.NetworkCurClass), (sbyte) type);
+                }
+                else
+                {
+                    MirrorExtensions.SendFakeSyncVar(target, ply.ReferenceHub.networkIdentity, typeof(CharacterClassManager), nameof(CharacterClassManager.NetworkCurClass), (sbyte) ply.Role);
                 }
             }
         }
