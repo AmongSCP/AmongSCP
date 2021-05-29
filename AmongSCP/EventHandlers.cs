@@ -2,13 +2,16 @@
 using Exiled.API.Enums;
 using Exiled.Events.EventArgs;
 using MEC;
+using Exiled.API.Extensions;
+using Exiled.API.Features;
+using Interactables.Interobjects.DoorUtils;
+using System.Collections.Generic;
+using System.Linq;
+using UnityEngine;
 
 namespace AmongSCP
 {
-    using Exiled.API.Extensions;
-    using Exiled.API.Features;
-    using System.Collections.Generic;
-    using System.Linq;
+
 
     public static class EventHandlers
     {
@@ -73,6 +76,7 @@ namespace AmongSCP
         {
             Timing.CallDelayed(.2f, () =>
             {
+                SetUpDoors();
                 PlayerManager.UpdateQueueNoWait();
 
                 var players = PlayerManager.PickPlayers(AmongSCP.Singleton.Config.MaxPlayers);
@@ -153,6 +157,14 @@ namespace AmongSCP
             ev.Damage = 200f;
         }
 
+        public static void OnElevatorUsed(InteractingElevatorEventArgs ev)
+        {
+            if(ev.Lift.Type() != ElevatorType.Scp049 || ev.Lift.Type() != ElevatorType.Nuke)
+            {
+                ev.IsAllowed = false;
+            }
+        }
+
         private static void ChangeOutfit(Player ply, RoleType type)
         {
             foreach (var target in Player.List)
@@ -168,5 +180,16 @@ namespace AmongSCP
                 }
             }
         }
+
+        private static void SetUpDoors()
+        {
+            foreach(DoorVariant Door in Exiled.API.Features.Map.Doors)
+            {
+                Door.NetworkTargetState = true;
+                Door.NetworkActiveLocks = 1;
+            }
+        }
+
+
     }
 }
