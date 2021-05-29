@@ -186,10 +186,8 @@ namespace AmongSCP
             foreach(DoorVariant Door in Exiled.API.Features.Map.Doors)
             {
                 Door.NetworkTargetState = true;
-                Door.NetworkActiveLocks = 1;
+                Door.ServerChangeLock(DoorLockReason.None, true);
             }
         }
-
-
     }
 }
