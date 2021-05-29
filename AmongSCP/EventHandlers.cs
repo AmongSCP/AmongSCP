@@ -241,7 +241,7 @@ namespace AmongSCP
             foreach(var door in Exiled.API.Features.Map.Doors)
             {
                 door.NetworkTargetState = true;
-                door.ServerChangeLock(DoorLockReason.None, true);
+                door.ServerChangeLock(DoorLockReason.SpecialDoorFeature, true);
             }
         }
     }
