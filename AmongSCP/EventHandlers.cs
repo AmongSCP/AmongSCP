@@ -17,6 +17,8 @@ namespace AmongSCP
 
         private static int _emergencyMeetings;
 
+        public static bool ImposterCanKill;
+        
         public static void Reset() 
         {
             PlayerManager = new PlayerManager();
@@ -37,7 +39,7 @@ namespace AmongSCP
         }
 
         //TODO - Figure out how to report bodies
-        public static void ReportBody()
+        public static void ReportBody(Player ply)
         {
             
         }

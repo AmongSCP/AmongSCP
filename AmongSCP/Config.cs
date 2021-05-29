@@ -25,5 +25,11 @@ namespace AmongSCP
 
         [Description("Item that when dropped will call an emergency meeting.")]
         public ItemType EmergencyMeetingTrigger = ItemType.Disarmer;
+
+        [Description("Length of time a player can vent for")]
+        public float VentTime = 10;
+
+        [Description("Time after an imposter vents that they cannot kill")]
+        public float VentKillCooldown = 5;
     }
 }

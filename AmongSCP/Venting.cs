@@ -1,23 +1,23 @@
-﻿using AmongSCP.Map;
-using Exiled.API.Enums;
-using Exiled.Events.EventArgs;
-using MEC;
-using Exiled.API.Extensions;
-using Exiled.API.Features;
-using Interactables.Interobjects.DoorUtils;
-using System.Collections.Generic;
-using System.Linq;
-using UnityEngine;
-
-namespace AmongSCP
+﻿namespace AmongSCP
 {
+    using MEC;
+    using Exiled.API.Features;
+    
     class Venting
     {
-        private static void PlayerVent(Player ply, string door)
+        private static void PlayerVent(Player ply)
         {
-            DoorVariant CurDooor = Exiled.API.Features.Map.GetDoorByName(door);
+            ply.IsInvisible = true;
+            EventHandlers.ImposterCanKill = false;
+            Timing.CallDelayed(AmongSCP.Singleton.Config.VentTime, () =>
+            {
+                ply.IsInvisible = false;
+                Timing.CallDelayed(AmongSCP.Singleton.Config.VentKillCooldown, () => EventHandlers.ImposterCanKill = true);
+            });
+            
+            /*DoorVariant CurDooor = Exiled.API.Features.Map.GetDoorByName(door);
             Vector3 doorPos = CurDooor.transform.position;
-            ply.Position = doorPos;
+            ply.Position = doorPos; */
         }
     }
 }
