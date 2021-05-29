@@ -59,6 +59,7 @@ namespace AmongSCP
             PlayerEvent.Dying += EventHandlers.OnDying;
             PlayerEvent.DroppingItem += EventHandlers.OnItemDrop;
             PlayerEvent.Shot += EventHandlers.OnPlayerShoot;
+            PlayerEvent.InteractingElevator += EventHandlers.OnElevatorUsed;
         }
 
         private void UnRegisterEvents()
@@ -73,6 +74,8 @@ namespace AmongSCP
             PlayerEvent.Dying -= EventHandlers.OnDying;
             PlayerEvent.DroppingItem -= EventHandlers.OnItemDrop;
             PlayerEvent.Shot -= EventHandlers.OnPlayerShoot;
+            PlayerEvent.InteractingElevator -= EventHandlers.OnElevatorUsed;
+
         }
     }
 }
