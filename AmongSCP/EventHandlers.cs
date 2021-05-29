@@ -1,4 +1,5 @@
 ﻿using AmongSCP.Map;
+using Exiled.API.Enums;
 using Exiled.Events.EventArgs;
 using MEC;
 
@@ -9,18 +10,16 @@ namespace AmongSCP
     using System.Collections.Generic;
     using System.Linq;
 
-    public class EventHandlers
+    public static class EventHandlers
     {
-        private readonly AmongSCP _plugin;
+        internal static PlayerManager PlayerManager = new PlayerManager();
 
-        private readonly PlayerManager _playerManager = new PlayerManager();
-
-        public EventHandlers(AmongSCP plugin)
+        public static void Reset()
         {
-            _plugin = plugin;
+            PlayerManager = new PlayerManager();
         }
         
-        public void OnPickupItem(PickingUpItemEventArgs ev)
+        public static void OnPickupItem(PickingUpItemEventArgs ev)
         {
             if (ev.Pickup.gameObject.TryGetComponent<InteractableBehavior>(out var component))
             {
@@ -29,27 +28,32 @@ namespace AmongSCP
         }
 
         //TODO - Work on voting
-        private void StartVoting()
+        private static void StartVoting()
         {
             
         }
 
         //TODO - Figure out how to report bodies
-        public void ReportBody()
+        public static void ReportBody()
         {
             
         }
 
-        public void OnDied(DiedEventArgs ev)
+        public static void OnDying(DyingEventArgs ev)
         {
-           Log.Debug($"Someone died at: {ev.Target.Position.x}, {ev.Target.Position.y}, {ev.Target.Position.z}");
+            ev.Target.Items.Clear();
         }
 
-        public void OnRoleChanging(ChangingRoleEventArgs ev)
+        public static void OnDied(DiedEventArgs ev)
+        {
+            Log.Debug($"Someone died at: {ev.Target.Position.x}, {ev.Target.Position.y}, {ev.Target.Position.z}");
+        }
+
+        public static void OnRoleChanging(ChangingRoleEventArgs ev)
         {
             if (ev.NewRole == RoleType.Tutorial) return;
 
-            if ((ev.NewRole != _plugin.Config.CrewmateRole || _playerManager.Crewmates.Contains(ev.Player)) && (ev.NewRole != _plugin.Config.ImposterRole || _playerManager.Imposters.Contains(ev.Player))) return;
+            if ((ev.NewRole != AmongSCP.Singleton.Config.CrewmateRole || PlayerManager.Crewmates.Contains(ev.Player)) && (ev.NewRole != AmongSCP.Singleton.Config.ImposterRole || PlayerManager.Imposters.Contains(ev.Player))) return;
 
             ev.IsEscaped = false;
             ev.NewRole = ev.Player.Role;
@@ -59,67 +63,90 @@ namespace AmongSCP
             ev.Items.AddRange(ev.Player.Items.Select(item => item.id));
         }
         
-        public void OnGameStart()
+        public static void OnGameStart()
         {
             Timing.CallDelayed(.2f, () =>
             {
-                _playerManager.UpdateQueueNoWait();
+                PlayerManager.UpdateQueueNoWait();
 
-                var players = _playerManager.PickPlayers(_plugin.Config.MaxPlayers);
+                var players = PlayerManager.PickPlayers(AmongSCP.Singleton.Config.MaxPlayers);
 
-                _playerManager.ClearQueued();
+                PlayerManager.ClearQueued();
 
                 players.ShuffleList();
                 
                 Log.Info(players);
                 Log.Info(players.Length);
                 
-                _playerManager.Crewmates.Clear();
-                _playerManager.Imposters.Clear();
+                PlayerManager.Crewmates.Clear();
+                PlayerManager.Imposters.Clear();
 
                 for (var i = 0; i < players.Length; i++)
                 {
-                    if (i % 5 < _plugin.Config.ImposterRatio)
+                    if (i % 5 < AmongSCP.Singleton.Config.ImposterRatio)
                     {
-                        players[i].SetRole(_plugin.Config.ImposterRole);
-                        _playerManager.Imposters.Add(players[i]);
+                        players[i].SetRole(AmongSCP.Singleton.Config.ImposterRole);
+                        PlayerManager.Imposters.Add(players[i]);
                     }
                     else
                     {
-                        players[i].SetRole(_plugin.Config.CrewmateRole);
-                        _playerManager.Crewmates.Add(players[i]);
+                        players[i].SetRole(AmongSCP.Singleton.Config.CrewmateRole);
+                        PlayerManager.Crewmates.Add(players[i]);
                     }
                 }
 
                 Timing.CallDelayed(.1f, () =>
                 {
-                    foreach (var imposter in _playerManager.Imposters)
+                    foreach (var imposter in PlayerManager.Imposters)
                     {
-                        ChangeOutfit(imposter, _plugin.Config.CrewmateRole);
+                        imposter.Ammo[(int) AmmoType.Nato9] = 999;
+                        imposter.Inventory.AddNewItem(ItemType.GunUSP);
+
+                        ChangeOutfit(imposter, AmongSCP.Singleton.Config.CrewmateRole);
                     }
                 });
             });
         }
 
-        public void OnJoin(VerifiedEventArgs ev)
+        public static void OnJoin(VerifiedEventArgs ev)
         {
             if (!RoundSummary.RoundInProgress()) return;
 
-            _playerManager.UpdateQueue();
+            PlayerManager.UpdateQueue();
         }
 
-        public void OnLeave(LeftEventArgs ev)
+        public static void OnLeave(LeftEventArgs ev)
         {
             if (!RoundSummary.RoundInProgress()) return;
 
-            _playerManager.UpdateQueue();
+            PlayerManager.UpdateQueue();
         }
 
-        private void ChangeOutfit(Player ply, RoleType type)
+        public static void OnItemDrop(DroppingItemEventArgs ev)
+        {
+            if (!PlayerManager.Imposters.Contains(ev.Player) || ev.Item.id != ItemType.GunUSP) return;
+            
+            ev.IsAllowed = false;
+        }
+
+        public static void OnPlayerShoot(ShotEventArgs ev)
+        {
+            //Anything > HEAD is non-player.
+            if (!PlayerManager.Imposters.Contains(ev.Shooter) || ev.HitboxTypeEnum > HitBoxType.HEAD)
+            {
+                ev.Damage = 0;
+                ev.CanHurt = false;
+                return;
+            }
+
+            ev.Damage = 200f;
+        }
+
+        private static void ChangeOutfit(Player ply, RoleType type)
         {
             foreach (var target in Player.List)
             {
-                if(!_playerManager.Imposters.Contains(target))
+                if(!PlayerManager.Imposters.Contains(target))
                 {
                     MirrorExtensions.SendFakeSyncVar(target, ply.ReferenceHub.networkIdentity, typeof(CharacterClassManager), nameof(CharacterClassManager.NetworkCurClass), (sbyte)type);
                 }

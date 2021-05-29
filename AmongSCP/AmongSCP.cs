@@ -1,4 +1,6 @@
-﻿namespace AmongSCP
+﻿using HarmonyLib;
+
+namespace AmongSCP
 {
     using System;
     using Exiled.API.Enums;
@@ -15,13 +17,18 @@
         public override Version Version { get; } = new Version(1, 0, 0);
         public override PluginPriority Priority { get; } = PluginPriority.First;
 
-        private EventHandlers _eventHandlers;
+        public static AmongSCP Singleton;
+        
+        private Harmony _harmony;
 
         public override void OnEnabled()
         {
-            _eventHandlers = new EventHandlers(this);
+            Singleton = this;
          
             RegisterEvents();
+
+            _harmony = new Harmony("AmongSCP");
+            _harmony.PatchAll();
             
             base.OnEnabled();
         }
@@ -30,31 +37,42 @@
         {
             UnRegisterEvents();
             
-            _eventHandlers = null;
+            _harmony.UnpatchAll();
+            _harmony = null;
+
+            EventHandlers.Reset();
+
+            Singleton = null;
 
             base.OnDisabled();
         }
 
         private void RegisterEvents()
         {
-            ServerEvent.RoundStarted += _eventHandlers.OnGameStart;
+            ServerEvent.RoundStarted += EventHandlers.OnGameStart;
 
-            PlayerEvent.Died += _eventHandlers.OnDied;
-            PlayerEvent.PickingUpItem += _eventHandlers.OnPickupItem;
-            PlayerEvent.Verified += _eventHandlers.OnJoin;
-            PlayerEvent.Left += _eventHandlers.OnLeave;
-            PlayerEvent.ChangingRole += _eventHandlers.OnRoleChanging;
+            PlayerEvent.Died += EventHandlers.OnDied;
+            PlayerEvent.PickingUpItem += EventHandlers.OnPickupItem;
+            PlayerEvent.Verified += EventHandlers.OnJoin;
+            PlayerEvent.Left += EventHandlers.OnLeave;
+            PlayerEvent.ChangingRole += EventHandlers.OnRoleChanging;
+            PlayerEvent.Dying += EventHandlers.OnDying;
+            PlayerEvent.DroppingItem += EventHandlers.OnItemDrop;
+            PlayerEvent.Shot += EventHandlers.OnPlayerShoot;
         }
 
         private void UnRegisterEvents()
         {
-            ServerEvent.RoundStarted -= _eventHandlers.OnGameStart;
+            ServerEvent.RoundStarted -= EventHandlers.OnGameStart;
             
-            PlayerEvent.Died -= _eventHandlers.OnDied;
-            PlayerEvent.PickingUpItem -= _eventHandlers.OnPickupItem;
-            PlayerEvent.Verified -= _eventHandlers.OnJoin;
-            PlayerEvent.Left -= _eventHandlers.OnLeave;
-            PlayerEvent.ChangingRole -= _eventHandlers.OnRoleChanging;
+            PlayerEvent.Died -= EventHandlers.OnDied;
+            PlayerEvent.PickingUpItem -= EventHandlers.OnPickupItem;
+            PlayerEvent.Verified -= EventHandlers.OnJoin;
+            PlayerEvent.Left -= EventHandlers.OnLeave;
+            PlayerEvent.ChangingRole -= EventHandlers.OnRoleChanging;
+            PlayerEvent.Dying -= EventHandlers.OnDying;
+            PlayerEvent.DroppingItem -= EventHandlers.OnItemDrop;
+            PlayerEvent.Shot -= EventHandlers.OnPlayerShoot;
         }
     }
 }
