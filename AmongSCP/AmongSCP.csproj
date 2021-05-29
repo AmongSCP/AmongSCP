@@ -100,10 +100,13 @@
     <Compile Include="EventHandlers.cs" />
     <Compile Include="Map\Interactable.cs" />
     <Compile Include="Map\InteractableBehavior.cs" />
+    <Compile Include="Map\Interactables\EmergencyMeetingInteractable.cs" />
+    <Compile Include="Map\ItemData.cs" />
     <Compile Include="Patches\SyncCurItemPatch.cs" />
     <Compile Include="Patches\SyncCurItemUniqPatch.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PlayerManager.cs" />
+    <Compile Include="Util.cs" />
     <Compile Include="Venting.cs" />
   </ItemGroup>
   <ItemGroup>

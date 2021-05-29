@@ -13,7 +13,9 @@ namespace AmongSCP
         
         public List<Player> Imposters = new List<Player>();
         public List<Player> Crewmates = new List<Player>();
-        public Dictionary<Player, Vector3> DeadPlayers = new Dictionary<Player, Vector3>();
+
+        public List<Player> CalledEmergencyMeeting = new List<Player>();
+        //public Dictionary<Player, Vector3> DeadPlayers = new Dictionary<Player, Vector3>();
 
         public void UpdateQueue()
         {
@@ -32,25 +34,19 @@ namespace AmongSCP
                 _players.Add(player);
             }
 
-            foreach (var player in _players.ToList())
+            UpdateList(_players);
+            UpdateList(Imposters);
+            UpdateList(Crewmates);
+            UpdateList(CalledEmergencyMeeting);
+        }
+
+        private void UpdateList(ICollection<Player> list)
+        {
+            foreach (var player in list.ToList())
             {
                 if (player != null && Player.List.Contains(player)) continue;
 
-                _players.Remove(player);
-            }
-            
-            foreach (var player in Imposters.ToList())
-            {
-                if (player != null && Player.List.Contains(player)) continue;
-
-                Imposters.Remove(player);
-            }
-            
-            foreach (var player in Crewmates.ToList())
-            {
-                if (player != null && Player.List.Contains(player)) continue;
-
-                Crewmates.Remove(player);
+                list.Remove(player);
             }
         }
 
