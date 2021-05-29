@@ -22,6 +22,8 @@ namespace AmongSCP
 
         private static Vector3 _votingPosition = new Vector3();
         
+        private static bool _starting = false;
+        
         public static void Reset() 
         {
             PlayerManager = new PlayerManager();
@@ -69,7 +71,8 @@ namespace AmongSCP
         {
             if (ev.NewRole == RoleType.Tutorial) return;
 
-            if ((ev.NewRole != AmongSCP.Singleton.Config.CrewmateRole || PlayerManager.Crewmates.Contains(ev.Player)) && (ev.NewRole != AmongSCP.Singleton.Config.ImposterRole || PlayerManager.Imposters.Contains(ev.Player))) return;
+            //if newrole == crewmate && player is crewmate OR newrole == imposter && player is imposter, return
+            if ((ev.NewRole == AmongSCP.Singleton.Config.CrewmateRole && PlayerManager.Crewmates.Contains(ev.Player)) || (ev.NewRole == AmongSCP.Singleton.Config.ImposterRole && PlayerManager.Imposters.Contains(ev.Player))) return;
 
             ev.IsEscaped = false;
             ev.NewRole = ev.Player.Role;
@@ -78,10 +81,16 @@ namespace AmongSCP
             ev.Items.Clear();
             ev.Items.AddRange(ev.Player.Items.Select(item => item.id));
         }
-        
+
+        public static void OnRoundEnding(EndingRoundEventArgs ev)
+        {
+            if (_starting) ev.IsAllowed = false;
+        }
+
         public static void OnGameStart()
         {
-            Timing.CallDelayed(.2f, () =>
+            _starting = true;
+            Timing.CallDelayed(.1f, () =>
             {
                 SetUpDoors();
                 PlayerManager.UpdateQueueNoWait();
@@ -90,41 +99,41 @@ namespace AmongSCP
 
                 PlayerManager.ClearQueued();
 
-                players.ShuffleList();
-
-                PlayerManager.Crewmates.Clear();
-                PlayerManager.Imposters.Clear();
+                players.ShuffleListSecure();
 
                 for (var i = 0; i < players.Length; i++)
                 {
                     if (i % 5 < AmongSCP.Singleton.Config.ImposterRatio)
                     {
-                        players[i].SetRole(AmongSCP.Singleton.Config.ImposterRole);
                         PlayerManager.Imposters.Add(players[i]);
+                        players[i].Role = AmongSCP.Singleton.Config.ImposterRole;
                     }
                     else
                     {
-                        players[i].SetRole(AmongSCP.Singleton.Config.CrewmateRole);
                         PlayerManager.Crewmates.Add(players[i]);
+                        players[i].Role = AmongSCP.Singleton.Config.CrewmateRole;
                     }
                 }
 
                 Timing.CallDelayed(.1f, () =>
                 {
+                    foreach (var player in players)
+                    {
+                        ChangeOutfit(player, AmongSCP.Singleton.Config.CrewmateRole);
+                        player.Inventory.Clear();
+                    }
+                    
                     foreach (var imposter in PlayerManager.Imposters)
                     {
                         imposter.Ammo[(int) AmmoType.Nato9] = 999;
                         imposter.Inventory.AddNewItem(ItemType.GunUSP);
                     }
 
-                    foreach (var player in players)
-                    {
-                        ChangeOutfit(player, AmongSCP.Singleton.Config.CrewmateRole);
-                    }
-
                     Timing.CallDelayed(.1f, () =>
                     {
                         PointManager.SpawnPlayers(players);
+                        
+                        _starting = false;
                     });
                 });
             });
@@ -164,16 +173,15 @@ namespace AmongSCP
                 return;
             }
 
-            var seconds = 0;
+            var seconds = 31;
 
             if (PlayerManager.LastShot.TryGetValue(ev.Shooter, out var time))
             {
                 seconds = (int) DateTime.Now.Subtract(time).TotalSeconds;
             }
 
-            if (!(seconds < 30))
+            if (seconds > 30)
             {
-                PlayerManager.LastShot[ev.Shooter] = DateTime.Now;
                 return;
             }
 
@@ -190,8 +198,9 @@ namespace AmongSCP
                 ev.CanHurt = false;
                 return;
             }
-
+            
             ev.Damage = 200f;
+            PlayerManager.LastShot[ev.Shooter] = DateTime.Now;
         }
 
         public static void OnElevatorUsed(InteractingElevatorEventArgs ev)

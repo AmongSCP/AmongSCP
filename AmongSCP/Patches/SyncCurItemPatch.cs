@@ -1,4 +1,5 @@
-﻿using Exiled.API.Features;
+﻿using Exiled.API.Extensions;
+using Exiled.API.Features;
 using HarmonyLib;
 
 namespace AmongSCP.Patches
@@ -8,10 +9,6 @@ namespace AmongSCP.Patches
     {
         public static bool Prefix(Inventory __instance, ItemType value)
         {
-            var player = Player.Get(__instance.gameObject);
-
-            if (player == null || !EventHandlers.PlayerManager.Imposters.Contains(player)) return true;
-
             __instance._curItemSynced = value;
             return false;
         }

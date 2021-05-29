@@ -51,6 +51,7 @@ namespace AmongSCP
         {
             ServerEvent.RoundStarted += EventHandlers.OnGameStart;
             ServerEvent.RoundEnded += EventHandlers.OnGameEnd;
+            ServerEvent.EndingRound += EventHandlers.OnRoundEnding;
 
             PlayerEvent.Died += EventHandlers.OnDied;
             PlayerEvent.PickingUpItem += EventHandlers.OnPickupItem;
@@ -68,6 +69,7 @@ namespace AmongSCP
         {
             ServerEvent.RoundStarted -= EventHandlers.OnGameStart;
             ServerEvent.RoundEnded -= EventHandlers.OnGameEnd;
+            ServerEvent.EndingRound -= EventHandlers.OnRoundEnding;
             
             PlayerEvent.Died -= EventHandlers.OnDied;
             PlayerEvent.PickingUpItem -= EventHandlers.OnPickupItem;
