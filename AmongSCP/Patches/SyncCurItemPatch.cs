@@ -12,7 +12,7 @@ namespace AmongSCP.Patches
 
             if (player == null || !EventHandlers.PlayerManager.Imposters.Contains(player)) return true;
 
-            __instance.curItem = value;
+            __instance._curItemSynced = value;
             return false;
         }
     }
