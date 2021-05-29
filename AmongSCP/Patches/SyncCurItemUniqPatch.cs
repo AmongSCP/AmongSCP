@@ -1,4 +1,5 @@
-﻿using Exiled.API.Features;
+﻿using Exiled.API.Extensions;
+using Exiled.API.Features;
 using HarmonyLib;
 
 namespace AmongSCP.Patches
@@ -8,10 +9,10 @@ namespace AmongSCP.Patches
     {
         public static bool Prefix(Inventory __instance, int value)
         {
-            var player = Player.Get(__instance.gameObject);
-
-            if (player == null || !EventHandlers.PlayerManager.Imposters.Contains(player)) return true;
-
+            var player = Player.Get(__instance._hub);
+            
+            MirrorExtensions.SendFakeSyncVar(player, player.ReferenceHub.networkIdentity, typeof(Inventory), nameof(Inventory.NetworkitemUniq), value);
+            
             __instance.itemUniq = value;
             return false;
         }

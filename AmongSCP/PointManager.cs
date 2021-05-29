@@ -8,6 +8,7 @@ namespace AmongSCP
 {
     public static class PointManager
     {
+        //Seed 1378514975
         public static List<Vector3> PlayerSpawns = new List<Vector3>()
         {
             new Vector3(79.77f, -1005.87f, 40.07f)
