@@ -24,7 +24,6 @@ namespace AmongSCP
             {
                 players[i].Position = PlayerSpawns[i % PlayerSpawns.Count];
             }
-            ConfigFile.
         }
     }
 }
