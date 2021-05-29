@@ -207,6 +207,7 @@ namespace AmongSCP
         {
             if(ev.Lift.Type() != ElevatorType.Scp049 || ev.Lift.Type() != ElevatorType.Nuke)
             {
+                Log.Debug("OnElevatorUsed() invoked.");
                 ev.IsAllowed = false;
             }
         }
