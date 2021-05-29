@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Exiled.API.Features;
+using GameCore;
 using UnityEngine;
 
 namespace AmongSCP
@@ -9,7 +10,7 @@ namespace AmongSCP
     {
         public static List<Vector3> PlayerSpawns = new List<Vector3>()
         {
-
+            new Vector3(79.77f, -1005.87f, 40.07f)
         };
 
         public static Dictionary<Type, Vector3> InteractableSpawns = new Dictionary<Type, Vector3>()
@@ -23,6 +24,7 @@ namespace AmongSCP
             {
                 players[i].Position = PlayerSpawns[i % PlayerSpawns.Count];
             }
+            ConfigFile.
         }
     }
 }
