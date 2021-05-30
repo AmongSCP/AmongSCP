@@ -13,26 +13,53 @@ using UnityEngine;
 namespace AmongSCP
 {
     public class TaskManager
-    {
-        public int _totalTasks;
+    {   
+        private PlayerManager _playerManager;
 
-        public int _tasksCompleted;
+        public List<Task> CurrentTasks = new List<Task>();
 
-        public bool TasksComplete()
+        public Dictionary<Player, List<Task>> PlayerTasks = new Dictionary<Player, List<Task>>();
+
+        public TaskManager(PlayerManager playerManager)
         {
-            return _totalTasks == _tasksCompleted;
+            _playerManager = playerManager;
+            AddPossibleTasks();
         }
 
-        public void OnGeneratorEngaged()
-        {
-            _tasksCompleted++;
-        }
-
-        public void GenerateTasks()
+        public void AddPossibleTasks()
         {
 
         }
 
+        public void GenerateRandomTasks()
+        {
+            
+        }
 
+        public void SplitTasks()
+        {
+
+        }
+
+        public void ShowPlayerTasks(Player ply)
+        {
+
+        }
+
+        public List<bool> GetPlayerTasks(Player ply)
+        {
+            return new List<bool>();
+        }
+
+
+        public bool PlayerCompletedAllTasks(Player ply)
+        {
+            return false;
+        }
+
+        public bool AllTasksCompleted()
+        {
+            return false;
+        }
     }
 }

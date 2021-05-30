@@ -102,6 +102,7 @@
     <Compile Include="Map\InteractableBehavior.cs" />
     <Compile Include="Map\Interactables\EmergencyMeetingInteractable.cs" />
     <Compile Include="Map\ItemData.cs" />
+    <Compile Include="Map\Task.cs" />
     <Compile Include="Patches\SyncCurItemPatch.cs" />
     <Compile Include="Patches\SyncCurItemUniqPatch.cs" />
     <Compile Include="Patches\SyncPlayerClassPatch.cs" />
@@ -115,6 +116,7 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
          Other similar extension points exist, see Microsoft.Common.targets.
