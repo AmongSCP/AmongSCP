@@ -22,8 +22,6 @@ namespace AmongSCP
         
         private static bool _starting = false;
 
-        internal static TaskManager TaskManager = new TaskManager();
-
         public static void Reset() 
         {
             PlayerManager = new PlayerManager();
