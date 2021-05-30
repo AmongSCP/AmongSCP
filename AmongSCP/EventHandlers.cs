@@ -6,7 +6,6 @@ using MEC;
 using Exiled.API.Extensions;
 using Exiled.API.Features;
 using Interactables.Interobjects.DoorUtils;
-using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -22,7 +21,7 @@ namespace AmongSCP
         
         private static bool _starting = false;
 
-        internal static TaskManager TaskManager = new TaskManager();
+        //internal static TaskManager TaskManager = new TaskManager();
 
         public static void Reset() 
         {
@@ -48,11 +47,11 @@ namespace AmongSCP
         }
 
         //TODO - Figure out how to report bodies
-        public static void ReportBody(Player ply)
+        public static void ReportBody(Player reporter)
         {
             foreach (var pos in PlayerManager.DeadPositions)
             {
-                if (Vector3.Distance(ply.Position, pos) <= AmongSCP.Singleton.Config.MaxReportDistance)
+                if (Vector3.Distance(reporter.Position, pos) <= AmongSCP.Singleton.Config.MaxReportDistance)
                 {
                     Log.Debug("Player is close enough to report");
                     //StartVoting();
@@ -80,14 +79,13 @@ namespace AmongSCP
                     PlayerManager.EndGame();
                     return;
                 }
-            }
-           else
+           } else
            {
-                PlayerManager.DeadPositions.Add(ev.Target.Position);
-                if (PlayerManager.Crewmates.Count <= PlayerManager.Imposters.Count || PlayerManager.Imposters.Count == 0)
-                {
-                    PlayerManager.EndGame();
-                }
+               PlayerManager.DeadPositions.Add(ev.Target.Position);
+               if (PlayerManager.Crewmates.Count <= PlayerManager.Imposters.Count || PlayerManager.Imposters.Count == 0)
+               {
+                   PlayerManager.EndGame();
+               }
             }
 
         }
