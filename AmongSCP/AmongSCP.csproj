@@ -117,11 +117,11 @@
     <Compile Include="Patches\SyncCurItemPatch.cs" />
     <Compile Include="Patches\SyncCurItemUniqPatch.cs" />
     <Compile Include="Patches\SyncPlayerClassPatch.cs" />
-    <Compile Include="PlayerInfo.cs" />
+    <Compile Include="PlayerManager\PlayerInfo.cs" />
+    <Compile Include="PlayerManager\PlayerManager.cs" />
+    <Compile Include="PlayerManager\Role.cs" />
     <Compile Include="PointManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="PlayerManager.cs" />
-    <Compile Include="Role.cs" />
     <Compile Include="TaskEventHandlers.cs" />
     <Compile Include="TaskManager.cs" />
     <Compile Include="Util.cs" />

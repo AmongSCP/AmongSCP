@@ -4,9 +4,8 @@ using System.Linq;
 using Exiled.API.Features;
 using mattmc3.dotmore.Collections.Generic;
 using MEC;
-using UnityEngine;
 
-namespace AmongSCP
+namespace AmongSCP.PlayerManager
 {
     public class PlayerManager
     {
@@ -39,10 +38,7 @@ namespace AmongSCP
         
         public void UpdateQueue()
         {
-            Timing.CallDelayed(.1f, () =>
-            {
-                UpdateQueueNoWait();
-            });
+            Timing.CallDelayed(.1f, UpdateQueueNoWait);
         }
 
         public void UpdateQueueNoWait()

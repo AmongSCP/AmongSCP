@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace AmongSCP
+namespace AmongSCP.PlayerManager
 {
     public class PlayerInfo
     {

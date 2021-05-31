@@ -1,4 +1,4 @@
-﻿namespace AmongSCP
+﻿namespace AmongSCP.PlayerManager
 {
     public enum Role
     {

@@ -15,7 +15,7 @@ namespace AmongSCP
     {
         internal static TaskManager TaskManager = new TaskManager();
         
-        internal static PlayerManager PlayerManager = new PlayerManager();
+        internal static PlayerManager.PlayerManager PlayerManager = new PlayerManager.PlayerManager();
 
         public static bool ImposterCanKill;
 
@@ -26,7 +26,7 @@ namespace AmongSCP
         public static void Reset()
         {
             TaskManager = new TaskManager();
-            PlayerManager = new PlayerManager();
+            PlayerManager = new PlayerManager.PlayerManager();
         }
         
         public static void OnPickupItem(PickingUpItemEventArgs ev)

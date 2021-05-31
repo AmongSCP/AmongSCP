@@ -1,4 +1,5 @@
 ﻿using System;
+using AmongSCP.PlayerManager;
 using Exiled.API.Features;
 
 namespace AmongSCP
