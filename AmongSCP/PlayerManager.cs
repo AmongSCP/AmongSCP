@@ -11,8 +11,6 @@ namespace AmongSCP
     {
         private readonly List<Player> _players = new List<Player>();
 
-        private TaskManager _taskManager;
-        
         public readonly List<Player> Imposters = new List<Player>();
         
         public readonly List<Player> Crewmates = new List<Player>();
@@ -24,11 +22,6 @@ namespace AmongSCP
         public readonly List<Player> CalledEmergencyMeeting = new List<Player>();
 
         public readonly Dictionary<Player, DateTime> LastShot = new Dictionary<Player, DateTime>();
-
-        public PlayerManager(TaskManager taskManager)
-        {
-            _taskManager = taskManager;
-        }
 
         public void EndGame()
         {

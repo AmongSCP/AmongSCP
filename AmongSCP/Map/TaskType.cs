@@ -8,6 +8,8 @@ namespace AmongSCP.Map
 {
     public enum TaskType
     {
-        GENERATOR
+        GENERATOR,
+        
+        COMPUTER,
     }
 }

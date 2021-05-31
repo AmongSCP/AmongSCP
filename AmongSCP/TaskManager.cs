@@ -85,7 +85,6 @@ namespace AmongSCP
             {
                 return;
             }
-            
         }
     }
 }
