@@ -32,9 +32,9 @@ namespace AmongSCP
             Crewmates.Clear();
             AlivePlayers.Clear();
             
-            Imposters.AddRange(Players.Where(pair => pair.Value.Role == Role.IMPOSTER).Select(pair => pair.Key));
-            Crewmates.AddRange(Players.Where(pair => pair.Value.Role == Role.CREWMATE).Select(pair => pair.Key));
-            AlivePlayers.AddRange(Players.Where(pair => pair.Value.Role != Role.NONE && pair.Value.IsAlive).Select(pair => pair.Key));
+            Imposters.AddRange(Players.Where(pair => pair.Value.Role == Role.Imposter).Select(pair => pair.Key));
+            Crewmates.AddRange(Players.Where(pair => pair.Value.Role == Role.Crewmate).Select(pair => pair.Key));
+            AlivePlayers.AddRange(Players.Where(pair => pair.Value.Role != Role.None && pair.Value.IsAlive).Select(pair => pair.Key));
         }
         
         public void UpdateQueue()

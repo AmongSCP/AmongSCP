@@ -7,7 +7,7 @@ namespace AmongSCP
     {
         private readonly PlayerManager _manager;
 
-        private Role _role = Role.NONE;
+        private Role _role = Role.None;
         public Role Role
         {
             get => _role;

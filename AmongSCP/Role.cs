@@ -2,8 +2,8 @@
 {
     public enum Role
     {
-        NONE,
-        CREWMATE,
-        IMPOSTER
+        None,
+        Crewmate,
+        Imposter
     }
 }

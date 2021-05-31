@@ -21,15 +21,15 @@ namespace AmongSCP
 
         public void AddPossibleTasks()
         {
-            AddMultipleInstance(5, new Task("Load weapon Manager Tablet into Generator", TaskType.GENERATOR));
+            AddMultipleInstance(5, new Task("Load weapon Manager Tablet into Generator", TaskType.Generator));
         }
 
         public void SplitTasks()
         {
             PossibleTasks.ShuffleListSecure();
-            for(int i = 0; i < EventHandlers.PlayerManager.Crewmates.Count; i++)
+            for(var i = 0; i < EventHandlers.PlayerManager.Crewmates.Count; i++)
             {
-                var tasks = PossibleTasks.Skip(i * AmongSCP.Singleton.Config.CrewmateTasks).Take(AmongSCP.Singleton.Config.CrewmateTasks);
+                var tasks = PossibleTasks.Skip(i * AmongSCP.Singleton.Config.CrewmateTasks).Take(AmongSCP.Singleton.Config.CrewmateTasks).ToArray();
                 CurrentTasks.AddRange(tasks);
                 PlayerTasks[EventHandlers.PlayerManager.Crewmates[i]] = tasks.ToList();
             }
@@ -57,7 +57,7 @@ namespace AmongSCP
 
         public void AddMultipleInstance(int num, Task task)
         {
-            for(int i = 0; i < num; i++)
+            for(var i = 0; i < num; i++)
             {
                 PossibleTasks.Add(new Task(task.Name, task.TaskType));
             }
