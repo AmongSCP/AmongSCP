@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Exiled.API.Features;
+using mattmc3.dotmore.Collections.Generic;
 using MEC;
 using UnityEngine;
 
@@ -9,28 +10,31 @@ namespace AmongSCP
 {
     public class PlayerManager
     {
-        private readonly List<Player> _players = new List<Player>();
-        
         public readonly List<Player> Imposters = new List<Player>();
         
         public readonly List<Player> Crewmates = new List<Player>();
         
-        public readonly List<Player> DeadPlayers = new List<Player>();
-        
-        public readonly List<Vector3> DeadPositions = new List<Vector3>();
+        public readonly List<Player> AlivePlayers = new List<Player>();
 
-        public readonly List<Player> CalledEmergencyMeeting = new List<Player>();
-
-        public readonly Dictionary<Player, DateTime> LastShot = new Dictionary<Player, DateTime>();
+        public readonly OrderedDictionary<Player, PlayerInfo> Players = new OrderedDictionary<Player, PlayerInfo>();
 
         public void EndGame()
         {
             Imposters.Clear();
             Crewmates.Clear();
-            DeadPlayers.Clear();
-            DeadPositions.Clear();
-            CalledEmergencyMeeting.Clear();
-            LastShot.Clear();
+            AlivePlayers.Clear();
+            Players.Clear();
+        }
+
+        public void ReloadLists()
+        {
+            Imposters.Clear();
+            Crewmates.Clear();
+            AlivePlayers.Clear();
+            
+            Imposters.AddRange(Players.Where(pair => pair.Value.Role == Role.IMPOSTER).Select(pair => pair.Key));
+            Crewmates.AddRange(Players.Where(pair => pair.Value.Role == Role.CREWMATE).Select(pair => pair.Key));
+            AlivePlayers.AddRange(Players.Where(pair => pair.Value.Role != Role.NONE && pair.Value.IsAlive).Select(pair => pair.Key));
         }
         
         public void UpdateQueue()
@@ -43,44 +47,42 @@ namespace AmongSCP
 
         public void UpdateQueueNoWait()
         {
+            foreach (var player in Players.Keys.ToList())
+            {
+                if (player == null || Player.List.Contains(player)) continue;
+
+                Players.Remove(player);
+            }
+            
             foreach (var player in Player.List)
             {
-                if (_players.Contains(player)) continue;
+                if (Players.ContainsKey(player)) continue;
                     
-                _players.Add(player);
+                Players[player] = new PlayerInfo(this);
             }
-
-            UpdateList(_players);
-            UpdateList(Imposters);
-            UpdateList(Crewmates);
-            UpdateList(CalledEmergencyMeeting);
-        }
-
-        private void UpdateList(ICollection<Player> list)
-        {
-            foreach (var player in list.ToList())
-            {
-                if (player != null && Player.List.Contains(player)) continue;
-
-                list.Remove(player);
-            }
+            
+            ReloadLists();
         }
 
         public Player[] PickPlayers(int num)
         {
-            var count = Math.Min(_players.Count, num);
+            var count = Math.Min(Players.Count, num);
             
-            var output = _players.Take(count).ToArray();
-            _players.RemoveRange(0, count);
+            var output = Players.Take(count).ToArray();
 
-            return output;
+            for (var i = 0; i < count; i++)
+            {
+                Players.RemoveAt(0);
+            }
+
+            return output.Select(pair => pair.Key).ToArray();
         }
 
         public void ClearQueued()
         {
-            foreach (var player in _players)
+            foreach (var pair in Players)
             {
-                player.Role = RoleType.Spectator;
+                pair.Key.Role = RoleType.Spectator;
             }
         }
         

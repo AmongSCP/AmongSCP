@@ -49,16 +49,14 @@ namespace AmongSCP
         //TODO - Figure out how to report bodies
         public static void ReportBody(Player reporter)
         {
-            foreach (var pos in PlayerManager.DeadPositions)
+            /*foreach (var pos in PlayerManager.DeadPositions)
             {
                 if (Vector3.Distance(reporter.Position, pos) <= AmongSCP.Singleton.Config.MaxReportDistance)
                 {
                     Log.Debug("Player is close enough to report");
                     //StartVoting();
                 }
-            }
-            
-            
+            }*/
         }
 
         public static void OnDying(DyingEventArgs ev)
@@ -68,10 +66,9 @@ namespace AmongSCP
         
         public static void OnDied(DiedEventArgs ev)
         {
-            
             Log.Debug($"Someone died at: {ev.Target.Position.x}, {ev.Target.Position.y}, {ev.Target.Position.z}");
 
-           PlayerManager.DeadPlayers.Add(ev.Target);
+           /*PlayerManager.DeadPlayers.Add(ev.Target);
            if (PlayerManager.Imposters.Contains(ev.Target))
            {
                 if (PlayerManager.Crewmates.Count <= PlayerManager.Imposters.Count || PlayerManager.Imposters.Count == 0)
@@ -86,8 +83,7 @@ namespace AmongSCP
                {
                    PlayerManager.EndGame();
                }
-            }
-
+            }*/
         }
 
         public static void OnRoleChanging(ChangingRoleEventArgs ev)
@@ -196,12 +192,7 @@ namespace AmongSCP
                 return;
             }
 
-            var seconds = 31;
-
-            if (PlayerManager.LastShot.TryGetValue(ev.Shooter, out var time))
-            {
-                seconds = (int) DateTime.Now.Subtract(time).TotalSeconds;
-            }
+            var seconds = (int) DateTime.Now.Subtract(ev.Shooter.GetInfo().LastShot).TotalSeconds;;
 
             if (seconds > 30)
             {
@@ -223,7 +214,7 @@ namespace AmongSCP
             }
             
             ev.Damage = 200f;
-            PlayerManager.LastShot[ev.Shooter] = DateTime.Now;
+            ev.Shooter.GetInfo().LastShot = DateTime.Now;
         }
 
         public static void OnElevatorUsed(InteractingElevatorEventArgs ev)

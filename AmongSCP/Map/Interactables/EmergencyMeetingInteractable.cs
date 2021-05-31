@@ -8,13 +8,13 @@
         {
             _interactable = new Interactable(data, player =>
             {
-                if (EventHandlers.PlayerManager.CalledEmergencyMeeting.Contains(player))
+                if (player.GetInfo().CalledEmergencyMeeting)
                 {
                     player.ShowHint("You have already called an emergency meeting!");
                     return;
                 }
-                
-                EventHandlers.PlayerManager.CalledEmergencyMeeting.Add(player);
+
+                player.GetInfo().CalledEmergencyMeeting = true;
                 Util.CallEmergencyMeeting(player, player.Nickname + " has called an emergency meeting!");
             });
         }
