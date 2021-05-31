@@ -228,11 +228,10 @@ namespace AmongSCP
 
         public static void OnElevatorUsed(InteractingElevatorEventArgs ev)
         {
-            if(ev.Lift.Type() != ElevatorType.Scp049 || ev.Lift.Type() != ElevatorType.Nuke)
-            {
-                Log.Debug("OnElevatorUsed() invoked.");
-                ev.IsAllowed = false;
-            }
+            if (ev.Lift.Type() == ElevatorType.Scp049 || ev.Lift.Type() == ElevatorType.Nuke) return;
+
+            Log.Debug("OnElevatorUsed() invoked.");
+            ev.IsAllowed = false;
         }
 
         private static void ChangeOutfit(Player ply, RoleType type)
