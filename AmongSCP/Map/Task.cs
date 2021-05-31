@@ -10,6 +10,12 @@ namespace AmongSCP.Map
     {
         public string Name;
 
-        public bool IsCompleted = false;
+        public TaskType TaskType;
+
+        public Task(string name, TaskType taskType)
+        {
+            Name = name;
+            TaskType = taskType;
+        }
     }
 }

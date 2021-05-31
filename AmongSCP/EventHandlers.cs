@@ -21,8 +21,6 @@ namespace AmongSCP
         
         private static bool _starting = false;
 
-        //internal static TaskManager TaskManager = new TaskManager();
-
         public static void Reset() 
         {
             PlayerManager = new PlayerManager();
@@ -71,22 +69,23 @@ namespace AmongSCP
             
             Log.Debug($"Someone died at: {ev.Target.Position.x}, {ev.Target.Position.y}, {ev.Target.Position.z}");
 
-           PlayerManager.DeadPlayers.Add(ev.Target);
-           if (PlayerManager.Imposters.Contains(ev.Target))
-           {
+            PlayerManager.DeadPlayers.Add(ev.Target);
+            PlayerManager.DeadPositions.Add(ev.Target.Position);
+            if (PlayerManager.Imposters.Contains(ev.Target))
+            {
                 if (PlayerManager.Crewmates.Count <= PlayerManager.Imposters.Count || PlayerManager.Imposters.Count == 0)
                 {
                     PlayerManager.EndGame();
                     return;
                 }
-           } else
-           {
-               PlayerManager.DeadPositions.Add(ev.Target.Position);
+            } 
+            else
+            {
                if (PlayerManager.Crewmates.Count <= PlayerManager.Imposters.Count || PlayerManager.Imposters.Count == 0)
                {
                    PlayerManager.EndGame();
                }
-            }
+             }
 
         }
 

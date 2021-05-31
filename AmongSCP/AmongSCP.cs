@@ -63,6 +63,8 @@ namespace AmongSCP
             PlayerEvent.Shot += EventHandlers.OnPlayerShoot;
             PlayerEvent.Shooting += EventHandlers.OnPlayerShooting;
             PlayerEvent.InteractingElevator += EventHandlers.OnElevatorUsed;
+            PlayerEvent.InsertingGeneratorTablet += TaskEventHandlers.OnInsertingGeneratorTabletEvent;
+            MapEvent.GeneratorActivated += TaskEventHandlers.HandleGeneratorEngaged;
         }
 
         private void UnRegisterEvents()
@@ -81,7 +83,8 @@ namespace AmongSCP
             PlayerEvent.Shot -= EventHandlers.OnPlayerShoot;
             PlayerEvent.Shooting -= EventHandlers.OnPlayerShooting;
             PlayerEvent.InteractingElevator -= EventHandlers.OnElevatorUsed;
-
+            PlayerEvent.InsertingGeneratorTablet += TaskEventHandlers.OnInsertingGeneratorTabletEvent;
+            MapEvent.GeneratorActivated -= TaskEventHandlers.HandleGeneratorEngaged;
         }
     }
 }

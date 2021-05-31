@@ -22,22 +22,25 @@ namespace AmongSCP
         public RoleType CrewmateRole { get; set; } = RoleType.NtfCommander;
 
         [Description("The number of emergncy meetings for each person.")]
-        public int EmergencyMeetings = 2;
+        public int EmergencyMeetings { get; set; } = 2;
 
         [Description("Item that when dropped will call an emergency meeting.")]
-        public ItemType EmergencyMeetingTrigger = ItemType.Disarmer;
+        public ItemType EmergencyMeetingTrigger { get; set; } = ItemType.Disarmer;
 
         [Description("Length of time a player can vent for")]
-        public float VentTime = 10;
+        public float VentTime { get; set; } = 10;
 
         [Description("Time after an imposter vents that they cannot kill")]
-        public float VentKillCooldown = 5;
+        public float VentKillCooldown { get; set; } = 5;
 
         //I think this should work?
         [Description("Location when someone calls a emergency meeting or voting starts")]
-        public Vector3 VotePosition = new Vector3(54, 1020, -45);
+        public Vector3 VotePosition { get; set; } = new Vector3(54, 1020, -45);
 
         [Description("The distance you have to be from a body to be able to trigger a report")]
-        public float MaxReportDistance = 2f;
+        public float MaxReportDistance { get; set; } = 2f;
+
+        [Description("Number of tasks each crewmate gets.")]
+        public int CrewmateTasks { get; set; } = 5;
     }
 }
