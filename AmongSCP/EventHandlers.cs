@@ -13,6 +13,8 @@ namespace AmongSCP
 {
     public static class EventHandlers
     {
+        internal static TaskManager TaskManager = new TaskManager();
+        
         internal static PlayerManager PlayerManager = new PlayerManager();
 
         public static bool ImposterCanKill;
@@ -21,10 +23,9 @@ namespace AmongSCP
         
         private static bool _starting = false;
 
-        //internal static TaskManager TaskManager = new TaskManager();
-
-        public static void Reset() 
+        public static void Reset()
         {
+            TaskManager = new TaskManager();
             PlayerManager = new PlayerManager();
         }
         
@@ -67,18 +68,22 @@ namespace AmongSCP
         public static void OnDied(DiedEventArgs ev)
         {
             Log.Debug($"Someone died at: {ev.Target.Position.x}, {ev.Target.Position.y}, {ev.Target.Position.z}");
-
+            
            /*PlayerManager.DeadPlayers.Add(ev.Target);
            if (PlayerManager.Imposters.Contains(ev.Target))
            {
+            PlayerManager.DeadPlayers.Add(ev.Target);
+            PlayerManager.DeadPositions.Add(ev.Target.Position);
+            if (PlayerManager.Imposters.Contains(ev.Target))
+            {
                 if (PlayerManager.Crewmates.Count <= PlayerManager.Imposters.Count || PlayerManager.Imposters.Count == 0)
                 {
                     PlayerManager.EndGame();
                     return;
                 }
-           } else
-           {
-               PlayerManager.DeadPositions.Add(ev.Target.Position);
+            } 
+            else
+            {
                if (PlayerManager.Crewmates.Count <= PlayerManager.Imposters.Count || PlayerManager.Imposters.Count == 0)
                {
                    PlayerManager.EndGame();
