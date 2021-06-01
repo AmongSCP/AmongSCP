@@ -187,6 +187,7 @@ namespace AmongSCP
 
         public static void OnGameEnd(RoundEndedEventArgs ev)
         {
+            TaskManager.EndGame();
             PlayerManager.EndGame();
         }
 

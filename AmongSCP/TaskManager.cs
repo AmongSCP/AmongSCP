@@ -8,17 +8,23 @@ namespace AmongSCP
 {
     public class TaskManager
     {
-        private List<Task> PossibleTasks = new List<Task>();
+        private readonly List<Task> _possibleTasks = new List<Task>();
 
-        public List<Task> CurrentTasks = new List<Task>();
+        public readonly List<Task> CurrentTasks = new List<Task>();
 
-        public Dictionary<Player, List<Task>> PlayerTasks = new Dictionary<Player, List<Task>>();
+        public readonly Dictionary<Player, List<Task>> PlayerTasks = new Dictionary<Player, List<Task>>();
 
         public int TasksCompleted;
 
         public TaskManager()
         {
             AddPossibleTasks();
+        }
+
+        public void EndGame()
+        {
+            CurrentTasks.Clear();
+            PlayerTasks.Clear();
         }
 
         public void AddPossibleTasks()
@@ -28,11 +34,11 @@ namespace AmongSCP
 
         public void SplitTasks()
         {
-            PossibleTasks.ShuffleListSecure();
+            _possibleTasks.ShuffleListSecure();
 
             for(var i = 0; i < EventHandlers.PlayerManager.Crewmates.Count; i++)
             {
-                var tasks = PossibleTasks.Skip(i * AmongSCP.Singleton.Config.CrewmateTasks).Take(AmongSCP.Singleton.Config.CrewmateTasks).ToArray();
+                var tasks = _possibleTasks.Skip(i * AmongSCP.Singleton.Config.CrewmateTasks).Take(AmongSCP.Singleton.Config.CrewmateTasks).Select(task => new Task(task.Name, task.TaskType)).ToArray();
                 CurrentTasks.AddRange(tasks);
                 PlayerTasks[EventHandlers.PlayerManager.Crewmates[i]] = tasks.ToList();
             }
@@ -62,7 +68,7 @@ namespace AmongSCP
         {
             for(var i = 0; i < num; i++)
             {
-                PossibleTasks.Add(new Task(task.Name, task.TaskType));
+                _possibleTasks.Add(new Task(task.Name, task.TaskType));
             }
         }
 
