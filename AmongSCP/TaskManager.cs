@@ -29,6 +29,7 @@ namespace AmongSCP
         public void SplitTasks()
         {
             PossibleTasks.ShuffleListSecure();
+
             for(var i = 0; i < EventHandlers.PlayerManager.Crewmates.Count; i++)
             {
                 var tasks = PossibleTasks.Skip(i * AmongSCP.Singleton.Config.CrewmateTasks).Take(AmongSCP.Singleton.Config.CrewmateTasks).ToArray();
@@ -67,13 +68,14 @@ namespace AmongSCP
 
         public Task GetPlayerTask(Player player, TaskType taskType)
         {
-            return PlayerTasks[player].FirstOrDefault(task => task.TaskType == taskType);
+            return PlayerTasks.TryGetValue(player, out var arr) ? arr.FirstOrDefault(task => task.TaskType == taskType) : null;
         }
 
         public void HandleTaskCompletion(Player player, Task task)
         {
             PlayerTasks[player].Remove(task);
             CurrentTasks.Remove(task);
+
             if(AllTasksCompleted())
             {
                 EventHandlers.PlayerManager.ClearImposters();
