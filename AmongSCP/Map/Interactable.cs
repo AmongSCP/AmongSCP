@@ -46,16 +46,13 @@ namespace AmongSCP.Map
                 return false;
             }
 
-            if (pickupOnInteract)
-            {
-                _interactable.Interactable = null;
-                Object.Destroy(_interactable);
-                _interactable = null;
+            if (!pickupOnInteract) return false;
 
-                return true;
-            }
+            _interactable.Interactable = null;
+            Object.Destroy(_interactable);
+            _interactable = null;
 
-            return false;
+            return true;
         }
     }
 }

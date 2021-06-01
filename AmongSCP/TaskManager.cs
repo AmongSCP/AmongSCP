@@ -7,34 +7,31 @@ using System.Linq;
 namespace AmongSCP
 {
     public class TaskManager
-    {   
-        private PlayerManager _playerManager;
-
+    {
         private List<Task> PossibleTasks = new List<Task>();
 
         public List<Task> CurrentTasks = new List<Task>();
 
         public Dictionary<Player, List<Task>> PlayerTasks = new Dictionary<Player, List<Task>>();
 
-        public TaskManager(PlayerManager playerManager)
+        public TaskManager()
         {
-            _playerManager = playerManager;
             AddPossibleTasks();
         }
 
         public void AddPossibleTasks()
         {
-            AddMultipleInstance(5, new Task("Load weapon Manager Tablet into Generator", TaskType.GENERATOR));
+            AddMultipleInstance(5, new Task("Load weapon Manager Tablet into Generator", TaskType.Generator));
         }
 
         public void SplitTasks()
         {
             PossibleTasks.ShuffleListSecure();
-            for(int i = 0; i < _playerManager.Crewmates.Count; i++)
+            for(var i = 0; i < EventHandlers.PlayerManager.Crewmates.Count; i++)
             {
-                var tasks = PossibleTasks.Skip(i * AmongSCP.Singleton.Config.CrewmateTasks).Take(AmongSCP.Singleton.Config.CrewmateTasks);
+                var tasks = PossibleTasks.Skip(i * AmongSCP.Singleton.Config.CrewmateTasks).Take(AmongSCP.Singleton.Config.CrewmateTasks).ToArray();
                 CurrentTasks.AddRange(tasks);
-                PlayerTasks[_playerManager.Crewmates[i]] = tasks.ToList();
+                PlayerTasks[EventHandlers.PlayerManager.Crewmates[i]] = tasks.ToList();
             }
         }
 
@@ -48,7 +45,6 @@ namespace AmongSCP
             return PlayerTasks[ply];
         }
 
-
         public bool PlayerCompletedAllTasks(Player ply)
         {
             return PlayerTasks[ply].Count == 0;
@@ -61,7 +57,7 @@ namespace AmongSCP
 
         public void AddMultipleInstance(int num, Task task)
         {
-            for(int i = 0; i < num; i++)
+            for(var i = 0; i < num; i++)
             {
                 PossibleTasks.Add(new Task(task.Name, task.TaskType));
             }
@@ -71,7 +67,6 @@ namespace AmongSCP
         {
             if(!PlayerTasks[player].Contains(task)) return false;
             return true;
-
         }
 
         public void HandleTaskCompletion(Player player, Task task)
