@@ -19,6 +19,7 @@ namespace AmongSCP
         public TaskManager()
         {
             AddPossibleTasks();
+            SplitTasks();
         }
 
         public void AddPossibleTasks()

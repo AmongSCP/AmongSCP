@@ -256,7 +256,7 @@ namespace AmongSCP
         }
 
         //Task Event Handlers
-        public static void OnTabletLoadedToGenerator(InsertingGeneratorTabletEventArgs ev)
+        public static void OnOpeningGenerator(UnlockingGeneratorEventArgs ev)
         {
             TaskManager.TryCompletingTask(ev.Player, TaskType.Generator);
         }

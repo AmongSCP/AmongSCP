@@ -63,6 +63,7 @@ namespace AmongSCP
             PlayerEvent.Shot += EventHandlers.OnPlayerShoot;
             PlayerEvent.Shooting += EventHandlers.OnPlayerShooting;
             PlayerEvent.InteractingElevator += EventHandlers.OnElevatorUsed;
+            PlayerEvent.UnlockingGenerator += EventHandlers.OnOpeningGenerator;
         }
 
         private void UnRegisterEvents()
@@ -81,6 +82,7 @@ namespace AmongSCP
             PlayerEvent.Shot -= EventHandlers.OnPlayerShoot;
             PlayerEvent.Shooting -= EventHandlers.OnPlayerShooting;
             PlayerEvent.InteractingElevator -= EventHandlers.OnElevatorUsed;
+            PlayerEvent.UnlockingGenerator -= EventHandlers.OnOpeningGenerator;
         }
     }
 }
