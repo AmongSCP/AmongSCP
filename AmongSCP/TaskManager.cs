@@ -81,11 +81,14 @@ namespace AmongSCP
             }
         }
 
-        public void TryCompletingTask(Player ply, TaskType taskType)
+        public bool TryCompletingTask(Player ply, TaskType taskType)
         {
             var task = GetPlayerTask(ply, taskType);
-            if (task == null) return;
+            if (task == null) return false;
+
             HandleTaskCompletion(ply, task);
+
+            return true;
         }
     }
 }
