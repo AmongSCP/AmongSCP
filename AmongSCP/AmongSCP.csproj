@@ -122,7 +122,6 @@
     <Compile Include="PlayerManager\Role.cs" />
     <Compile Include="PointManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TaskEventHandlers.cs" />
     <Compile Include="TaskManager.cs" />
     <Compile Include="Util.cs" />
     <Compile Include="Venting.cs" />

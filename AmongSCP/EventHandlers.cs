@@ -254,5 +254,11 @@ namespace AmongSCP
                 door.ServerChangeLock(DoorLockReason.SpecialDoorFeature, true);
             }
         }
+
+        //Task Event Handlers
+        public static void OnTabletLoadedToGenerator(InsertingGeneratorTabletEventArgs ev)
+        {
+            TaskManager.TryCompletingTask(ev.Player, TaskType.Generator);
+        }
     }
 }

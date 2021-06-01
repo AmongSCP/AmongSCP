@@ -14,6 +14,8 @@ namespace AmongSCP
 
         public Dictionary<Player, List<Task>> PlayerTasks = new Dictionary<Player, List<Task>>();
 
+        public int TasksCompleted;
+
         public TaskManager()
         {
             AddPossibleTasks();
@@ -63,23 +65,26 @@ namespace AmongSCP
             }
         }
 
-        public bool PlayerCanCompleteTask(Player player, Task task)
+        public Task GetPlayerTask(Player player, TaskType taskType)
         {
-            if(!PlayerTasks[player].Contains(task)) return false;
-            return true;
+            return PlayerTasks[player].FirstOrDefault(task => task.TaskType == taskType);
         }
 
         public void HandleTaskCompletion(Player player, Task task)
         {
-            try
+            PlayerTasks[player].Remove(task);
+            CurrentTasks.Remove(task);
+            if(AllTasksCompleted())
             {
-                PlayerTasks[player].Remove(task);
-                CurrentTasks.Remove(task);
+                EventHandlers.PlayerManager.ClearImposters();
             }
-            catch (Exception e)
-            {
-                return;
-            }
+        }
+
+        public void TryCompletingTask(Player ply, TaskType taskType)
+        {
+            var task = GetPlayerTask(ply, taskType);
+            if (task == null) return;
+            HandleTaskCompletion(ply, task);
         }
     }
 }
