@@ -157,6 +157,7 @@ namespace AmongSCP
                     {
                         PointManager.SpawnPlayers(players);
                         
+                        TaskManager.SplitTasks();
                         _starting = false;
                     });
                 });
