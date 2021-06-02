@@ -85,6 +85,7 @@ namespace AmongSCP
             if(AllTasksCompleted())
             {
                 EventHandlers.PlayerManager.ClearImposters();
+                
             }
         }
 

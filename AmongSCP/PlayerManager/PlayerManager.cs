@@ -22,7 +22,6 @@ namespace AmongSCP.PlayerManager
             Imposters.Clear();
             Crewmates.Clear();
             AlivePlayers.Clear();
-            Players.Clear();
         }
 
         public void ReloadLists()
@@ -76,9 +75,10 @@ namespace AmongSCP.PlayerManager
 
         public void ClearQueued()
         {
-            foreach (var pair in Players)
+            foreach (var key in Players.Keys.ToList())
             {
-                pair.Key.Role = RoleType.Spectator;
+                key.Role = RoleType.Spectator;
+                Players[key] = new PlayerInfo(this);
             }
         }
         
