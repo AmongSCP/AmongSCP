@@ -184,7 +184,7 @@ namespace AmongSCP
             
             ev.IsAllowed = false;
         }
-
+    
         public static void OnGameEnd(RoundEndedEventArgs ev)
         {
             TaskManager.EndGame();
