@@ -35,7 +35,7 @@ namespace AmongSCP.PlayerManager
 
         public bool CalledEmergencyMeeting = false;
 
-        public DateTime LastShot = DateTime.Now.Subtract(TimeSpan.FromSeconds(30));
+        public DateTime LastShot = DateTime.MinValue;
 
         public PlayerInfo(PlayerManager manager)
         {

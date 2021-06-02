@@ -8,6 +8,7 @@ using Exiled.API.Features;
 using Interactables.Interobjects.DoorUtils;
 using System.Linq;
 using UnityEngine;
+using String = System.String;
 
 namespace AmongSCP
 {
@@ -93,7 +94,7 @@ namespace AmongSCP
 
         public static void OnRoleChanging(ChangingRoleEventArgs ev)
         {
-            if (ev.NewRole == RoleType.Tutorial) return;
+            if (ev.NewRole == RoleType.Tutorial || ev.NewRole == RoleType.Spectator) return;
 
             //if newrole == crewmate && player is crewmate OR newrole == imposter && player is imposter, return
             if ((ev.NewRole == AmongSCP.Singleton.Config.CrewmateRole && PlayerManager.Crewmates.Contains(ev.Player)) || (ev.NewRole == AmongSCP.Singleton.Config.ImposterRole && PlayerManager.Imposters.Contains(ev.Player))) return;
@@ -120,21 +121,23 @@ namespace AmongSCP
                 PlayerManager.UpdateQueueNoWait();
 
                 var players = PlayerManager.PickPlayers(AmongSCP.Singleton.Config.MaxPlayers);
+                players.ShuffleListSecure();
 
                 PlayerManager.ClearQueued();
 
-                players.ShuffleListSecure();
-
                 for (var i = 0; i < players.Length; i++)
                 {
+                    var info = players[i].GetInfo();
+                    info.IsAlive = true;
+                    
                     if (i % 5 < AmongSCP.Singleton.Config.ImposterRatio)
                     {
-                        PlayerManager.Imposters.Add(players[i]);
+                        info.Role = global::AmongSCP.PlayerManager.Role.Imposter;
                         players[i].Role = AmongSCP.Singleton.Config.ImposterRole;
                     }
                     else
                     {
-                        PlayerManager.Crewmates.Add(players[i]);
+                        info.Role = global::AmongSCP.PlayerManager.Role.Crewmate;
                         players[i].Role = AmongSCP.Singleton.Config.CrewmateRole;
                     }
                 }
@@ -156,7 +159,7 @@ namespace AmongSCP
                     Timing.CallDelayed(.1f, () =>
                     {
                         PointManager.SpawnPlayers(players);
-                        
+
                         TaskManager.SplitTasks();
                         _starting = false;
                     });
@@ -199,7 +202,8 @@ namespace AmongSCP
                 return;
             }
 
-            var seconds = (int) DateTime.Now.Subtract(ev.Shooter.GetInfo().LastShot).TotalSeconds;;
+            var lastShot = ev.Shooter.GetInfo().LastShot;
+            var seconds = lastShot == DateTime.MinValue ? 31 : (int) DateTime.Now.Subtract(lastShot).TotalSeconds;;
 
             if (seconds > 30)
             {
