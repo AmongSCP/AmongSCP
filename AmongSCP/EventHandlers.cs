@@ -45,28 +45,15 @@ namespace AmongSCP
         
         public static void OnDied(DiedEventArgs ev)
         {
-            Log.Debug($"Someone died at: {ev.Target.Position.x}, {ev.Target.Position.y}, {ev.Target.Position.z}");
+            Log.Debug($"{ev.Target} died at: {ev.Target.Position.x}, {ev.Target.Position.y}, {ev.Target.Position.z}. Role was {ev.Target.Role}");
+
+            var plyinfo = ev.Target.GetInfo();
+            plyinfo.IsAlive = false;
+
+            //TODO - I didnt see checks anywhere to check round end conditions but remove this if there is
+            if (PlayerManager.Crewmates.Count <= PlayerManager.Imposters.Count)
+                Round.ForceEnd();
             
-           /*PlayerManager.DeadPlayers.Add(ev.Target);
-           if (PlayerManager.Imposters.Contains(ev.Target))
-           {
-            PlayerManager.DeadPlayers.Add(ev.Target);
-            PlayerManager.DeadPositions.Add(ev.Target.Position);
-            if (PlayerManager.Imposters.Contains(ev.Target))
-            {
-                if (PlayerManager.Crewmates.Count <= PlayerManager.Imposters.Count || PlayerManager.Imposters.Count == 0)
-                {
-                    PlayerManager.EndGame();
-                    return;
-                }
-            } 
-            else
-            {
-               if (PlayerManager.Crewmates.Count <= PlayerManager.Imposters.Count || PlayerManager.Imposters.Count == 0)
-               {
-                   PlayerManager.EndGame();
-               }
-            }*/
         }
 
         public static void OnRoleChanging(ChangingRoleEventArgs ev)
