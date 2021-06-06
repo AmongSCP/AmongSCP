@@ -38,19 +38,6 @@ namespace AmongSCP
             }
         }
 
-        //TODO - Figure out how to report bodies
-        public static void ReportBody(Player reporter)
-        {
-            /*foreach (var pos in PlayerManager.DeadPositions)
-            {
-                if (Vector3.Distance(reporter.Position, pos) <= AmongSCP.Singleton.Config.MaxReportDistance)
-                {
-                    Log.Debug("Player is close enough to report");
-                    //StartVoting();
-                }
-            }*/
-        }
-
         public static void OnDying(DyingEventArgs ev)
         {
             ev.Target.Items.Clear();
