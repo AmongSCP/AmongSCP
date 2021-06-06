@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Exiled.API.Features;
 using UnityEngine;
 using MEC;
@@ -13,13 +14,12 @@ namespace AmongSCP
             Log.Debug("Emergency meeting invoked.");
             var meetingStarted = true;
             var meetingTime = AmongSCP.Singleton.Config.EmergencyTime;
-            
+
+            var votePos = AmongSCP.Singleton.Config.VotePosition.GetPositions();
+
             foreach (var ply in Player.List)
             {
-                ply.Position = new Vector3(
-                    AmongSCP.Singleton.Config.VotePosition.X,
-                    AmongSCP.Singleton.Config.VotePosition.Y, 
-                    AmongSCP.Singleton.Config.VotePosition.Z);
+                ply.Position = votePos;
             }
 
             while (meetingStarted)
@@ -27,10 +27,10 @@ namespace AmongSCP
                 Exiled.API.Features.Map.ShowHint($"Meeting ends in {meetingTime} seconds.", 1);
                 yield return Timing.WaitForSeconds(1f);
                 meetingTime -= 1;
-                if (meetingTime <= 1)
-                {
-                    meetingStarted = false;
-                }
+                if (meetingTime > 1) continue;
+                meetingStarted = false;
+                
+                PointManager.SpawnPlayers(EventHandlers.PlayerManager.AlivePlayers.ToArray());
 
             }
         }
