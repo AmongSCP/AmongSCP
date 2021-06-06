@@ -37,17 +37,6 @@ namespace AmongSCP
                 ev.IsAllowed = component.Interactable.OnInteract(ev.Player);
             }
         }
-        
-        //TODO - Work on voting
-        /*
-        private static void StartVoting()
-        {
-            _votingPosition = new Vector3(AmongSCP.Singleton.Config.VotePosition.x, AmongSCP.Singleton.Config.VotePosition.y, AmongSCP.Singleton.Config.VotePosition.z);
-            foreach (var ply in Player.List)
-            {
-                ply.Position = _votingPosition;
-            }
-        }*/
 
         //TODO - Figure out how to report bodies
         public static void ReportBody(Player reporter)
