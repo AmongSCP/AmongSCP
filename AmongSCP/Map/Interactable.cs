@@ -22,6 +22,16 @@ namespace AmongSCP.Map
             var gameObject = UnityEngine.Object.Instantiate<GameObject>(Server.Host.Inventory.pickupPrefab);
 
             gameObject.transform.localScale = data.scale;
+
+            if (!data.hasPhysics)
+            {
+                var rb = gameObject.GetComponent<Rigidbody>();
+                rb.useGravity = false;
+                rb.isKinematic = true;
+
+                var collider = gameObject.GetComponent<Collider>();
+                collider.enabled = false;
+            }
             
             NetworkServer.Spawn(gameObject);
             

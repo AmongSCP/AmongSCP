@@ -49,6 +49,7 @@ namespace AmongSCP
 
             var plyinfo = ev.Target.GetInfo();
             plyinfo.IsAlive = false;
+            plyinfo.Role = global::AmongSCP.PlayerManager.Role.None;
 
             //TODO - I didnt see checks anywhere to check round end conditions but remove this if there is
             if (PlayerManager.Crewmates.Count <= PlayerManager.Imposters.Count)
@@ -58,7 +59,14 @@ namespace AmongSCP
 
         public static void OnRoleChanging(ChangingRoleEventArgs ev)
         {
-            if (ev.NewRole == RoleType.Tutorial || ev.NewRole == RoleType.Spectator) return;
+            if (ev.NewRole == RoleType.Tutorial || ev.NewRole == RoleType.Spectator)
+            {
+                var plyinfo = ev.Player.GetInfo();
+                plyinfo.IsAlive = false;
+                plyinfo.Role = global::AmongSCP.PlayerManager.Role.None;
+
+                return;
+            }
 
             //if newrole == crewmate && player is crewmate OR newrole == imposter && player is imposter, return
             if ((ev.NewRole == AmongSCP.Singleton.Config.CrewmateRole && PlayerManager.Crewmates.Contains(ev.Player)) || (ev.NewRole == AmongSCP.Singleton.Config.ImposterRole && PlayerManager.Imposters.Contains(ev.Player))) return;

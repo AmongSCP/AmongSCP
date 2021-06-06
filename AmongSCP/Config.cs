@@ -44,5 +44,8 @@ namespace AmongSCP
 
         [Description("Emergency Meeting Time")]
         public int EmergencyTime = 30; 
+        
+        [Description("Body Reporting Time")]
+        public int BodyReportedMeetingTime = 30; 
     }
 }

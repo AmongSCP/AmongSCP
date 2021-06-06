@@ -10,10 +10,12 @@ namespace AmongSCP.PlayerManager
     public class PlayerManager
     {
         public readonly List<Player> Imposters = new List<Player>();
-        
+
         public readonly List<Player> Crewmates = new List<Player>();
-        
+
         public readonly List<Player> AlivePlayers = new List<Player>();
+
+        public readonly List<Player> DeadPlayers = new List<Player>();
 
         public readonly OrderedDictionary<Player, PlayerInfo> Players = new OrderedDictionary<Player, PlayerInfo>();
 
@@ -22,6 +24,7 @@ namespace AmongSCP.PlayerManager
             Imposters.Clear();
             Crewmates.Clear();
             AlivePlayers.Clear();
+            DeadPlayers.Clear();
         }
 
         public void ReloadLists()
@@ -29,10 +32,12 @@ namespace AmongSCP.PlayerManager
             Imposters.Clear();
             Crewmates.Clear();
             AlivePlayers.Clear();
+            DeadPlayers.Clear();
             
             Imposters.AddRange(Players.Where(pair => pair.Value.Role == Role.Imposter).Select(pair => pair.Key));
             Crewmates.AddRange(Players.Where(pair => pair.Value.Role == Role.Crewmate).Select(pair => pair.Key));
             AlivePlayers.AddRange(Players.Where(pair => pair.Value.Role != Role.None && pair.Value.IsAlive).Select(pair => pair.Key));
+            DeadPlayers.AddRange(Players.Where(pair => !(pair.Value.Role != Role.None && pair.Value.IsAlive)).Select(pair => pair.Key));
         }
         
         public void UpdateQueue()
