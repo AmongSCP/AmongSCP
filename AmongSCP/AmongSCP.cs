@@ -16,6 +16,7 @@ namespace AmongSCP
         public override string Name { get; } = "AmongSCP";
         public override Version Version { get; } = new Version(1, 0, 0);
         public override PluginPriority Priority { get; } = PluginPriority.First;
+        public override string Prefix { get; } = "among_scp";
 
         public static AmongSCP Singleton;
         
