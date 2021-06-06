@@ -110,6 +110,7 @@
     <Compile Include="Extensions.cs" />
     <Compile Include="Map\Interactable.cs" />
     <Compile Include="Map\InteractableBehavior.cs" />
+    <Compile Include="Map\Interactables\DeadBodyInteractable.cs" />
     <Compile Include="Map\Interactables\EmergencyMeetingInteractable.cs" />
     <Compile Include="Map\ItemData.cs" />
     <Compile Include="Map\Task.cs" />
