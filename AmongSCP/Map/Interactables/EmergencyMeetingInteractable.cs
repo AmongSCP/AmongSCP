@@ -1,4 +1,6 @@
-﻿namespace AmongSCP.Map.Interactables
+﻿using MEC;
+
+namespace AmongSCP.Map.Interactables
 {
     public class EmergencyMeetingInteractable
     {
@@ -15,7 +17,8 @@
                 }
 
                 player.GetInfo().CalledEmergencyMeeting = true;
-                Util.CallEmergencyMeeting(player, player.Nickname + " has called an emergency meeting!");
+                Timing.RunCoroutine(Util.CallEmergencyMeeting(player,
+                    player.Nickname + " has called an emergency meeting!"));
             });
         }
     }
