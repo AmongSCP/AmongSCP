@@ -16,7 +16,10 @@ namespace AmongSCP
             
             foreach (var ply in Player.List)
             {
-                ply.Position = AmongSCP.Singleton.Config.VotePosition; 
+                ply.Position = new Vector3(
+                    AmongSCP.Singleton.Config.VotePosition.X,
+                    AmongSCP.Singleton.Config.VotePosition.Y, 
+                    AmongSCP.Singleton.Config.VotePosition.Z);
             }
 
             while (meetingStarted)

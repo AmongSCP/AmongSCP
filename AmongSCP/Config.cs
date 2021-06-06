@@ -32,10 +32,9 @@ namespace AmongSCP
 
         [Description("Time after an imposter vents that they cannot kill")]
         public float VentKillCooldown { get; set; } = 5;
-
-        //I think this should work?
-        [Description("Location when someone calls a emergency meeting or voting starts")]
-        public Vector3 VotePosition { get; set; } = new Vector3(54, 1020, -45);
+        
+        [Description("Location when someone calls a emergency meeting or voting starts. Tutorial tower position is 54, 1020, -45 ")]
+        public Position VotePosition { get; set; } = new Position();
 
         [Description("The distance you have to be from a body to be able to trigger a report")]
         public float MaxReportDistance { get; set; } = 2f;
