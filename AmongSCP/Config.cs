@@ -42,5 +42,8 @@ namespace AmongSCP
 
         [Description("Number of tasks each crewmate gets.")]
         public int CrewmateTasks { get; set; } = 5;
+
+        [Description("Emergency Meeting Time")]
+        public int Time = 30; 
     }
 }

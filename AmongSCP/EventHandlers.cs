@@ -18,9 +18,9 @@ namespace AmongSCP
         
         internal static PlayerManager.PlayerManager PlayerManager = new PlayerManager.PlayerManager();
 
-        public static bool ImposterCanKill;
+        internal static SpawnInteractables SpawnInteractables;
 
-        private static Vector3 _votingPosition = new Vector3();
+        public static bool ImposterCanKill;
         
         private static bool _starting = false;
 
@@ -39,6 +39,7 @@ namespace AmongSCP
         }
         
         //TODO - Work on voting
+        /*
         private static void StartVoting()
         {
             _votingPosition = new Vector3(AmongSCP.Singleton.Config.VotePosition.x, AmongSCP.Singleton.Config.VotePosition.y, AmongSCP.Singleton.Config.VotePosition.z);
@@ -46,7 +47,7 @@ namespace AmongSCP
             {
                 ply.Position = _votingPosition;
             }
-        }
+        }*/
 
         //TODO - Figure out how to report bodies
         public static void ReportBody(Player reporter)
@@ -118,6 +119,7 @@ namespace AmongSCP
             Timing.CallDelayed(.1f, () =>
             {
                 SetUpDoors();
+                SpawnInteractables = new SpawnInteractables();
                 PlayerManager.UpdateQueueNoWait();
 
                 var players = PlayerManager.PickPlayers(AmongSCP.Singleton.Config.MaxPlayers);
