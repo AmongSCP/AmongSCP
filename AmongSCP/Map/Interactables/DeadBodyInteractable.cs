@@ -22,7 +22,7 @@ namespace AmongSCP.Map.Interactables
 
             _interactable = new Interactable(deadBodyItemData, player =>
             {
-                Timing.RunCoroutine(Util.CallEmergencyMeeting(player, player.Nickname + " has reported the body of" + name));
+                Timing.RunCoroutine(Util.CallEmergencyMeeting(player, player.Nickname + " has reported the body of" + name + "!", true));
             }, true);
         }
     }

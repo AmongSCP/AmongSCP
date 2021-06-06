@@ -17,8 +17,7 @@ namespace AmongSCP.Map.Interactables
                 }
 
                 player.GetInfo().CalledEmergencyMeeting = true;
-                Timing.RunCoroutine(Util.CallEmergencyMeeting(player,
-                    player.Nickname + " has called an emergency meeting!"));
+                Timing.RunCoroutine(Util.CallEmergencyMeeting(player, player.Nickname + " has called an emergency meeting!", false));
             });
         }
     }

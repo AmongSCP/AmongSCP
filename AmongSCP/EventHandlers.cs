@@ -54,7 +54,6 @@ namespace AmongSCP
             //TODO - I didnt see checks anywhere to check round end conditions but remove this if there is
             if (PlayerManager.Crewmates.Count <= PlayerManager.Imposters.Count)
                 Round.ForceEnd();
-            
         }
 
         public static void OnRagdollSpawn(SpawningRagdollEventArgs ev)
@@ -183,7 +182,7 @@ namespace AmongSCP
             }
 
             var lastShot = ev.Shooter.GetInfo().LastShot;
-            var seconds = lastShot == DateTime.MinValue ? 31 : (int) DateTime.Now.Subtract(lastShot).TotalSeconds;;
+            var seconds = lastShot == DateTime.MinValue ? 31 : (int) DateTime.Now.Subtract(lastShot).TotalSeconds;
 
             if (seconds > 30)
             {
