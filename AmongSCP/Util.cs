@@ -33,7 +33,9 @@ namespace AmongSCP
                     //$" \n Dead Players: {EventHandlers.PlayerManager.DeadPlayer.Count}", 1);
                     
                 yield return Timing.WaitForSeconds(1f);
+                
                 meetingTime -= 1;
+                
                 if (meetingTime >= 1) continue;
                 meetingStarted = false;
                 
@@ -67,13 +69,15 @@ namespace AmongSCP
                 //$" \n Dead Players: {EventHandlers.PlayerManager.DeadPlayer.Count}", 1);
 
                 yield return Timing.WaitForSeconds(1f);
+                
                 meetingTime -= 1;
+                
                 if (meetingTime >= 1) continue;
+                
                 meetingStarted = false;
+                
+                PointManager.SpawnPlayers(EventHandlers.PlayerManager.AlivePlayers.ToArray());
             }
-
-            PointManager.SpawnPlayers(EventHandlers.PlayerManager.AlivePlayers.ToArray());
-
         }
     }
 }
