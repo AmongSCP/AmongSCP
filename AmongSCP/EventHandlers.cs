@@ -57,6 +57,13 @@ namespace AmongSCP
             
         }
 
+        public static void OnRagdollSpawn(SpawningRagdollEventArgs ev)
+        {
+            if (ev.Owner?.Nickname == null) return;
+
+            SpawnInteractables.SpawnDeadBodyInteractable(ev.Position, ev.Owner.Nickname);
+        }
+
         public static void OnRoleChanging(ChangingRoleEventArgs ev)
         {
             if (ev.NewRole == RoleType.Tutorial || ev.NewRole == RoleType.Spectator)

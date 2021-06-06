@@ -13,23 +13,16 @@ namespace AmongSCP.Map.Interactables
     {
         private Interactable _interactable;
 
-        private Ragdoll _deadBody;
-
-        private String _name;
-
-        public DeadBodyInteractable(Ragdoll deadBody)
+        public DeadBodyInteractable(Vector3 pos, string name)
         {
-            _deadBody = deadBody;
-            _name = deadBody.owner.Nick;
-
-            Vector3 deadBodyPosition = deadBody.transform.position;
+            var deadBodyPosition = pos;
             deadBodyPosition.y += 1;
 
-            ItemData deadBodyItemData = new ItemData(ItemType.SCP018, deadBodyPosition, Quaternion.identity, new Vector3(2, 2, 2));
+            var deadBodyItemData = new ItemData(ItemType.SCP018, deadBodyPosition, Quaternion.identity, new Vector3(2, 2, 2));
 
             _interactable = new Interactable(deadBodyItemData, player =>
             {
-                Timing.RunCoroutine(Util.CallEmergencyMeeting(player, player.Nickname + " has reported the body of" + _name));
+                Timing.RunCoroutine(Util.CallEmergencyMeeting(player, player.Nickname + " has reported the body of" + name));
             }, true);
         }
     }

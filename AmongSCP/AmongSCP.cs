@@ -64,6 +64,7 @@ namespace AmongSCP
             PlayerEvent.Shooting += EventHandlers.OnPlayerShooting;
             PlayerEvent.InteractingElevator += EventHandlers.OnElevatorUsed;
             PlayerEvent.UnlockingGenerator += EventHandlers.OnOpeningGenerator;
+            PlayerEvent.SpawningRagdoll += EventHandlers.OnRagdollSpawn;
         }
 
         private void UnRegisterEvents()
@@ -83,6 +84,7 @@ namespace AmongSCP
             PlayerEvent.Shooting -= EventHandlers.OnPlayerShooting;
             PlayerEvent.InteractingElevator -= EventHandlers.OnElevatorUsed;
             PlayerEvent.UnlockingGenerator -= EventHandlers.OnOpeningGenerator;
+            PlayerEvent.SpawningRagdoll -= EventHandlers.OnRagdollSpawn;
         }
     }
 }

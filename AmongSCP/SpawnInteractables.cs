@@ -20,13 +20,13 @@ namespace AmongSCP
 
         public void SpawnEmergencyMeetingInteractable()
         {
-            ItemData emergencyInteractableData = new ItemData(ItemType.Flashlight, new Vector3(79.77f, -1005.87f, 40.07f), new Quaternion(0,0,0,0));
-            EmergencyMeetingInteractable emergencyInteractable = new EmergencyMeetingInteractable(emergencyInteractableData);
+            var emergencyInteractableData = new ItemData(ItemType.Flashlight, new Vector3(79.77f, -1005.87f, 40.07f), new Quaternion(0,0,0,0));
+            var emergencyInteractable = new EmergencyMeetingInteractable(emergencyInteractableData);
         }
 
-        public void SpawnDeadBodyInteractable(Ragdoll deadBody)
+        public void SpawnDeadBodyInteractable(Vector3 pos, string playerName)
         {
-            DeadBodyInteractable deadBodyInteractable = new DeadBodyInteractable(deadBody);
+            var deadBodyInteractable = new DeadBodyInteractable(pos, playerName);
         }
     }
 }
