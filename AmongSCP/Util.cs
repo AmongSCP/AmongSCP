@@ -38,7 +38,6 @@ namespace AmongSCP
                 meetingStarted = false;
                 
                 PointManager.SpawnPlayers(EventHandlers.PlayerManager.AlivePlayers.ToArray());
-
             }
         }
 
