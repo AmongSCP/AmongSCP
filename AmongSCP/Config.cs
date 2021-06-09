@@ -48,9 +48,12 @@ namespace AmongSCP
         public int CrewmateTasks { get; set; } = 5;
 
         [Description("The amount of time an emergency meeting lasts for.")]
-        public int EmergencyTime = 30; 
+        public int EmergencyTime { get; set; } = 30; 
         
         [Description("Body Reporting Time")]
-        public int BodyReportedMeetingTime = 30; 
+        public int BodyReportedMeetingTime { get; set; } = 30;
+
+        [Description("Cooldown for turning out lights.")]
+        public int LightsCooldown { get; set; } = 30;
     }
 }

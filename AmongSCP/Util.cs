@@ -20,6 +20,8 @@ namespace AmongSCP
 
         public static bool meetingStarted = false;
 
+        public static bool CanTurnOffLights = true;
+
         public static IEnumerator<float> CallEmergencyMeeting(Player caller, string message, bool isBodyReport)
         {
             Log.Debug("Emergency meeting invoked.");
@@ -56,7 +58,20 @@ namespace AmongSCP
         {
             foreach (Room room in Exiled.API.Features.Map.Rooms)
             {
-                room.SetLightIntensity(intensity);
+                if(intensity!=0)
+                {
+                    room.SetLightIntensity(intensity);
+                }
+                else
+                {
+                    if(CanTurnOffLights)
+                    {
+                        room.SetLightIntensity(intensity);
+                        CanTurnOffLights = false;
+                        Timing.CallDelayed(AmongSCP.Singleton.Config.LightsCooldown, () => CanTurnOffLights = true);
+                    }
+                }
+                
             }
         }
 
@@ -84,6 +99,11 @@ namespace AmongSCP
                     MirrorExtensions.SendFakeSyncVar(target, ply.ReferenceHub.networkIdentity, typeof(CharacterClassManager), nameof(CharacterClassManager.NetworkCurClass), (sbyte)ply.Role);
                 }
             }
+        }
+
+        public static void RemoveAllItems()
+        {
+            //needs to be implemented
         }
     }
 }

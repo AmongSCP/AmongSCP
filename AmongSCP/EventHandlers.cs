@@ -96,6 +96,7 @@ namespace AmongSCP
             Timing.CallDelayed(.1f, () =>
             {
                 Util.SetUpDoors();
+                Util.RemoveAllItems();
                 SpawnInteractables = new SpawnInteractables();
                 PlayerManager.UpdateQueueNoWait();
 

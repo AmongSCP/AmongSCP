@@ -29,7 +29,7 @@ namespace AmongSCP
 
         public void AddPossibleTasks()
         {
-            AddMultipleInstance(5, new Task("Load weapon Manager Tablet into Generator", TaskType.Generator));
+            AddMultipleInstance(45, new Task("Load weapon Manager Tablet into Generator", TaskType.Generator));
         }
 
         public void SplitTasks()
