@@ -5,10 +5,7 @@ using Exiled.Events.EventArgs;
 using MEC;
 using Exiled.API.Extensions;
 using Exiled.API.Features;
-using Interactables.Interobjects.DoorUtils;
 using System.Linq;
-using UnityEngine;
-using String = System.String;
 
 namespace AmongSCP
 {
