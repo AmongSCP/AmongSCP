@@ -1,16 +1,8 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using Exiled.API.Features;
-using UnityEngine;
 using MEC;
-using System;
-using AmongSCP.Map;
-using Exiled.API.Enums;
-using Exiled.Events.EventArgs;
 using Exiled.API.Extensions;
 using Interactables.Interobjects.DoorUtils;
-using String = System.String;
 
 namespace AmongSCP
 {
@@ -41,15 +33,15 @@ namespace AmongSCP
                     $"Meeting ends in {meetingTime} seconds. " +
                     $"\n {VoteAmount} Votes " +
                     $"\n Alive Players: {EventHandlers.PlayerManager.AlivePlayers.Count}", 1);
-                    //$" \n Dead Players: {EventHandlers.PlayerManager.DeadPlayer.Count}", 1);
-                    
+                //$" \n Dead Players: {EventHandlers.PlayerManager.DeadPlayer.Count}", 1);
+
                 yield return Timing.WaitForSeconds(1f);
-                
+
                 meetingTime -= 1;
-                
+
                 if (meetingTime >= 1) continue;
                 meetingStarted = false;
-                
+
                 PointManager.SpawnPlayers(EventHandlers.PlayerManager.AlivePlayers.ToArray());
             }
         }
@@ -58,20 +50,20 @@ namespace AmongSCP
         {
             foreach (Room room in Exiled.API.Features.Map.Rooms)
             {
-                if(intensity!=0)
+                if (intensity != 0)
                 {
                     room.SetLightIntensity(intensity);
                 }
                 else
                 {
-                    if(CanTurnOffLights)
+                    if (CanTurnOffLights)
                     {
                         room.SetLightIntensity(intensity);
                         CanTurnOffLights = false;
                         Timing.CallDelayed(AmongSCP.Singleton.Config.LightsCooldown, () => CanTurnOffLights = true);
                     }
                 }
-                
+
             }
         }
 
