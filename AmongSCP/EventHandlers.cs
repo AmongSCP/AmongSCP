@@ -95,7 +95,7 @@ namespace AmongSCP
             _starting = true;
             Timing.CallDelayed(.1f, () =>
             {
-                SetUpDoors();
+                Util.SetUpDoors();
                 SpawnInteractables = new SpawnInteractables();
                 PlayerManager.UpdateQueueNoWait();
 
@@ -125,7 +125,7 @@ namespace AmongSCP
                 {
                     foreach (var player in players)
                     {
-                        ChangeOutfit(player, AmongSCP.Singleton.Config.CrewmateRole);
+                        Util.ChangeOutfit(player, AmongSCP.Singleton.Config.CrewmateRole, PlayerManager);
                         player.Inventory.Clear();
                     }
                     
@@ -163,8 +163,9 @@ namespace AmongSCP
         public static void OnItemDrop(DroppingItemEventArgs ev)
         {
             if (!PlayerManager.Imposters.Contains(ev.Player) || ev.Item.id != ItemType.GunUSP) return;
-            
+
             ev.IsAllowed = false;
+            
         }
     
         public static void OnGameEnd(RoundEndedEventArgs ev)
@@ -213,31 +214,6 @@ namespace AmongSCP
 
             Log.Debug("OnElevatorUsed() invoked.");
             ev.IsAllowed = false;
-        }
-
-        private static void ChangeOutfit(Player ply, RoleType type)
-        {
-            foreach (var target in Player.List)
-            {
-                //If the target is not an imposter, show the fake role, otherwise show the true role.
-                if(!PlayerManager.Imposters.Contains(target))
-                {
-                    MirrorExtensions.SendFakeSyncVar(target, ply.ReferenceHub.networkIdentity, typeof(CharacterClassManager), nameof(CharacterClassManager.NetworkCurClass), (sbyte) type);
-                }
-                else
-                {
-                    MirrorExtensions.SendFakeSyncVar(target, ply.ReferenceHub.networkIdentity, typeof(CharacterClassManager), nameof(CharacterClassManager.NetworkCurClass), (sbyte) ply.Role);
-                }
-            }
-        }
-
-        private static void SetUpDoors()
-        {
-            foreach(var door in Exiled.API.Features.Map.Doors)
-            {
-                door.NetworkTargetState = true;
-                door.ServerChangeLock(DoorLockReason.SpecialDoorFeature, true);
-            }
         }
 
         //Task Event Handlers

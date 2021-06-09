@@ -4,6 +4,13 @@ using System.Linq;
 using Exiled.API.Features;
 using UnityEngine;
 using MEC;
+using System;
+using AmongSCP.Map;
+using Exiled.API.Enums;
+using Exiled.Events.EventArgs;
+using Exiled.API.Extensions;
+using Interactables.Interobjects.DoorUtils;
+using String = System.String;
 
 namespace AmongSCP
 {
@@ -50,6 +57,32 @@ namespace AmongSCP
             foreach (Room room in Exiled.API.Features.Map.Rooms)
             {
                 room.SetLightIntensity(intensity);
+            }
+        }
+
+        public static void SetUpDoors()
+        {
+            foreach (var door in Exiled.API.Features.Map.Doors)
+            {
+                door.NetworkTargetState = true;
+                door.ServerChangeLock(DoorLockReason.SpecialDoorFeature, true);
+            }
+        }
+
+
+        public static void ChangeOutfit(Player ply, RoleType type, PlayerManager.PlayerManager playerManager)
+        {
+            foreach (var target in Player.List)
+            {
+                //If the target is not an imposter, show the fake role, otherwise show the true role.
+                if (!playerManager.Imposters.Contains(target))
+                {
+                    MirrorExtensions.SendFakeSyncVar(target, ply.ReferenceHub.networkIdentity, typeof(CharacterClassManager), nameof(CharacterClassManager.NetworkCurClass), (sbyte)type);
+                }
+                else
+                {
+                    MirrorExtensions.SendFakeSyncVar(target, ply.ReferenceHub.networkIdentity, typeof(CharacterClassManager), nameof(CharacterClassManager.NetworkCurClass), (sbyte)ply.Role);
+                }
             }
         }
     }
