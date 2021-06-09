@@ -5,7 +5,7 @@ namespace AmongSCP.Map.Interactables
     public class EmergencyMeetingInteractable
     {
         private Interactable _interactable;
-        
+
         public EmergencyMeetingInteractable(ItemData data)
         {
             _interactable = new Interactable(data, player =>

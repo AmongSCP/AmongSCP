@@ -1,6 +1,4 @@
-﻿using Exiled.API.Extensions;
-using Exiled.API.Features;
-using HarmonyLib;
+﻿using HarmonyLib;
 
 namespace AmongSCP.Patches
 {

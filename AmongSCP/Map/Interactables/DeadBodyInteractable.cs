@@ -1,11 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using MEC;
+﻿using MEC;
 using UnityEngine;
-using Exiled.API.Features;
 
 namespace AmongSCP.Map.Interactables
 {

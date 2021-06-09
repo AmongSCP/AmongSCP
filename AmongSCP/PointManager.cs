@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using Exiled.API.Features;
-using GameCore;
 using UnityEngine;
 
 namespace AmongSCP

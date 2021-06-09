@@ -1,10 +1,7 @@
 ﻿using AmongSCP.Map;
 using UnityEngine;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using AmongSCP.Map.Interactables;
 using Exiled.API.Features;
 

@@ -1,12 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Exiled.API.Enums;
-using Exiled.API.Features;
-using UnityEngine;
-using AmongSCP;
+﻿using UnityEngine;
 
 namespace AmongSCP.Map.Interactables
 {
@@ -25,20 +17,11 @@ namespace AmongSCP.Map.Interactables
             ItemData _interactableData = new ItemData(ItemType.Disarmer, _roomPosition, Quaternion.identity, new Vector3(2, 2, 2));
             _interactable = new Interactable(_interactableData, player =>
             {
-                HandleInteraction(player);
+                if(EventHandlers.PlayerManager.Imposters.Contains(player))
+                {
+                    player.Position = _nextRoomPosition;
+                }
             });
         }
-
-        public void HandleInteraction(Player player)
-        {
-            //add imposter check
-            if(EventHandlers.PlayerManager.Imposters.Contains(player))
-            {
-                player.Position = _nextRoomPosition;
-            }
-        }
-
-
-
     }
 }

@@ -1,7 +1,7 @@
-﻿namespace AmongSCP
+﻿using UnityEngine;
+
+namespace AmongSCP
 {
-    using UnityEngine;
-    
     public class Position
     {
         public float X { get; set; } = 54f;

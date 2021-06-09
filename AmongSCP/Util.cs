@@ -1,16 +1,8 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using Exiled.API.Features;
-using UnityEngine;
 using MEC;
-using System;
-using AmongSCP.Map;
-using Exiled.API.Enums;
-using Exiled.Events.EventArgs;
 using Exiled.API.Extensions;
 using Interactables.Interobjects.DoorUtils;
-using String = System.String;
 
 namespace AmongSCP
 {
