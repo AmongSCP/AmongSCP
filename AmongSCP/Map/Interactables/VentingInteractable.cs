@@ -30,6 +30,7 @@ namespace AmongSCP.Map.Interactables
 
         public void HandleInteraction(Player player)
         {
+            //add imposter check
             player.Position = _nextRoomPosition;
         }
 

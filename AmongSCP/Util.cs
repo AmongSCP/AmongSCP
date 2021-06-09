@@ -44,5 +44,13 @@ namespace AmongSCP
                 PointManager.SpawnPlayers(EventHandlers.PlayerManager.AlivePlayers.ToArray());
             }
         }
+
+        public static void ModifyLightIntensity(float intensity)
+        {
+            foreach (Room room in Exiled.API.Features.Map.Rooms)
+            {
+                room.SetLightIntensity(intensity);
+            }
+        }
     }
 }

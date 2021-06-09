@@ -108,7 +108,6 @@
     <Compile Include="DotMore\StringExtensions.cs" />
     <Compile Include="EventHandlers.cs" />
     <Compile Include="Extensions.cs" />
-    <Compile Include="ImposterUtil.cs" />
     <Compile Include="Map\Interactable.cs" />
     <Compile Include="Map\InteractableBehavior.cs" />
     <Compile Include="Map\Interactables\DeadBodyInteractable.cs" />
