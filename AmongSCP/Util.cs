@@ -10,11 +10,13 @@ namespace AmongSCP
     public static class Util
     {
         public static int VoteAmount;
-        
+
+        public static bool meetingStarted = false;
+
         public static IEnumerator<float> CallEmergencyMeeting(Player caller, string message, bool isBodyReport)
         {
             Log.Debug("Emergency meeting invoked.");
-            var meetingStarted = true;
+            meetingStarted = true;
             var meetingTime = isBodyReport ? AmongSCP.Singleton.Config.BodyReportedMeetingTime : AmongSCP.Singleton.Config.EmergencyTime;
 
             var votePos = AmongSCP.Singleton.Config.VotePosition.GetPositions();

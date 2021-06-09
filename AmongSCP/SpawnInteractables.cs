@@ -28,5 +28,15 @@ namespace AmongSCP
         {
             var deadBodyInteractable = new DeadBodyInteractable(pos, playerName);
         }
+
+        public void SpawnVentInteractable(Dictionary<Vector3,Vector3> cordinates)
+        {
+            for(int i = 0; i < cordinates.Count; i++)
+            {
+                var element = cordinates.ElementAt(i);
+                var vent = new VentingInteractable(element.Key, element.Value);
+            }
+            
+        }
     }
 }

@@ -108,10 +108,12 @@
     <Compile Include="DotMore\StringExtensions.cs" />
     <Compile Include="EventHandlers.cs" />
     <Compile Include="Extensions.cs" />
+    <Compile Include="ImposterUtil.cs" />
     <Compile Include="Map\Interactable.cs" />
     <Compile Include="Map\InteractableBehavior.cs" />
     <Compile Include="Map\Interactables\DeadBodyInteractable.cs" />
     <Compile Include="Map\Interactables\EmergencyMeetingInteractable.cs" />
+    <Compile Include="Map\Interactables\VentingInteractable.cs" />
     <Compile Include="Map\ItemData.cs" />
     <Compile Include="Map\Task.cs" />
     <Compile Include="Map\TaskType.cs" />
@@ -127,7 +129,6 @@
     <Compile Include="SpawnInteractables.cs" />
     <Compile Include="TaskManager.cs" />
     <Compile Include="Util.cs" />
-    <Compile Include="Venting.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

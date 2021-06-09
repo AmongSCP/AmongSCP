@@ -196,7 +196,7 @@ namespace AmongSCP
         public static void OnPlayerShoot(ShotEventArgs ev)
         {
             //Anything > HEAD is non-player.
-            if (!PlayerManager.Imposters.Contains(ev.Shooter) || ev.HitboxTypeEnum > HitBoxType.HEAD)
+            if (!PlayerManager.Imposters.Contains(ev.Shooter) || ev.HitboxTypeEnum > HitBoxType.HEAD || Util.meetingStarted)
             {
                 ev.Damage = 0;
                 ev.CanHurt = false;
