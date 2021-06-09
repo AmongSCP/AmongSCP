@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Exiled.API.Enums;
 using Exiled.API.Features;
 using UnityEngine;
+using AmongSCP;
 
 namespace AmongSCP.Map.Interactables
 {
@@ -31,7 +32,10 @@ namespace AmongSCP.Map.Interactables
         public void HandleInteraction(Player player)
         {
             //add imposter check
-            player.Position = _nextRoomPosition;
+            if(EventHandlers.PlayerManager.Imposters.Contains(player))
+            {
+                player.Position = _nextRoomPosition;
+            }
         }
 
 
