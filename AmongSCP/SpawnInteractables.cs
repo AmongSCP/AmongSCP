@@ -13,6 +13,7 @@ namespace AmongSCP
         {
             Log.Debug("no");
             SpawnEmergencyMeetingInteractable();
+            SpawnVentInteractables(PointManager.Vents);
         }
 
         public void SpawnEmergencyMeetingInteractable()
@@ -26,7 +27,7 @@ namespace AmongSCP
             var deadBodyInteractable = new DeadBodyInteractable(pos, playerName);
         }
 
-        public void SpawnVentInteractable(Dictionary<Vector3, Vector3> cordinates)
+        public void SpawnVentInteractables(Dictionary<Vector3, Vector3> cordinates)
         {
             for (int i = 0; i < cordinates.Count; i++)
             {
