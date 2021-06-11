@@ -48,23 +48,13 @@ namespace AmongSCP
 
         public static void ModifyLightIntensity(float intensity)
         {
+            if (!CanTurnOffLights && intensity == 0) return;
             foreach (Room room in Exiled.API.Features.Map.Rooms)
             {
-                if (intensity != 0)
-                {
-                    room.SetLightIntensity(intensity);
-                }
-                else
-                {
-                    if (CanTurnOffLights)
-                    {
-                        room.SetLightIntensity(intensity);
-                        CanTurnOffLights = false;
-                        Timing.CallDelayed(AmongSCP.Singleton.Config.LightsCooldown, () => CanTurnOffLights = true);
-                    }
-                }
-
+                room.SetLightIntensity(intensity);
             }
+            CanTurnOffLights = false;
+            Timing.CallDelayed(AmongSCP.Singleton.Config.LightsCooldown, () => CanTurnOffLights = true);
         }
 
         public static void SetUpDoors()

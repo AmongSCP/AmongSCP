@@ -131,6 +131,7 @@ namespace AmongSCP
                     {
                         imposter.Ammo[(int) AmmoType.Nato9] = 999;
                         imposter.Inventory.AddNewItem(ItemType.GunUSP);
+                        imposter.Inventory.AddNewItem(ItemType.GrenadeFlash);
                     }
 
                     Timing.CallDelayed(.1f, () =>
@@ -160,12 +161,16 @@ namespace AmongSCP
 
         public static void OnItemDrop(DroppingItemEventArgs ev)
         {
-            if (!PlayerManager.Imposters.Contains(ev.Player) || ev.Item.id != ItemType.GunUSP) return;
+            if(ev.Item.id == ItemType.GrenadeFlash)
+            {
+                Log.Debug("Grenade Flash is being called.");
+                Util.ModifyLightIntensity(0);
+            }
 
             ev.IsAllowed = false;
             
         }
-    
+        
         public static void OnGameEnd(RoundEndedEventArgs ev)
         {
             TaskManager.EndGame();

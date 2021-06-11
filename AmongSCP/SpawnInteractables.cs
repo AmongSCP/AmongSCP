@@ -14,6 +14,7 @@ namespace AmongSCP
             Log.Debug("no");
             SpawnEmergencyMeetingInteractable();
             SpawnVentInteractables(PointManager.Vents);
+            SpawnLightsInteractable(PointManager.LightsSpawn);
         }
 
         public void SpawnEmergencyMeetingInteractable()
@@ -34,7 +35,11 @@ namespace AmongSCP
                 var element = cordinates.ElementAt(i);
                 var vent = new VentingInteractable(element.Key, element.Value);
             }
+        }
 
+        public void SpawnLightsInteractable(Vector3 pos)
+        {
+            var lightsInteractable = new TurnOnLightsInteractable(pos, ItemType.GrenadeFlash);
         }
     }
 }

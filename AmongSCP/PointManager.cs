@@ -17,7 +17,9 @@ namespace AmongSCP
             {new Vector3(73.29224f, -998.67f, 75.03807f), new Vector3(71.74154f, -998.6702f, 144.5681f) },//Checkpoint to servers
             {new Vector3(71.74154f, -998.6702f, 144.5681f), new Vector3(77.2f, -998.67f, 199.3183f) },//servers to 096
         };
-         
+
+        public static Vector3 LightsSpawn = new Vector3(80.66904f, -998.67f, 179.4948f);
+
         //Seed 1378514975
         public static List<Vector3> PlayerSpawns = new List<Vector3>()
         {

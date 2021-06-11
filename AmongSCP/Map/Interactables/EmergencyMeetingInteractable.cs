@@ -1,4 +1,5 @@
 ﻿using MEC;
+using System.Collections.Generic;
 
 namespace AmongSCP.Map.Interactables
 {

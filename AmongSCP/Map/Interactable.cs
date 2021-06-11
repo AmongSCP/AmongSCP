@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using Exiled.API.Features;
 using Mirror;
 using UnityEngine;
 using Object = UnityEngine.Object;
+using MEC;
 
 namespace AmongSCP.Map
 {
@@ -41,6 +43,8 @@ namespace AmongSCP.Map
             _pickup = pickup;
             _interactable = gameObject.AddComponent<InteractableBehavior>();
             _interactable.Interactable = this;
+
+            //Timing.RunCoroutine(Levitate(gameObject));
         }
 
         public bool OnInteract(Player p)
@@ -64,5 +68,19 @@ namespace AmongSCP.Map
 
             return true;
         }
+
+        /*
+        public static IEnumerator<float> Levitate(GameObject gameObject)
+        {
+            Vector3 currPos = gameObject.transform.position;
+            float amplitude = 0.5f;
+            float frequency = 1f;
+            while(true)
+            {
+                currPos.y += Mathf.Sin(Time.fixedTime * Mathf.PI * frequency) * amplitude;
+                yield return Timing.WaitForOneFrame;
+            }
+        }
+        */
     }
 }
