@@ -66,6 +66,7 @@ namespace AmongSCP
             PlayerEvent.InteractingElevator += EventHandlers.OnElevatorUsed;
             PlayerEvent.UnlockingGenerator += EventHandlers.OnOpeningGenerator;
             PlayerEvent.SpawningRagdoll += EventHandlers.OnRagdollSpawn;
+            PlayerEvent.TriggeringTesla += EventHandlers.OnTriggeringTeslaEvent;
         }
 
         private void UnRegisterEvents()
@@ -86,6 +87,7 @@ namespace AmongSCP
             PlayerEvent.InteractingElevator -= EventHandlers.OnElevatorUsed;
             PlayerEvent.UnlockingGenerator -= EventHandlers.OnOpeningGenerator;
             PlayerEvent.SpawningRagdoll -= EventHandlers.OnRagdollSpawn;
+            PlayerEvent.TriggeringTesla -= EventHandlers.OnTriggeringTeslaEvent;
         }
     }
 }
