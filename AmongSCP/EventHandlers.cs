@@ -132,6 +132,7 @@ namespace AmongSCP
                         imposter.Ammo[(int) AmmoType.Nato9] = 999;
                         imposter.Inventory.AddNewItem(ItemType.GunUSP);
                         imposter.Inventory.AddNewItem(ItemType.GrenadeFlash);
+                        imposter.Inventory.AddNewItem(ItemType.GrenadeFrag);
                     }
 
                     Timing.CallDelayed(.1f, () =>
@@ -165,6 +166,11 @@ namespace AmongSCP
             {
                 Log.Debug("Grenade Flash is being called.");
                 Util.ModifyLightIntensity(0);
+            }
+            if(ev.Item.id == ItemType.GrenadeFrag && Util.CanNuke)
+            {
+                Log.Debug("Warhead is being called.");
+                Timing.RunCoroutine(Util.DetonateWarhead());
             }
 
             ev.IsAllowed = false;
@@ -223,6 +229,21 @@ namespace AmongSCP
         {
             if (AmongSCP.Singleton.Config.TeslaGatesEnabled) return;
             ev.IsTriggerable = false;
+        }
+
+        public static void OnChangingLeverStatusEvent(ChangingLeverStatusEventArgs ev)
+        {
+            /*
+            if(!Warhead.LeverStatus)
+            {
+                Util.StopWarhead();
+            }
+            */
+        }
+
+        public static void OnThrowingGrenade(ThrowingGrenadeEventArgs ev)
+        {
+            ev.IsAllowed = false;
         }
 
         //Task Event Handlers

@@ -9,6 +9,7 @@ namespace AmongSCP
     using PlayerEvent = Exiled.Events.Handlers.Player;
     using ServerEvent = Exiled.Events.Handlers.Server;
     using MapEvent = Exiled.Events.Handlers.Map;
+    using Warhead = Exiled.Events.Handlers.Warhead;
     
     public class AmongSCP : Plugin<Config>
     {
@@ -67,6 +68,8 @@ namespace AmongSCP
             PlayerEvent.UnlockingGenerator += EventHandlers.OnOpeningGenerator;
             PlayerEvent.SpawningRagdoll += EventHandlers.OnRagdollSpawn;
             PlayerEvent.TriggeringTesla += EventHandlers.OnTriggeringTeslaEvent;
+            PlayerEvent.ThrowingGrenade += EventHandlers.OnThrowingGrenade;
+            Warhead.ChangingLeverStatus += EventHandlers.OnChangingLeverStatusEvent;
         }
 
         private void UnRegisterEvents()
@@ -88,6 +91,8 @@ namespace AmongSCP
             PlayerEvent.UnlockingGenerator -= EventHandlers.OnOpeningGenerator;
             PlayerEvent.SpawningRagdoll -= EventHandlers.OnRagdollSpawn;
             PlayerEvent.TriggeringTesla -= EventHandlers.OnTriggeringTeslaEvent;
+            PlayerEvent.ThrowingGrenade -= EventHandlers.OnThrowingGrenade;
+            Warhead.ChangingLeverStatus -= EventHandlers.OnChangingLeverStatusEvent;
         }
     }
 }

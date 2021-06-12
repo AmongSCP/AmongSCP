@@ -4,6 +4,7 @@ using MEC;
 using Exiled.API.Extensions;
 using Interactables.Interobjects.DoorUtils;
 
+
 namespace AmongSCP
 {
     public static class Util
@@ -13,6 +14,8 @@ namespace AmongSCP
         public static bool meetingStarted = false;
 
         public static bool CanTurnOffLights = true;
+
+        public static bool CanNuke = true;
 
         public static IEnumerator<float> CallEmergencyMeeting(Player caller, string message, bool isBodyReport)
         {
@@ -81,6 +84,28 @@ namespace AmongSCP
                     MirrorExtensions.SendFakeSyncVar(target, ply.ReferenceHub.networkIdentity, typeof(CharacterClassManager), nameof(CharacterClassManager.NetworkCurClass), (sbyte)ply.Role);
                 }
             }
+        }
+
+        public static IEnumerator<float> DetonateWarhead()
+        {
+            Warhead.Start();
+            Warhead.LeverStatus = true;
+            Log.Debug("Warhead: " + Warhead.IsInProgress.ToString());
+            while(Warhead.IsInProgress)
+            {
+                if(Warhead.DetonationTimer <= 9f)
+                {
+                    Log.Debug("Warhead is Locked");
+                    foreach(Player ply in EventHandlers.PlayerManager.Imposters)
+                    {
+                        ply.Position = Exiled.API.Features.Map.GetRandomSpawnPoint(RoleType.ChaosInsurgency);
+                    }
+                    break;
+                }
+                yield return Timing.WaitForOneFrame;
+            }
+            CanNuke = false;
+            Timing.CallDelayed(AmongSCP.Singleton.Config.NukeCooldown, () => CanNuke = true);
         }
 
         public static void RemoveAllItems()
