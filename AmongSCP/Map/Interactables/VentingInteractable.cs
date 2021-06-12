@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using MEC;
 
 namespace AmongSCP.Map.Interactables
 {
@@ -10,6 +11,8 @@ namespace AmongSCP.Map.Interactables
 
         private Vector3 _nextRoomPosition;
 
+        private static bool CanVent = true;
+
         public VentingInteractable(Vector3 roomPositon, Vector3 nextRoomPosition)
         {
             _roomPosition = roomPositon;
@@ -19,7 +22,12 @@ namespace AmongSCP.Map.Interactables
             {
                 if(EventHandlers.PlayerManager.Imposters.Contains(player))
                 {
-                    player.Position = _nextRoomPosition;
+                    if(CanVent)
+                    {
+                        player.Position = _nextRoomPosition;
+                        CanVent = false;
+                        Timing.CallDelayed(AmongSCP.Singleton.Config.VentKillCooldown, () => CanVent = true);
+                    }
                 }
             });
         }

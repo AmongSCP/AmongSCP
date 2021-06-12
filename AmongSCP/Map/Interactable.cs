@@ -44,7 +44,7 @@ namespace AmongSCP.Map
             _interactable = gameObject.AddComponent<InteractableBehavior>();
             _interactable.Interactable = this;
 
-            //Timing.RunCoroutine(Levitate(gameObject));
+            //Timing.RunCoroutine(Levitate(pickup));
         }
 
         public bool OnInteract(Player p)
@@ -70,15 +70,13 @@ namespace AmongSCP.Map
         }
 
         /*
-        public static IEnumerator<float> Levitate(GameObject gameObject)
+        public static IEnumerator<float> Levitate(Pickup gameObject)
         {
-            Vector3 currPos = gameObject.transform.position;
-            float amplitude = 0.5f;
-            float frequency = 1f;
             while(true)
             {
-                currPos.y += Mathf.Sin(Time.fixedTime * Mathf.PI * frequency) * amplitude;
+                gameObject.transform.Translate(Vector3.up * Time.deltaTime, Space.World);
                 yield return Timing.WaitForOneFrame;
+                gameObject.transform.Translate(Vector3.down * Time.deltaTime, Space.World);
             }
         }
         */

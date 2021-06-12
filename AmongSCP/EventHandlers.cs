@@ -219,6 +219,12 @@ namespace AmongSCP
             ev.IsAllowed = false;
         }
 
+        public static void OnTriggeringTeslaEvent(TriggeringTeslaEventArgs ev)
+        {
+            if (AmongSCP.Singleton.Config.TeslaGatesEnabled) return;
+            ev.IsTriggerable = false;
+        }
+
         //Task Event Handlers
         public static void OnOpeningGenerator(UnlockingGeneratorEventArgs ev)
         {
