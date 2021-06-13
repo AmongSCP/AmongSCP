@@ -32,6 +32,7 @@ namespace AmongSCP.Map.Interactables
                         return;
                     }
 
+                    playerInfo.LastVent = DateTime.Now;
                     player.Position = _nextRoomPosition;
                 }
             });
