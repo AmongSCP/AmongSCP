@@ -17,6 +17,8 @@ namespace AmongSCP
 
         public static bool CanNuke = true;
 
+        public static float curLightIntensity = 1;
+
         public static IEnumerator<float> CallEmergencyMeeting(Player caller, string message, bool isBodyReport)
         {
             Log.Debug("Emergency meeting invoked.");
@@ -51,10 +53,11 @@ namespace AmongSCP
 
         public static void ModifyLightIntensity(float intensity)
         {
-            if (!CanTurnOffLights && intensity == 0) return;
+            if ((!CanTurnOffLights && intensity == 0) || Warhead.IsInProgress) return;
             foreach (Room room in Exiled.API.Features.Map.Rooms)
             {
                 room.SetLightIntensity(intensity);
+                curLightIntensity = intensity;
             }
             CanTurnOffLights = false;
             Timing.CallDelayed(AmongSCP.Singleton.Config.LightsCooldown, () => CanTurnOffLights = true);
@@ -86,10 +89,18 @@ namespace AmongSCP
             }
         }
 
+        public static void RunDetonateWarhead()
+        {
+            if (Warhead.IsInProgress || curLightIntensity != 1) return;
+            Timing.RunCoroutine(DetonateWarhead());
+        }
+
         public static IEnumerator<float> DetonateWarhead()
         {
+            Warhead.DetonationTimer = 90;
             Warhead.Start();
             Warhead.LeverStatus = true;
+
             Log.Debug("Warhead: " + Warhead.IsInProgress.ToString());
             while(Warhead.IsInProgress)
             {

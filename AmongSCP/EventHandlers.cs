@@ -170,7 +170,7 @@ namespace AmongSCP
             if(ev.Item.id == ItemType.GrenadeFrag && Util.CanNuke)
             {
                 Log.Debug("Warhead is being called.");
-                Timing.RunCoroutine(Util.DetonateWarhead());
+                Util.RunDetonateWarhead();
             }
 
             ev.IsAllowed = false;
