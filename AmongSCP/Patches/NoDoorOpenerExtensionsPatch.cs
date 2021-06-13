@@ -6,7 +6,7 @@ namespace AmongSCP.Patches
     [HarmonyPatch(typeof(DoorEventOpenerExtension), nameof(DoorEventOpenerExtension.TriggerAction))]
     public static class NoDoorOpenerExtensionsPatch
     {
-        public static bool Prefix(DoorEventOpenerExtension.OpenerEventType ev)
+        public static bool Prefix()
         {
             return false;
         }
