@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
 using MEC;
+using AmongSCP.PlayerManager;
+using System;
 
 namespace AmongSCP.Map.Interactables
 {
@@ -11,8 +13,6 @@ namespace AmongSCP.Map.Interactables
 
         private Vector3 _nextRoomPosition;
 
-        private static bool CanVent = true;
-
         public VentingInteractable(Vector3 roomPositon, Vector3 nextRoomPosition)
         {
             _roomPosition = roomPositon;
@@ -20,14 +20,19 @@ namespace AmongSCP.Map.Interactables
             ItemData _interactableData = new ItemData(ItemType.Disarmer, _roomPosition, Quaternion.identity, new Vector3(2, 2, 2));
             _interactable = new Interactable(_interactableData, player =>
             {
-                if(EventHandlers.PlayerManager.Imposters.Contains(player))
+                var playerInfo = player.GetInfo();
+                if (playerInfo.Role == PlayerManager.Role.Imposter)
                 {
-                    if(CanVent)
+                    var lastVent = playerInfo.LastVent;
+                    var seconds = lastVent == DateTime.MinValue ? (AmongSCP.Singleton.Config.VentTime + 1) : (int) DateTime.Now.Subtract(lastVent).TotalSeconds;
+
+                    if(seconds <= AmongSCP.Singleton.Config.VentTime)
                     {
-                        player.Position = _nextRoomPosition;
-                        CanVent = false;
-                        Timing.CallDelayed(AmongSCP.Singleton.Config.VentKillCooldown, () => CanVent = true);
+                        player.ShowHint("You are still on cooldown. " + (AmongSCP.Singleton.Config.VentTime - seconds) + " seconds left.");
+                        return;
                     }
+
+                    player.Position = _nextRoomPosition;
                 }
             });
         }

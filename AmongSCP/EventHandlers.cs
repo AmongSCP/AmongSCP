@@ -192,15 +192,15 @@ namespace AmongSCP
             }
 
             var lastShot = ev.Shooter.GetInfo().LastShot;
-            var seconds = lastShot == DateTime.MinValue ? 31 : (int) DateTime.Now.Subtract(lastShot).TotalSeconds;
+            var seconds = lastShot == DateTime.MinValue ? (AmongSCP.Singleton.Config.KillCooldown + 1) : (int) DateTime.Now.Subtract(lastShot).TotalSeconds;
 
-            if (seconds > 30)
+            if (seconds > AmongSCP.Singleton.Config.KillCooldown)
             {
                 return;
             }
 
             ev.IsAllowed = false;
-            ev.Shooter.ShowHint("You are still on cooldown. " + (30 - seconds) + " seconds left.");
+            ev.Shooter.ShowHint("You are still on cooldown. " + (AmongSCP.Singleton.Config.KillCooldown - seconds) + " seconds left.");
         }
 
         public static void OnPlayerShoot(ShotEventArgs ev)

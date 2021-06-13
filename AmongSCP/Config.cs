@@ -28,9 +28,6 @@ namespace AmongSCP
 
         [Description("Length of time a player can vent for.")]
         public float VentTime { get; set; } = 10;
-
-        [Description("Time after an imposter vents that they cannot kill.")]
-        public float VentKillCooldown { get; set; } = 5;
         
         [Description("Location when someone calls a emergency meeting or voting starts. Tutorial tower position is 54, 1020, -45.")]
         public Position VotePosition { get; set; } = new Position()
@@ -60,5 +57,8 @@ namespace AmongSCP
 
         [Description("Cooldown for turning on the nuke.")]
         public int NukeCooldown { get; set; } = 10;
+
+        [Description("Cooldown for the imposter to kill someone.")]
+        public int KillCooldown { get; set; } = 30;
     }
 }

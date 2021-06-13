@@ -37,6 +37,8 @@ namespace AmongSCP.PlayerManager
 
         public DateTime LastShot = DateTime.MinValue;
 
+        public DateTime LastVent = DateTime.MinValue;
+
         public PlayerInfo(PlayerManager manager)
         {
             _manager = manager;
