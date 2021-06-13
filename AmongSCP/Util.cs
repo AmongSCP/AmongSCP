@@ -72,7 +72,6 @@ namespace AmongSCP
             }
         }
 
-
         public static void ChangeOutfit(Player ply, RoleType type, PlayerManager.PlayerManager playerManager)
         {
             foreach (var target in Player.List)
