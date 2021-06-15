@@ -3,7 +3,7 @@ using Exiled.API.Features;
 using MEC;
 using Exiled.API.Extensions;
 using Interactables.Interobjects.DoorUtils;
-
+using UnityEngine;
 
 namespace AmongSCP
 {
@@ -21,11 +21,12 @@ namespace AmongSCP
 
         public static IEnumerator<float> CallEmergencyMeeting(Player caller, string message, bool isBodyReport)
         {
-            Log.Debug("Emergency meeting invoked.");
             meetingStarted = true;
             var meetingTime = isBodyReport ? AmongSCP.Singleton.Config.BodyReportedMeetingTime : AmongSCP.Singleton.Config.EmergencyTime;
 
             var votePos = AmongSCP.Singleton.Config.VotePosition.GetPositions();
+
+            Exiled.API.Features.Map.ShowHint(message, 5f);
 
             foreach (var ply in Player.List)
             {
@@ -49,16 +50,25 @@ namespace AmongSCP
 
                 PointManager.SpawnPlayers(EventHandlers.PlayerManager.AlivePlayers.ToArray());
             }
+            caller.GetInfo().CalledEmergencyMeeting = false;
         }
 
         public static void ModifyLightIntensity(float intensity)
         {
-            if ((!CanTurnOffLights && intensity == 0) || Warhead.IsInProgress) return;
+            if ((!CanTurnOffLights && intensity == 0) || Warhead.IsInProgress || meetingStarted) return;
             foreach (Room room in Exiled.API.Features.Map.Rooms)
             {
                 room.SetLightIntensity(intensity);
                 curLightIntensity = intensity;
             }
+            
+            /*
+            foreach (Player ply in EventHandlers.PlayerManager.Imposters)
+            {
+                MirrorExtensions.SendFakeTargetRpc(ply, , typeof(FlickerableLightController), nameof(FlickerableLightController.RpcSetLightIntensity), (sbyte)intensity);
+                curLightIntensity = intensity;
+            }
+            */
             CanTurnOffLights = false;
             Timing.CallDelayed(AmongSCP.Singleton.Config.LightsCooldown, () => CanTurnOffLights = true);
         }
@@ -90,7 +100,7 @@ namespace AmongSCP
 
         public static void RunDetonateWarhead()
         {
-            if (Warhead.IsInProgress || curLightIntensity != 1) return;
+            if (Warhead.IsInProgress || curLightIntensity != 1 || meetingStarted) return;
             Timing.RunCoroutine(DetonateWarhead());
         }
 
@@ -120,7 +130,7 @@ namespace AmongSCP
 
         public static void RemoveAllItems()
         {
-            //needs to be implemented
+            
         }
     }
 }

@@ -14,13 +14,13 @@ namespace AmongSCP.Map
         private InteractableBehavior _interactable;
         private Action<Player> _action;
 
-        private bool destroyOnInteract = false;
-        private bool pickupOnInteract = false;
+        private bool _destroyOnInteract = false;
+        private bool _pickupOnInteract = false;
 
         public Interactable(ItemData data, Action<Player> onInteract, bool destroyOnInteract = false, bool pickupOnInteract = false)
         {
             _action = onInteract;
-
+            _destroyOnInteract = destroyOnInteract;
             var gameObject = UnityEngine.Object.Instantiate<GameObject>(Server.Host.Inventory.pickupPrefab);
 
             gameObject.transform.localScale = data.scale;
@@ -50,9 +50,10 @@ namespace AmongSCP.Map
         public bool OnInteract(Player p)
         {
             _action(p);
-
-            if (destroyOnInteract)
+            Log.Debug("Method OnInteract() Invoked.");
+            if (_destroyOnInteract)
             {
+                Log.Debug("Object Destroyed?");
                 _interactable.Interactable = null;
                 
                 Object.Destroy(_pickup.gameObject);
@@ -60,7 +61,7 @@ namespace AmongSCP.Map
                 return false;
             }
 
-            if (!pickupOnInteract) return false;
+            if (!_pickupOnInteract) return false;
 
             _interactable.Interactable = null;
             Object.Destroy(_interactable);

@@ -117,6 +117,7 @@
     <Compile Include="Map\ItemData.cs" />
     <Compile Include="Map\Task.cs" />
     <Compile Include="Map\TaskType.cs" />
+    <Compile Include="Patches\Scp914Patch.cs" />
     <Compile Include="Patches\SyncCurItemPatch.cs" />
     <Compile Include="Patches\SyncCurItemUniqPatch.cs" />
     <Compile Include="Patches\SyncPlayerClassPatch.cs" />

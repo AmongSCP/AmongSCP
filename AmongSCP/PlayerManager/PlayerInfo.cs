@@ -39,11 +39,14 @@ namespace AmongSCP.PlayerManager
 
         public DateTime LastVent = DateTime.MinValue;
 
+        public int EmergencyMeetings = AmongSCP.Singleton.Config.EmergencyMeetings;
+
         public PlayerInfo(PlayerManager manager)
         {
             _manager = manager;
             
             _manager.ReloadLists();
         }
+
     }
 }

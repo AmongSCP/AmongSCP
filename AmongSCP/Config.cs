@@ -53,7 +53,7 @@ namespace AmongSCP
         public int LightsCooldown { get; set; } = 30;
 
         [Description("Should tesla gates be turned on?")]
-        public bool TeslaGatesEnabled { get; set; } = true;
+        public bool TeslaGatesEnabled { get; set; } = false;
 
         [Description("Cooldown for turning on the nuke.")]
         public int NukeCooldown { get; set; } = 10;
