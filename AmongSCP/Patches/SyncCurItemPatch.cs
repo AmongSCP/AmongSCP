@@ -1,4 +1,5 @@
-﻿using HarmonyLib;
+﻿using Exiled.API.Features;
+using HarmonyLib;
 
 namespace AmongSCP.Patches
 {
@@ -7,6 +8,7 @@ namespace AmongSCP.Patches
     {
         public static bool Prefix(Inventory __instance, ItemType value)
         {
+            //Log.Debug("SyncCurItemPatch");
             __instance._curItemSynced = value;
             return false;
         }

@@ -56,19 +56,14 @@ namespace AmongSCP
         public static void ModifyLightIntensity(float intensity)
         {
             if ((!CanTurnOffLights && intensity == 0) || Warhead.IsInProgress || meetingStarted) return;
+           
             foreach (Room room in Exiled.API.Features.Map.Rooms)
             {
                 room.SetLightIntensity(intensity);
                 curLightIntensity = intensity;
             }
             
-            /*
-            foreach (Player ply in EventHandlers.PlayerManager.Imposters)
-            {
-                MirrorExtensions.SendFakeTargetRpc(ply, , typeof(FlickerableLightController), nameof(FlickerableLightController.RpcSetLightIntensity), (sbyte)intensity);
-                curLightIntensity = intensity;
-            }
-            */
+            
             CanTurnOffLights = false;
             Timing.CallDelayed(AmongSCP.Singleton.Config.LightsCooldown, () => CanTurnOffLights = true);
         }
