@@ -51,6 +51,14 @@ namespace AmongSCP
             //TODO - I didnt see checks anywhere to check round end conditions but remove this if there is
             if (PlayerManager.Crewmates.Count <= PlayerManager.Imposters.Count)
                 Round.ForceEnd();
+            
+            if (ev.Target.Role == RoleType.ChaosInsurgency) return;
+
+            foreach(Task task in TaskManager.GetPlayerTasks(ev.Target))
+            {
+                TaskManager.CurrentTasks.Remove(task);
+            }
+            Log.Debug(TaskManager.CurrentTasks.Count.ToString());
         }
 
         public static void OnRagdollSpawn(SpawningRagdollEventArgs ev)
@@ -90,6 +98,7 @@ namespace AmongSCP
         public static void OnGameStart()
         {
             _starting = true;
+            Log.Debug("Round start");
             Timing.CallDelayed(.1f, () =>
             {
                 Util.SetUpDoors();
@@ -249,7 +258,11 @@ namespace AmongSCP
         //Task Event Handlers
         public static void OnOpeningGenerator(UnlockingGeneratorEventArgs ev)
         {
-            if (!TaskManager.TryCompletingTask(ev.Player, TaskType.Generator)) return;
+            if (!TaskManager.TryCompletingTask(ev.Player, TaskType.Generator))
+            {
+                Log.Debug("Task not valid");
+                return;
+            }
 
             MirrorExtensions.SendFakeSyncVar(ev.Player, ev.Generator.netIdentity, typeof(Generator079), nameof(Generator079.NetworkisDoorUnlocked), true);
             MirrorExtensions.SendFakeSyncVar(ev.Player, ev.Generator.netIdentity, typeof(Generator079), nameof(Generator079.NetworkisDoorOpen), true);
