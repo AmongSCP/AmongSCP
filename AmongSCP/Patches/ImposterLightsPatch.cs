@@ -6,24 +6,24 @@ using Exiled.API.Features;
 
 namespace AmongSCP.Patches
 {
-    [HarmonyPatch(typeof(FlickerableLightController), nameof(FlickerableLightController.ServerSetLightIntensity))]
+    [HarmonyPatch(typeof(FlickerableLightController), nameof(FlickerableLightController.RpcSetLightIntensity))]
     public static class ImposterLightsPatch
     {
-        public static bool Prefix(FlickerableLightController __instance)
+        public static bool Prefix(FlickerableLightController __instance, float intensityMultiplier)
         {
-            var networkIdentity = __instance.netIdentity;
-            foreach(Player ply in EventHandlers.PlayerManager.AlivePlayers)
+            foreach (Player ply in Player.List)
             {
-                if(EventHandlers.PlayerManager.Imposters.Contains(ply))
-                {
-                    MirrorExtensions.SendFakeTargetRpc(ply, networkIdentity, typeof(FlickerableLightController), nameof(FlickerableLightController.ServerSetLightIntensity), 1f);
-                }
-                else
-                {
-                    MirrorExtensions.SendFakeTargetRpc(ply, networkIdentity, typeof(FlickerableLightController), nameof(FlickerableLightController.ServerSetLightIntensity), 0f);
-                }
+               var playerInfo = ply.GetInfo();
+
+               if (playerInfo.Role == PlayerManager.Role.Imposter)
+               {
+                    MirrorExtensions.SendFakeTargetRpc(ply, __instance.netIdentity, typeof(FlickerableLightController), nameof(FlickerableLightController.RpcSetLightIntensity), 1f);
+               }
+               else
+               {
+                    MirrorExtensions.SendFakeTargetRpc(ply, __instance.netIdentity, typeof(FlickerableLightController), nameof(FlickerableLightController.RpcSetLightIntensity), intensityMultiplier);
+               }
             }
-            
             return false;
         }
     }

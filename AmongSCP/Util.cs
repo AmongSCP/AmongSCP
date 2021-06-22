@@ -56,10 +56,11 @@ namespace AmongSCP
 
         public static void ModifyLightIntensity(float intensity)
         {
-            if ((!CanTurnOffLights && intensity == 0) || Warhead.IsInProgress || meetingStarted) return;
+            //if ((!CanTurnOffLights && intensity == 0) || Warhead.IsInProgress || meetingStarted) return;
            
             foreach (Room room in Exiled.API.Features.Map.Rooms)
             {
+                Log.Debug("Method ModifyLightIntensity() invoked.");
                 room.SetLightIntensity(intensity);
                 curLightIntensity = intensity;
             }
