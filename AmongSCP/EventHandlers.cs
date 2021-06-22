@@ -6,6 +6,7 @@ using MEC;
 using Exiled.API.Extensions;
 using Exiled.API.Features;
 using System.Linq;
+using SCPStats.API;
 
 namespace AmongSCP
 {
@@ -32,7 +33,10 @@ namespace AmongSCP
             if (ev.Pickup.gameObject.TryGetComponent<InteractableBehavior>(out var component))
             {
                 ev.IsAllowed = component.Interactable.OnInteract(ev.Player);
+                return;
             }
+            
+            ev.IsAllowed = false;
         }
 
         public static void OnDying(DyingEventArgs ev)
@@ -48,16 +52,17 @@ namespace AmongSCP
             plyinfo.IsAlive = false;
             plyinfo.Role = global::AmongSCP.PlayerManager.Role.None;
 
-            //TODO - I didnt see checks anywhere to check round end conditions but remove this if there is
             if (PlayerManager.Crewmates.Count <= PlayerManager.Imposters.Count)
                 Round.ForceEnd();
             
             if (ev.Target.Role == RoleType.ChaosInsurgency) return;
 
+            /*
             foreach(Task task in TaskManager.GetPlayerTasks(ev.Target))
             {
                 TaskManager.CurrentTasks.Remove(task);
             }
+            */
             Log.Debug(TaskManager.CurrentTasks.Count.ToString());
         }
 
@@ -147,7 +152,10 @@ namespace AmongSCP
                     Timing.CallDelayed(.1f, () =>
                     {
                         PointManager.SpawnPlayers(players);
-
+                        foreach (Player ply in players)
+                        {
+                            API.SpawnHat(ply, ItemType.KeycardNTFLieutenant);
+                        }
                         TaskManager.SplitTasks();
                         _starting = false;
                     });

@@ -41,6 +41,7 @@ namespace AmongSCP
                 CurrentTasks.AddRange(tasks);
                 PlayerTasks[EventHandlers.PlayerManager.Crewmates[i]] = tasks.ToList();
             }
+            Log.Debug(CurrentTasks.Count);
         }
 
         public void ShowPlayerTasks(Player ply)
@@ -85,6 +86,7 @@ namespace AmongSCP
             {
                 EventHandlers.PlayerManager.ClearImposters();
             }
+            Log.Debug(CurrentTasks.Count);
         }
 
         public bool TryCompletingTask(Player ply, TaskType taskType)

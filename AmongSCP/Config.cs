@@ -9,7 +9,7 @@ namespace AmongSCP
         public bool IsEnabled { get; set; } = true;
 
         [Description("Number of imposters for every 5 people.")]
-        public int ImposterRatio { get; set; } = 1;
+        public int ImposterRatio { get; set; } = 0;
 
         [Description("Maximum amount of players in a game.")]
         public int MaxPlayers { get; set; } = 10;

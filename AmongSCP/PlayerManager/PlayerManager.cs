@@ -4,6 +4,7 @@ using System.Linq;
 using Exiled.API.Features;
 using mattmc3.dotmore.Collections.Generic;
 using MEC;
+using SCPStats.API;
 
 namespace AmongSCP.PlayerManager
 {
@@ -93,6 +94,7 @@ namespace AmongSCP.PlayerManager
             {
                 player.Role = RoleType.Spectator;
             }
+            Log.Debug("Method ClearImposters() invoked");
         }
         
         public void ClearCrewmates()
