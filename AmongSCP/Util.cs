@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Exiled.API.Features;
 using MEC;
 using Exiled.API.Extensions;
@@ -126,6 +127,22 @@ namespace AmongSCP
         public static void RemoveAllItems()
         {
             
+        }
+
+        public static IEnumerator<float> Levitate(Pickup pickup, float heightMultiplier, float speedMultiplier)
+        {
+            var transform = pickup.transform;
+
+            while (pickup != null)
+            {
+                var vector = transform.position;
+                vector.y += heightMultiplier * (float) Math.Sin(Time.timeSinceLevelLoad / speedMultiplier);
+
+                transform.position = vector;
+                pickup.Networkposition = vector;
+                
+                yield return Timing.WaitForOneFrame;
+            }
         }
     }
 }
