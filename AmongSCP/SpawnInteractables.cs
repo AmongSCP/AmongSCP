@@ -11,7 +11,6 @@ namespace AmongSCP
     {
         public SpawnInteractables()
         {
-            Log.Debug("no");
             SpawnEmergencyMeetingInteractable();
             SpawnVentInteractables(PointManager.Vents);
             SpawnLightsInteractable(PointManager.LightsSpawn);
@@ -40,6 +39,14 @@ namespace AmongSCP
         public void SpawnLightsInteractable(Vector3 pos)
         {
             var lightsInteractable = new TurnOnLightsInteractable(pos, ItemType.GrenadeFlash);
+        }
+
+        public void SpawnHats(Player[] players)
+        {
+            foreach(Player ply in players)
+            {
+                var hatInteractable = new HatInteractable(ply, ItemType.KeycardJanitor);
+            }
         }
     }
 }

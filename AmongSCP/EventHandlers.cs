@@ -30,10 +30,13 @@ namespace AmongSCP
         
         public static void OnPickupItem(PickingUpItemEventArgs ev)
         {
+            //Log.Debug("Method OnPickupItem() invoked.");
+
+            
+            Log.Debug(ev.Pickup.gameObject.TryGetComponent<SCPStats.Hats.HatPlayerComponent>(out var w));
             if (ev.Pickup.gameObject.TryGetComponent<InteractableBehavior>(out var component))
             {
                 ev.IsAllowed = component.Interactable.OnInteract(ev.Player);
-                return;
             }
             
             ev.IsAllowed = false;
@@ -125,16 +128,19 @@ namespace AmongSCP
                     {
                         info.Role = global::AmongSCP.PlayerManager.Role.Imposter;
                         players[i].Role = AmongSCP.Singleton.Config.ImposterRole;
+                        players[i].ShowHint("You are an Imposter!");
                     }
                     else
                     {
                         info.Role = global::AmongSCP.PlayerManager.Role.Crewmate;
                         players[i].Role = AmongSCP.Singleton.Config.CrewmateRole;
+                        players[i].ShowHint("You are a crewmate!");
                     }
                 }
 
                 Timing.CallDelayed(.1f, () =>
                 {
+                    SpawnInteractables.SpawnHats(players);
                     foreach (var player in players)
                     {
                         Util.ChangeOutfit(player, AmongSCP.Singleton.Config.CrewmateRole, PlayerManager);
@@ -152,10 +158,6 @@ namespace AmongSCP
                     Timing.CallDelayed(.1f, () =>
                     {
                         PointManager.SpawnPlayers(players);
-                        foreach (Player ply in players)
-                        {
-                            API.SpawnHat(ply, ItemType.KeycardNTFLieutenant);
-                        }
                         TaskManager.SplitTasks();
                         _starting = false;
                     });
@@ -181,12 +183,12 @@ namespace AmongSCP
         {
             if(ev.Item.id == ItemType.GrenadeFlash)
             {
-                Log.Debug("Grenade Flash is being called.");
+                //Log.Debug("Grenade Flash is being called.");
                 Util.ModifyLightIntensity(0);
             }
             if(ev.Item.id == ItemType.GrenadeFrag && Util.CanNuke)
             {
-                Log.Debug("Warhead is being called.");
+                //Log.Debug("Warhead is being called.");
                 Util.RunDetonateWarhead();
             }
 
@@ -238,7 +240,7 @@ namespace AmongSCP
         {
             if (ev.Lift.Type() == ElevatorType.Scp049 || ev.Lift.Type() == ElevatorType.Nuke) return;
 
-            Log.Debug("OnElevatorUsed() invoked.");
+            //Log.Debug("OnElevatorUsed() invoked.");
             ev.IsAllowed = false;
         }
 

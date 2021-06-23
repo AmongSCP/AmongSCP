@@ -10,7 +10,7 @@ namespace AmongSCP.Map
 {
     public class Interactable
     {
-        private Pickup _pickup;
+        public Pickup Pickup;
         private InteractableBehavior _interactable;
         private Action<Player> _action;
 
@@ -40,7 +40,7 @@ namespace AmongSCP.Map
             var pickup = gameObject.GetComponent<Pickup>();
             pickup.SetupPickup(data.item, 0, Server.Host.Inventory.gameObject, new Pickup.WeaponModifiers(true, 0, 0, 0), data.pos, data.rot);
 
-            _pickup = pickup;
+            Pickup = pickup;
             _interactable = gameObject.AddComponent<InteractableBehavior>();
             _interactable.Interactable = this;
 
@@ -56,7 +56,7 @@ namespace AmongSCP.Map
                 Log.Debug("Object Destroyed?");
                 _interactable.Interactable = null;
                 
-                Object.Destroy(_pickup.gameObject);
+                Object.Destroy(Pickup.gameObject);
 
                 return false;
             }

@@ -4,6 +4,7 @@ using MEC;
 using Exiled.API.Extensions;
 using Interactables.Interobjects.DoorUtils;
 using UnityEngine;
+using AmongSCP.PlayerManager;
 
 namespace AmongSCP
 {
@@ -21,6 +22,7 @@ namespace AmongSCP
 
         public static IEnumerator<float> CallEmergencyMeeting(Player caller, string message, bool isBodyReport)
         {
+            Warhead.Stop();
             meetingStarted = true;
             var meetingTime = isBodyReport ? AmongSCP.Singleton.Config.BodyReportedMeetingTime : AmongSCP.Singleton.Config.EmergencyTime;
 
@@ -51,6 +53,8 @@ namespace AmongSCP
                 PointManager.SpawnPlayers(EventHandlers.PlayerManager.AlivePlayers.ToArray());
             }
             caller.GetInfo().CalledEmergencyMeeting = false;
+            PlayerInfo.KillMostVotedPlayer();
+            PlayerInfo.ClearAllPlayersVotes();
         }
 
         public static void ModifyLightIntensity(float intensity)
@@ -106,12 +110,10 @@ namespace AmongSCP
             Warhead.Start();
             Warhead.LeverStatus = true;
 
-            Log.Debug("Warhead: " + Warhead.IsInProgress.ToString());
             while(Warhead.IsInProgress)
             {
                 if(Warhead.DetonationTimer <= 9f)
                 {
-                    Log.Debug("Warhead is Locked");
                     foreach(Player ply in EventHandlers.PlayerManager.Imposters)
                     {
                         ply.Position = Exiled.API.Features.Map.GetRandomSpawnPoint(RoleType.ChaosInsurgency);

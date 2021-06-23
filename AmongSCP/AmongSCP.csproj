@@ -80,8 +80,8 @@
     <Reference Include="Mirror.Components, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
       <HintPath>lib\Mirror.Components.dll</HintPath>
     </Reference>
-    <Reference Include="SCPStats">
-      <HintPath>..\..\..\..\Downloads\SCPStats.dll</HintPath>
+    <Reference Include="SCPStats %281%29">
+      <HintPath>..\..\..\..\Downloads\SCPStats (1).dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -115,6 +115,7 @@
     <Compile Include="Map\InteractableBehavior.cs" />
     <Compile Include="Map\Interactables\DeadBodyInteractable.cs" />
     <Compile Include="Map\Interactables\EmergencyMeetingInteractable.cs" />
+    <Compile Include="Map\Interactables\HatInteractable.cs" />
     <Compile Include="Map\Interactables\TurnOnLightsInteractable.cs" />
     <Compile Include="Map\Interactables\VentingInteractable.cs" />
     <Compile Include="Map\ItemData.cs" />

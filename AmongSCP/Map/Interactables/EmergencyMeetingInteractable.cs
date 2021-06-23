@@ -1,5 +1,6 @@
 ﻿using MEC;
 using System.Collections.Generic;
+using Exiled.API.Features;
 
 namespace AmongSCP.Map.Interactables
 {
@@ -11,6 +12,12 @@ namespace AmongSCP.Map.Interactables
         {
             _interactable = new Interactable(data, player =>
             {
+                if (Warhead.IsInProgress)
+                {
+                    player.ShowHint("Warhead is in progress!");
+                    return;
+                }
+
                 if (player.GetInfo().CalledEmergencyMeeting)
                 {
                     player.ShowHint("You have already called an emergency meeting!");

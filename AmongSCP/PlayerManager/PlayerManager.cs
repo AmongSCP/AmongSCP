@@ -4,7 +4,6 @@ using System.Linq;
 using Exiled.API.Features;
 using mattmc3.dotmore.Collections.Generic;
 using MEC;
-using SCPStats.API;
 
 namespace AmongSCP.PlayerManager
 {
@@ -27,7 +26,7 @@ namespace AmongSCP.PlayerManager
             AlivePlayers.Clear();
             DeadPlayers.Clear();
         }
-
+        
         public void ReloadLists()
         {
             Imposters.Clear();
