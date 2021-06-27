@@ -103,5 +103,53 @@ namespace AmongSCP.PlayerManager
                 player.Role = RoleType.Spectator;
             }
         }
+
+        public void ClearAllPlayersVotes()
+        {
+            Log.Debug("Method ClearAllPlayersVotes() invoked.");
+            foreach (Player ply in AlivePlayers)
+            {
+                ply.GetInfo().votes = 0;
+                ply.GetInfo().hasVoted = false;
+            }
+        }
+
+        public void KillMostVotedPlayer()
+        {
+            int maxVotes = EventHandlers.PlayerManager.AlivePlayers[0].GetInfo().votes;
+
+            int totalVotes = 0;
+
+            int totalSkips = 0;
+
+            int tieVotes = 0;
+
+            Player player = EventHandlers.PlayerManager.AlivePlayers[0];
+
+            
+            foreach (Player ply in EventHandlers.PlayerManager.AlivePlayers)
+            {
+                if (ply.GetInfo().votes > maxVotes)
+                {
+                    maxVotes = ply.GetInfo().votes;
+                    player = ply;
+                    totalVotes += ply.GetInfo().votes;
+                    if (!ply.GetInfo().hasVoted)
+                    {
+                        totalSkips++;
+                    }
+                }
+                else if (ply.GetInfo().votes == maxVotes)
+                {
+                    tieVotes = ply.GetInfo().votes;
+                }
+            }
+            Log.Debug("Max Votes " + maxVotes);
+            Log.Debug((totalVotes <= totalSkips || tieVotes == maxVotes).ToString());
+
+            
+            if (totalVotes <= totalSkips || tieVotes == maxVotes) return;
+            player.SetRole(RoleType.Spectator);
+        }
     }
 }

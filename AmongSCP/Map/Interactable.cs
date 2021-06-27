@@ -17,7 +17,7 @@ namespace AmongSCP.Map
         private bool _destroyOnInteract = false;
         private bool _pickupOnInteract = false;
 
-        public Interactable(ItemData data, Action<Player> onInteract, bool destroyOnInteract = false, bool pickupOnInteract = false)
+        public Interactable(ItemData data, Action<Player> onInteract, bool destroyOnInteract = false, bool pickupOnInteract = false, bool levitate = false, float height = 1.5f, float speed = 1)
         {
             _action = onInteract;
             _destroyOnInteract = destroyOnInteract;
@@ -44,16 +44,14 @@ namespace AmongSCP.Map
             _interactable = gameObject.AddComponent<InteractableBehavior>();
             _interactable.Interactable = this;
 
-            //Timing.RunCoroutine(Levitate(pickup));
+           // Timing.RunCoroutine(Levitate(pickup, height, speed));
         }
 
         public bool OnInteract(Player p)
         {
             _action(p);
-            Log.Debug("Method OnInteract() Invoked.");
             if (_destroyOnInteract)
             {
-                Log.Debug("Object Destroyed?");
                 _interactable.Interactable = null;
                 
                 Object.Destroy(Pickup.gameObject);
@@ -70,16 +68,20 @@ namespace AmongSCP.Map
             return true;
         }
 
-        /*
-        public static IEnumerator<float> Levitate(Pickup gameObject)
+        public IEnumerator<float> Levitate(Pickup pickup, float heightMultiplier, float speedMultiplier)
         {
-            while(true)
+            var transform = pickup.transform;
+
+            while (pickup != null)
             {
-                gameObject.transform.Translate(Vector3.up * Time.deltaTime, Space.World);
+                var vector = transform.position;
+                vector.y += heightMultiplier * (float)Math.Sin(Time.timeSinceLevelLoad / speedMultiplier);
+
+                transform.position = vector;
+                pickup.Networkposition = vector;
+
                 yield return Timing.WaitForOneFrame;
-                gameObject.transform.Translate(Vector3.down * Time.deltaTime, Space.World);
             }
         }
-        */
     }
 }

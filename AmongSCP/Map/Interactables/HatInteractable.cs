@@ -24,14 +24,14 @@ namespace AmongSCP.Map.Interactables
             var itemdata = new ItemData(item, new UnityEngine.Vector3(72.4817f,-1005.853f,34.69f), UnityEngine.Quaternion.identity, new UnityEngine.Vector3(4,8,4));
             interactable = new Interactable(itemdata, player =>
             {
-                Log.Debug("Hat interactable invoked");
+                Log.Debug(Util.meetingStarted.ToString());
+                Log.Debug((!player.GetInfo().hasVoted).ToString());
                 if(Util.meetingStarted && !player.GetInfo().hasVoted)
                 {
-                    Log.Debug("Voted.");
+                    Log.Debug("voted");
                     Player.GetInfo().votes++;
                     player.GetInfo().hasVoted = true;
-                    Log.Debug(Player.GetInfo().votes);
-                    Log.Debug(Player.GetInfo().hasVoted.ToString());
+                    Util.VoteAmount++;
                 }
             });
             SCPStats.API.API.SpawnHat(Player, interactable.Pickup, new UnityEngine.Vector3(0f, .1f, 0f), UnityEngine.Quaternion.identity);

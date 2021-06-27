@@ -33,7 +33,7 @@ namespace AmongSCP
             //Log.Debug("Method OnPickupItem() invoked.");
 
             
-            Log.Debug(ev.Pickup.gameObject.TryGetComponent<SCPStats.Hats.HatPlayerComponent>(out var w));
+            //Log.Debug(ev.Pickup.gameObject.TryGetComponent<SCPStats.Hats.HatPlayerComponent>(out var w));
             if (ev.Pickup.gameObject.TryGetComponent<InteractableBehavior>(out var component))
             {
                 ev.IsAllowed = component.Interactable.OnInteract(ev.Player);
@@ -54,9 +54,6 @@ namespace AmongSCP
             var plyinfo = ev.Target.GetInfo();
             plyinfo.IsAlive = false;
             plyinfo.Role = global::AmongSCP.PlayerManager.Role.None;
-
-            if (PlayerManager.Crewmates.Count <= PlayerManager.Imposters.Count)
-                Round.ForceEnd();
             
             if (ev.Target.Role == RoleType.ChaosInsurgency) return;
 
@@ -106,11 +103,13 @@ namespace AmongSCP
         public static void OnGameStart()
         {
             _starting = true;
-            Log.Debug("Round start");
+            Log.Debug("Round has started now.");
             Timing.CallDelayed(.1f, () =>
             {
                 Util.SetUpDoors();
                 Util.RemoveAllItems();
+                Timing.KillCoroutines();
+                Timing.RunCoroutine(Util.CheckCrewmates());
                 SpawnInteractables = new SpawnInteractables();
                 PlayerManager.UpdateQueueNoWait();
 

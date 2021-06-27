@@ -11,7 +11,7 @@ namespace AmongSCP
 {
     public static class Util
     {
-        public static int VoteAmount;
+        public static int VoteAmount = 0;
 
         public static bool meetingStarted = false;
 
@@ -48,14 +48,16 @@ namespace AmongSCP
 
                 meetingTime -= 1;
 
-                if (meetingTime >= 1) continue;
-                meetingStarted = false;
+                if (meetingTime >= 1 && VoteAmount!=EventHandlers.PlayerManager.AlivePlayers.Count) continue;
 
+                meetingStarted = false;
                 PointManager.SpawnPlayers(EventHandlers.PlayerManager.AlivePlayers.ToArray());
+                VoteAmount = 0;
+                caller.GetInfo().CalledEmergencyMeeting = false;
+
+                EventHandlers.PlayerManager.KillMostVotedPlayer();
+                EventHandlers.PlayerManager.ClearAllPlayersVotes();
             }
-            caller.GetInfo().CalledEmergencyMeeting = false;
-            PlayerInfo.KillMostVotedPlayer();
-            PlayerInfo.ClearAllPlayersVotes();
         }
 
         public static void ModifyLightIntensity(float intensity)
@@ -132,18 +134,14 @@ namespace AmongSCP
             
         }
 
-        public static IEnumerator<float> Levitate(Pickup pickup, float heightMultiplier, float speedMultiplier)
+        public static IEnumerator<float> CheckCrewmates()
         {
-            var transform = pickup.transform;
-
-            while (pickup != null)
+            while(true)
             {
-                var vector = transform.position;
-                vector.y += heightMultiplier * (float) Math.Sin(Time.timeSinceLevelLoad / speedMultiplier);
-
-                transform.position = vector;
-                pickup.Networkposition = vector;
-                
+                if (EventHandlers.PlayerManager.Crewmates.Count <= EventHandlers.PlayerManager.Imposters.Count)
+                {
+                    Round.ForceEnd();
+                }
                 yield return Timing.WaitForOneFrame;
             }
         }

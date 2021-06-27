@@ -21,7 +21,7 @@ namespace AmongSCP
         public RoleType CrewmateRole { get; set; } = RoleType.NtfCommander;
 
         [Description("The number of emergncy meetings for each person.")]
-        public int EmergencyMeetings { get; set; } = 2;
+        public int EmergencyMeetings { get; set; } = 5;
 
         [Description("Item that when dropped will call an emergency meeting.")]
         public ItemType EmergencyMeetingTrigger { get; set; } = ItemType.Disarmer;

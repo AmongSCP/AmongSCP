@@ -52,50 +52,5 @@ namespace AmongSCP.PlayerManager
             
             _manager.ReloadLists();
         }
-
-        public static void ClearAllPlayersVotes()
-        {
-            foreach(Player ply in EventHandlers.PlayerManager.AlivePlayers)
-            {
-                ply.GetInfo().votes = 0;
-                ply.GetInfo().hasVoted = false;
-            }
-        }
-
-        public static void KillMostVotedPlayer()
-        {
-            int maxVotes = EventHandlers.PlayerManager.AlivePlayers[1].GetInfo().votes;
-
-            int totalVotes = 0;
-
-            int totalSkips = 0;
-
-            int tieVotes = 0;
-
-            Player player = EventHandlers.PlayerManager.AlivePlayers[1];
-
-            foreach (Player ply in EventHandlers.PlayerManager.AlivePlayers)
-            {
-                if(ply.GetInfo().votes > maxVotes)
-                {
-                    maxVotes = ply.GetInfo().votes;
-                    player = ply;
-                    totalVotes += ply.GetInfo().votes;
-                    if(!ply.GetInfo().hasVoted)
-                    {
-                        totalSkips++;
-                    }
-                }
-                else if(ply.GetInfo().votes == maxVotes)
-                {
-                    tieVotes = ply.GetInfo().votes;
-                }
-            }
-
-            if (totalVotes <= totalSkips || tieVotes == maxVotes) return;
-            player.SetRole(RoleType.Spectator);
-
-        }
-
     }
 }
