@@ -43,9 +43,27 @@ namespace AmongSCP
 
         public void SpawnHats(Player[] players)
         {
-            foreach(Player ply in players)
+            List<ItemType> possibleItems = new List<ItemType>()
             {
-                var hatInteractable = new HatInteractable(ply, ItemType.KeycardJanitor);
+                ItemType.KeycardChaosInsurgency,
+                ItemType.KeycardContainmentEngineer,
+                ItemType.KeycardFacilityManager,
+                ItemType.KeycardGuard,
+                ItemType.KeycardJanitor,
+                ItemType.KeycardO5,
+                ItemType.KeycardNTFLieutenant,
+                ItemType.KeycardScientist,
+                ItemType.KeycardSeniorGuard,
+                ItemType.KeycardZoneManager
+            };
+
+            possibleItems.ShuffleListSecure();
+
+            int count = 0;
+            foreach (Player ply in players)
+            {
+                var hatInteractable = new HatInteractable(ply, possibleItems[count]);
+                count++;
             }
         }
     }

@@ -1,5 +1,6 @@
 ﻿using AmongSCP.Map;
 using Exiled.API.Features;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -9,9 +10,9 @@ namespace AmongSCP
     {
         private readonly List<Task> _possibleTasks = new List<Task>();
 
-        public readonly List<Task> CurrentTasks = new List<Task>();
+        public List<Task> CurrentTasks = new List<Task>();
 
-        public readonly Dictionary<Player, List<Task>> PlayerTasks = new Dictionary<Player, List<Task>>();
+        public Dictionary<Player, List<Task>> PlayerTasks = new Dictionary<Player, List<Task>>();
 
         public int TasksCompleted;
 
@@ -61,7 +62,16 @@ namespace AmongSCP
 
         public bool AllTasksCompleted()
         {
-            return CurrentTasks.Count == 0;
+            try
+            {
+                return !CurrentTasks.Any();
+            }
+            catch(Exception e)
+            {
+                Log.Debug(e);
+                return true;
+            }
+            
         }
 
         public void AddMultipleInstance(int num, Task task)
@@ -79,19 +89,25 @@ namespace AmongSCP
 
         public void HandleTaskCompletion(Player player, Task task)
         {
-            PlayerTasks[player].Remove(task);
-            CurrentTasks.Remove(task);
-
-            if(AllTasksCompleted())
+            try
+            {
+                PlayerTasks[player].Remove(task);
+                CurrentTasks.Remove(task);
+            }
+            catch (Exception e)
+            {
+                Log.Debug(e);
+            }
+            if (AllTasksCompleted())
             {
                 EventHandlers.PlayerManager.ClearImposters();
             }
-            Log.Debug(CurrentTasks.Count);
         }
 
         public bool TryCompletingTask(Player ply, TaskType taskType)
         {
             var task = GetPlayerTask(ply, taskType);
+
             if (task == null) return false;
 
             HandleTaskCompletion(ply, task);

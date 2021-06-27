@@ -66,7 +66,6 @@ namespace AmongSCP
            
             foreach (Room room in Exiled.API.Features.Map.Rooms)
             {
-                Log.Debug("Method ModifyLightIntensity() invoked.");
                 room.SetLightIntensity(intensity);
                 curLightIntensity = intensity;
             }

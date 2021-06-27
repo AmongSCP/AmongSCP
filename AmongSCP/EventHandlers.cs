@@ -111,6 +111,7 @@ namespace AmongSCP
                 Timing.KillCoroutines();
                 Timing.RunCoroutine(Util.CheckCrewmates());
                 SpawnInteractables = new SpawnInteractables();
+                TaskManager = new TaskManager();
                 PlayerManager.UpdateQueueNoWait();
 
                 var players = PlayerManager.PickPlayers(AmongSCP.Singleton.Config.MaxPlayers);

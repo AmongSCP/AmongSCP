@@ -9,15 +9,15 @@ namespace AmongSCP.PlayerManager
 {
     public class PlayerManager
     {
-        public readonly List<Player> Imposters = new List<Player>();
+        public List<Player> Imposters = new List<Player>();
 
-        public readonly List<Player> Crewmates = new List<Player>();
+        public List<Player> Crewmates = new List<Player>();
 
-        public readonly List<Player> AlivePlayers = new List<Player>();
+        public List<Player> AlivePlayers = new List<Player>();
 
-        public readonly List<Player> DeadPlayers = new List<Player>();
+        public List<Player> DeadPlayers = new List<Player>();
 
-        public readonly OrderedDictionary<Player, PlayerInfo> Players = new OrderedDictionary<Player, PlayerInfo>();
+        public OrderedDictionary<Player, PlayerInfo> Players = new OrderedDictionary<Player, PlayerInfo>();
 
         public void EndGame()
         {
@@ -89,10 +89,22 @@ namespace AmongSCP.PlayerManager
         
         public void ClearImposters()
         {
-            foreach (var player in Imposters)
+            foreach (Player player in Player.List)
             {
-                player.Role = RoleType.Spectator;
+                try
+                {
+                    if (player.GetInfo().Role == Role.Imposter)
+                    {
+                        player.Role = RoleType.Spectator;
+                    }
+                }
+                catch(Exception e)
+                {
+                    continue;
+                }
+                
             }
+
             Log.Debug("Method ClearImposters() invoked");
         }
         
