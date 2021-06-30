@@ -30,6 +30,11 @@ jobs:
         file-url: 'https://www.exiled.host/build_deps/References.zip'
         file-name: 'References.zip'
 
+    - uses: carlosperate/download-file-action@v1.0.3
+      with:
+        file-url: 'https://github.com/SCPStats/Plugin/releases/download/1.2.5/SCPStats.dll'
+        file-name: 'SCPStats.dll'
+
     - name: Download 7zip
       uses: carlosperate/download-file-action@v1.0.3
       with:
@@ -38,6 +43,8 @@ jobs:
 
     - name: Extract Refs
       run: ./7zip.exe e References.zip -oAmongSCP/lib/ -r -y
+
+    - run: move SCPStats.dll AmongSCP/lib/SCPStats.dll
 
     - name: Build
       run: msbuild AmongSCP.sln -p:Configuration=release
