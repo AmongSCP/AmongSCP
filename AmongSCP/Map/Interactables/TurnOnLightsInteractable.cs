@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UnityEngine;
-using Exiled.API.Features;
+﻿using UnityEngine;
 
 namespace AmongSCP.Map.Interactables
 {
@@ -14,8 +8,8 @@ namespace AmongSCP.Map.Interactables
 
         public TurnOnLightsInteractable(Vector3 position, ItemType item)
         {
-            Vector3 pos = position;
-            ItemData itemData = new ItemData(item, position, Quaternion.identity, new Vector3(2, 2, 2));
+            var pos = position;
+            var itemData = new ItemData(item, position, Quaternion.identity, new Vector3(2, 2, 2));
             _interactable = new Interactable(itemData, player => Util.ModifyLightIntensity(1));
         }
     }

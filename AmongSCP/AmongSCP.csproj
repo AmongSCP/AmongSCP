@@ -80,8 +80,8 @@
     <Reference Include="Mirror.Components, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
       <HintPath>lib\Mirror.Components.dll</HintPath>
     </Reference>
-    <Reference Include="SCPStats %281%29">
-      <HintPath>..\..\..\..\Downloads\SCPStats (1).dll</HintPath>
+    <Reference Include="SCPStats, Version=1.2.5.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>lib/SCPStats.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -130,7 +130,6 @@
     <Compile Include="PlayerManager\PlayerManager.cs" />
     <Compile Include="PlayerManager\Role.cs" />
     <Compile Include="PointManager.cs" />
-    <Compile Include="Position.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SpawnInteractables.cs" />
     <Compile Include="TaskManager.cs" />

@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel;
 using Exiled.API.Interfaces;
+using Exiled.CustomItems.API.Features;
 
 namespace AmongSCP
 {
@@ -30,12 +31,7 @@ namespace AmongSCP
         public float VentTime { get; set; } = 10;
         
         [Description("Location when someone calls a emergency meeting or voting starts. Tutorial tower position is 54, 1020, -45.")]
-        public Position VotePosition { get; set; } = new Position()
-        {
-            X = 54,
-            Y = 1020,
-            Z = -45
-        };
+        public Vector VotePosition { get; set; } = new Vector(54, 1020, -45);
 
         [Description("The distance you have to be from a body to be able to trigger a report.")]
         public float MaxReportDistance { get; set; } = 2f;

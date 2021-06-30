@@ -54,8 +54,14 @@ namespace AmongSCP
             var plyinfo = ev.Target.GetInfo();
             plyinfo.IsAlive = false;
             plyinfo.Role = global::AmongSCP.PlayerManager.Role.None;
-
             
+            if (ev.Target.Role == RoleType.ChaosInsurgency) return;
+
+            if (EventHandlers.PlayerManager.Crewmates.Count <= EventHandlers.PlayerManager.Imposters.Count || EventHandlers.PlayerManager.Imposters.Count == 0)
+            {
+                Round.ForceEnd();
+            }
+            Log.Debug(TaskManager.CurrentTasks.Count.ToString());
         }
 
         public static void OnRagdollSpawn(SpawningRagdollEventArgs ev)
@@ -171,19 +177,19 @@ namespace AmongSCP
 
         public static void OnItemDrop(DroppingItemEventArgs ev)
         {
-            if(ev.Item.id == ItemType.GrenadeFlash)
+            switch (ev.Item.id)
             {
-                //Log.Debug("Grenade Flash is being called.");
-                Util.ModifyLightIntensity(0);
-            }
-            if(ev.Item.id == ItemType.GrenadeFrag && Util.CanNuke)
-            {
-                //Log.Debug("Warhead is being called.");
-                Util.RunDetonateWarhead();
+                case ItemType.GrenadeFlash:
+                    //Log.Debug("Grenade Flash is being called.");
+                    Util.ModifyLightIntensity(0);
+                    break;
+                case ItemType.GrenadeFrag when Util.CanNuke:
+                    //Log.Debug("Warhead is being called.");
+                    Util.RunDetonateWarhead();
+                    break;
             }
 
             ev.IsAllowed = false;
-            
         }
         
         public static void OnGameEnd(RoundEndedEventArgs ev)

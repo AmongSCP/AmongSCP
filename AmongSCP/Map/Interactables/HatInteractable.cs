@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Exiled.API.Features;
+﻿using Exiled.API.Features;
 
 namespace AmongSCP.Map.Interactables
 {
@@ -26,17 +21,14 @@ namespace AmongSCP.Map.Interactables
             {
                 Log.Debug(Util.meetingStarted.ToString());
                 Log.Debug((!player.GetInfo().hasVoted).ToString());
-                if(Util.meetingStarted && !player.GetInfo().hasVoted)
-                {
-                    Log.Debug("voted");
-                    Player.GetInfo().votes++;
-                    player.GetInfo().hasVoted = true;
-                    Util.VoteAmount++;
-                }
+
+                if (!Util.meetingStarted || player.GetInfo().hasVoted) return;
+                Log.Debug("voted");
+                Player.GetInfo().votes++;
+                player.GetInfo().hasVoted = true;
+                Util.VoteAmount++;
             });
             SCPStats.API.API.SpawnHat(Player, interactable.Pickup, new UnityEngine.Vector3(0f, .1f, 0f), UnityEngine.Quaternion.identity);
         }
-
-
     }
 }

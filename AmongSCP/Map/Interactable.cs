@@ -14,13 +14,15 @@ namespace AmongSCP.Map
         private InteractableBehavior _interactable;
         private Action<Player> _action;
 
-        private bool _destroyOnInteract = false;
-        private bool _pickupOnInteract = false;
+        private bool _destroyOnInteract;
+        private bool _pickupOnInteract;
 
-        public Interactable(ItemData data, Action<Player> onInteract, bool destroyOnInteract = false, bool pickupOnInteract = false, bool levitate = false, float height = 1.5f, float speed = 1)
+        public Interactable(ItemData data, Action<Player> onInteract, bool destroyOnInteract = false, bool pickupOnInteract = false, bool levitate = false, float levitateHeight = 1.5f, float levitateSpeed = 1)
         {
             _action = onInteract;
             _destroyOnInteract = destroyOnInteract;
+            _pickupOnInteract = pickupOnInteract;
+
             var gameObject = UnityEngine.Object.Instantiate<GameObject>(Server.Host.Inventory.pickupPrefab);
 
             gameObject.transform.localScale = data.scale;
@@ -44,7 +46,7 @@ namespace AmongSCP.Map
             _interactable = gameObject.AddComponent<InteractableBehavior>();
             _interactable.Interactable = this;
 
-           // Timing.RunCoroutine(Levitate(pickup, height, speed));
+           if(levitate) Timing.RunCoroutine(Util.Levitate(pickup, levitateHeight, levitateSpeed));
         }
 
         public bool OnInteract(Player p)
@@ -66,22 +68,6 @@ namespace AmongSCP.Map
             _interactable = null;
 
             return true;
-        }
-
-        public IEnumerator<float> Levitate(Pickup pickup, float heightMultiplier, float speedMultiplier)
-        {
-            var transform = pickup.transform;
-
-            while (pickup != null)
-            {
-                var vector = transform.position;
-                vector.y += heightMultiplier * (float)Math.Sin(Time.timeSinceLevelLoad / speedMultiplier);
-
-                transform.position = vector;
-                pickup.Networkposition = vector;
-
-                yield return Timing.WaitForOneFrame;
-            }
         }
     }
 }

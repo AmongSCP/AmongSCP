@@ -5,7 +5,6 @@ using MEC;
 using Exiled.API.Extensions;
 using Interactables.Interobjects.DoorUtils;
 using UnityEngine;
-using AmongSCP.PlayerManager;
 
 namespace AmongSCP
 {
@@ -27,7 +26,7 @@ namespace AmongSCP
             meetingStarted = true;
             var meetingTime = isBodyReport ? AmongSCP.Singleton.Config.BodyReportedMeetingTime : AmongSCP.Singleton.Config.EmergencyTime;
 
-            var votePos = AmongSCP.Singleton.Config.VotePosition.GetPositions();
+            var votePos = AmongSCP.Singleton.Config.VotePosition.ToVector3;
 
             Exiled.API.Features.Map.ShowHint(message, 5f);
 
@@ -46,7 +45,7 @@ namespace AmongSCP
 
                 yield return Timing.WaitForSeconds(1f);
 
-                meetingTime -= 1;
+                meetingTime--;
 
                 if (meetingTime >= 1 && VoteAmount!=EventHandlers.PlayerManager.AlivePlayers.Count) continue;
 
@@ -116,7 +115,7 @@ namespace AmongSCP
             {
                 if(Warhead.DetonationTimer <= 9f)
                 {
-                    foreach(Player ply in EventHandlers.PlayerManager.Imposters)
+                    foreach(var ply in EventHandlers.PlayerManager.Imposters)
                     {
                         ply.Position = Exiled.API.Features.Map.GetRandomSpawnPoint(RoleType.ChaosInsurgency);
                     }
@@ -131,6 +130,22 @@ namespace AmongSCP
         public static void RemoveAllItems()
         {
             
+        }
+        
+        public static IEnumerator<float> Levitate(Pickup pickup, float heightMultiplier, float speedMultiplier)
+        {
+            var transform = pickup.transform;
+
+            while (pickup != null)
+            {
+                var vector = transform.position;
+                vector.y += heightMultiplier * (float)Math.Sin(Time.timeSinceLevelLoad / speedMultiplier);
+
+                transform.position = vector;
+                pickup.Networkposition = vector;
+
+                yield return Timing.WaitForOneFrame;
+            }
         }
     }
 }

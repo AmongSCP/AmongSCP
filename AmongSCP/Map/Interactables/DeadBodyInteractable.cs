@@ -10,7 +10,7 @@ namespace AmongSCP.Map.Interactables
         public DeadBodyInteractable(Vector3 pos, string name)
         {
             var deadBodyPosition = pos;
-            deadBodyPosition.y += 1;
+            deadBodyPosition.y++;
 
             var deadBodyItemData = new ItemData(ItemType.SCP018, deadBodyPosition, Quaternion.identity, new Vector3(2, 2, 2));
 
