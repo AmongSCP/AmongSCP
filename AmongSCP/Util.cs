@@ -132,17 +132,5 @@ namespace AmongSCP
         {
             
         }
-
-        public static IEnumerator<float> CheckCrewmates()
-        {
-            while(true)
-            {
-                if (EventHandlers.PlayerManager.Crewmates.Count <= EventHandlers.PlayerManager.Imposters.Count)
-                {
-                    Round.ForceEnd();
-                }
-                yield return Timing.WaitForOneFrame;
-            }
-        }
     }
 }

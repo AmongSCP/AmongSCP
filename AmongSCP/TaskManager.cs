@@ -10,9 +10,9 @@ namespace AmongSCP
     {
         private readonly List<Task> _possibleTasks = new List<Task>();
 
-        public List<Task> CurrentTasks = new List<Task>();
+        public readonly List<Task> CurrentTasks = new List<Task>();
 
-        public Dictionary<Player, List<Task>> PlayerTasks = new Dictionary<Player, List<Task>>();
+        public readonly Dictionary<Player, List<Task>> PlayerTasks = new Dictionary<Player, List<Task>>();
 
         public int TasksCompleted;
 

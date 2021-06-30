@@ -9,17 +9,17 @@ namespace AmongSCP.PlayerManager
 {
     public class PlayerManager
     {
-        public List<Player> Imposters = new List<Player>();
+        public readonly List<Player> Imposters = new List<Player>();
 
-        public List<Player> Crewmates = new List<Player>();
+        public readonly List<Player> Crewmates = new List<Player>();
 
-        public List<Player> AlivePlayers = new List<Player>();
+        public readonly List<Player> AlivePlayers = new List<Player>();
 
-        public List<Player> DeadPlayers = new List<Player>();
+        public readonly List<Player> DeadPlayers = new List<Player>();
 
-        public OrderedDictionary<Player, PlayerInfo> Players = new OrderedDictionary<Player, PlayerInfo>();
+        public readonly OrderedDictionary<Player, PlayerInfo> Players = new OrderedDictionary<Player, PlayerInfo>();
 
-        public void EndGame()
+        public void EndGame()   
         {
             Imposters.Clear();
             Crewmates.Clear();
@@ -104,8 +104,6 @@ namespace AmongSCP.PlayerManager
                 }
                 
             }
-
-            Log.Debug("Method ClearImposters() invoked");
         }
         
         public void ClearCrewmates()
@@ -161,6 +159,7 @@ namespace AmongSCP.PlayerManager
 
             
             if (totalVotes <= totalSkips || tieVotes == maxVotes) return;
+            Log.Debug("No return");
             player.SetRole(RoleType.Spectator);
         }
     }

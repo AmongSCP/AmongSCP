@@ -57,12 +57,10 @@ namespace AmongSCP
             
             if (ev.Target.Role == RoleType.ChaosInsurgency) return;
 
-            /*
-            foreach(Task task in TaskManager.GetPlayerTasks(ev.Target))
+            if (EventHandlers.PlayerManager.Crewmates.Count <= EventHandlers.PlayerManager.Imposters.Count || EventHandlers.PlayerManager.Imposters.Count == 0)
             {
-                TaskManager.CurrentTasks.Remove(task);
+                Round.ForceEnd();
             }
-            */
             Log.Debug(TaskManager.CurrentTasks.Count.ToString());
         }
 
@@ -108,8 +106,6 @@ namespace AmongSCP
             {
                 Util.SetUpDoors();
                 Util.RemoveAllItems();
-                Timing.KillCoroutines();
-                Timing.RunCoroutine(Util.CheckCrewmates());
                 SpawnInteractables = new SpawnInteractables();
                 TaskManager = new TaskManager();
                 PlayerManager.UpdateQueueNoWait();
