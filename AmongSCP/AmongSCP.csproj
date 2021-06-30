@@ -80,7 +80,7 @@
     <Reference Include="Mirror.Components, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
       <HintPath>lib\Mirror.Components.dll</HintPath>
     </Reference>
-    <Reference Include="SCPStats, Version=1.2.5, Culture=neutral, PublicKeyToken=null">
+    <Reference Include="SCPStats, Version=1.2.5.0, Culture=neutral, PublicKeyToken=null">
       <HintPath>lib/SCPStats.dll</HintPath>
     </Reference>
     <Reference Include="System" />
