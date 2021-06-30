@@ -54,14 +54,8 @@ namespace AmongSCP
             var plyinfo = ev.Target.GetInfo();
             plyinfo.IsAlive = false;
             plyinfo.Role = global::AmongSCP.PlayerManager.Role.None;
-            
-            if (ev.Target.Role == RoleType.ChaosInsurgency) return;
 
-            if (EventHandlers.PlayerManager.Crewmates.Count <= EventHandlers.PlayerManager.Imposters.Count || EventHandlers.PlayerManager.Imposters.Count == 0)
-            {
-                Round.ForceEnd();
-            }
-            Log.Debug(TaskManager.CurrentTasks.Count.ToString());
+            
         }
 
         public static void OnRagdollSpawn(SpawningRagdollEventArgs ev)
