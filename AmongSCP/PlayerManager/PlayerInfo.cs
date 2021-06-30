@@ -1,6 +1,5 @@
 ﻿using System;
 using UnityEngine;
-using Exiled.API.Features;
 
 namespace AmongSCP.PlayerManager
 {
@@ -15,7 +14,7 @@ namespace AmongSCP.PlayerManager
             set
             {
                 _role = value;
-                
+
                 _manager.ReloadLists();
             }
         }
@@ -27,7 +26,7 @@ namespace AmongSCP.PlayerManager
             set
             {
                 _isAlive = value;
-                
+
                 _manager.ReloadLists();
             }
         }
@@ -49,7 +48,7 @@ namespace AmongSCP.PlayerManager
         public PlayerInfo(PlayerManager manager)
         {
             _manager = manager;
-            
+
             _manager.ReloadLists();
         }
     }

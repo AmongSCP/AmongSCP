@@ -1,16 +1,14 @@
 ﻿using HarmonyLib;
+using System;
+using Exiled.API.Enums;
+using Exiled.API.Features;
+using PlayerEvent = Exiled.Events.Handlers.Player;
+using ServerEvent = Exiled.Events.Handlers.Server;
+using MapEvent = Exiled.Events.Handlers.Map;
+using Warhead = Exiled.Events.Handlers.Warhead;
 
 namespace AmongSCP
 {
-    using System;
-    using Exiled.API.Enums;
-    using Exiled.API.Features;
-    
-    using PlayerEvent = Exiled.Events.Handlers.Player;
-    using ServerEvent = Exiled.Events.Handlers.Server;
-    using MapEvent = Exiled.Events.Handlers.Map;
-    using Warhead = Exiled.Events.Handlers.Warhead;
-    
     public class AmongSCP : Plugin<Config>
     {
         public override string Author { get; } = "Parkeymon, PintTheDragon, RedRanger26";

@@ -89,26 +89,15 @@ namespace AmongSCP.PlayerManager
         
         public void ClearImposters()
         {
-            foreach (Player player in Player.List)
+            foreach (var player in Imposters.ToList())
             {
-                try
-                {
-                    if (player.GetInfo().Role == Role.Imposter)
-                    {
-                        player.Role = RoleType.Spectator;
-                    }
-                }
-                catch(Exception e)
-                {
-                    continue;
-                }
-                
+                player.Role = RoleType.Spectator;
             }
         }
         
         public void ClearCrewmates()
         {
-            foreach (var player in Crewmates)
+            foreach (var player in Crewmates.ToList())
             {
                 player.Role = RoleType.Spectator;
             }
@@ -117,50 +106,28 @@ namespace AmongSCP.PlayerManager
         public void ClearAllPlayersVotes()
         {
             Log.Debug("Method ClearAllPlayersVotes() invoked.");
-            foreach (Player ply in AlivePlayers)
+            foreach (var ply in AlivePlayers)
             {
-                ply.GetInfo().votes = 0;
-                ply.GetInfo().hasVoted = false;
+                var info = ply.GetInfo();
+                
+                info.votes = 0;
+                info.hasVoted = false;
             }
         }
 
-        public void KillMostVotedPlayer()
+        public bool KillMostVotedPlayer()
         {
-            int maxVotes = EventHandlers.PlayerManager.AlivePlayers[0].GetInfo().votes;
+            var votes = EventHandlers.PlayerManager.AlivePlayers.OrderByDescending(ply => ply.GetInfo().votes).ToList();
+            var skips = EventHandlers.PlayerManager.AlivePlayers.Count(ply => !ply.GetInfo().hasVoted);
 
-            int totalVotes = 0;
-
-            int totalSkips = 0;
-
-            int tieVotes = 0;
-
-            Player player = EventHandlers.PlayerManager.AlivePlayers[0];
-
+            var first = votes.Count > 0 ? votes[0].GetInfo().votes : 0;
+            var second = votes.Count > 1 ? votes[1].GetInfo().votes : 0;
             
-            foreach (Player ply in EventHandlers.PlayerManager.AlivePlayers)
-            {
-                if (ply.GetInfo().votes > maxVotes)
-                {
-                    maxVotes = ply.GetInfo().votes;
-                    player = ply;
-                    totalVotes += ply.GetInfo().votes;
-                    if (!ply.GetInfo().hasVoted)
-                    {
-                        totalSkips++;
-                    }
-                }
-                else if (ply.GetInfo().votes == maxVotes)
-                {
-                    tieVotes = ply.GetInfo().votes;
-                }
-            }
-            Log.Debug("Max Votes " + maxVotes);
-            Log.Debug((totalVotes <= totalSkips || tieVotes == maxVotes).ToString());
+            //If there are no votes or first is tied or there are >= skips to first
+            if (votes.Count < 1 || first <= second || skips >= first) return false;
 
-            
-            if (totalVotes <= totalSkips || tieVotes == maxVotes) return;
-            Log.Debug("No return");
-            player.SetRole(RoleType.Spectator);
+            votes[0].SetRole(RoleType.Spectator);
+            return true;
         }
     }
 }

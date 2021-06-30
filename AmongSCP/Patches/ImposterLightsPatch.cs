@@ -1,7 +1,5 @@
 ﻿using Exiled.API.Extensions;
 using HarmonyLib;
-using UnityEngine;
-using Mirror;
 using Exiled.API.Features;
 
 namespace AmongSCP.Patches
@@ -11,18 +9,11 @@ namespace AmongSCP.Patches
     {
         public static bool Prefix(FlickerableLightController __instance, float intensityMultiplier)
         {
-            foreach (Player ply in Player.List)
+            foreach (var ply in Player.List)
             {
                var playerInfo = ply.GetInfo();
 
-               if (playerInfo.Role == PlayerManager.Role.Imposter)
-               {
-                    MirrorExtensions.SendFakeTargetRpc(ply, __instance.netIdentity, typeof(FlickerableLightController), nameof(FlickerableLightController.RpcSetLightIntensity), 1f);
-               }
-               else
-               {
-                    MirrorExtensions.SendFakeTargetRpc(ply, __instance.netIdentity, typeof(FlickerableLightController), nameof(FlickerableLightController.RpcSetLightIntensity), intensityMultiplier);
-               }
+               MirrorExtensions.SendFakeTargetRpc(ply, __instance.netIdentity, typeof(FlickerableLightController), nameof(FlickerableLightController.RpcSetLightIntensity), playerInfo.Role == PlayerManager.Role.Imposter ? 1f : intensityMultiplier);
             }
             return false;
         }

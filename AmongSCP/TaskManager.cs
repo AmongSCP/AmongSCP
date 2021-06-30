@@ -71,7 +71,6 @@ namespace AmongSCP
                 Log.Debug(e);
                 return true;
             }
-            
         }
 
         public void AddMultipleInstance(int num, Task task)
