@@ -64,12 +64,13 @@ namespace AmongSCP
         {
             try
             {
-                return !CurrentTasks.Any();
+                Log.Debug(CurrentTasks.Count);
+                return CurrentTasks.Count == 0;
             }
             catch(Exception e)
             {
                 Log.Debug(e);
-                return true;
+                return false;
             }
         }
 

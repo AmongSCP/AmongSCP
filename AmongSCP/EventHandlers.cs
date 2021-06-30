@@ -6,7 +6,6 @@ using MEC;
 using Exiled.API.Extensions;
 using Exiled.API.Features;
 using System.Linq;
-using SCPStats.API;
 
 namespace AmongSCP
 {
@@ -73,6 +72,7 @@ namespace AmongSCP
 
         public static void OnRoleChanging(ChangingRoleEventArgs ev)
         {
+            Log.Debug("OnRoleChanging() invoked.");
             if (ev.NewRole == RoleType.Tutorial || ev.NewRole == RoleType.Spectator)
             {
                 var plyinfo = ev.Player.GetInfo();
