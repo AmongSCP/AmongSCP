@@ -47,7 +47,7 @@ namespace AmongSCP
 
         public void ShowPlayerTasks(Player ply)
         {
-
+            
         }
 
         public List<Task> GetPlayerTasks(Player ply)
@@ -65,6 +65,10 @@ namespace AmongSCP
             try
             {
                 Log.Debug(CurrentTasks.Count);
+                if(CurrentTasks.Count == 0)
+                {
+                    Exiled.API.Features.Map.ShowHint("Crewmates win!", 5f);
+                }
                 return CurrentTasks.Count == 0;
             }
             catch(Exception e)
@@ -85,6 +89,23 @@ namespace AmongSCP
         public Task GetPlayerTask(Player player, TaskType taskType)
         {
             return PlayerTasks.TryGetValue(player, out var arr) ? arr.FirstOrDefault(task => task.TaskType == taskType) : null;
+        }
+
+        public void DeletePlayerTasks(Player ply)
+        {
+            foreach(Task task in GetPlayerTasks(ply))
+            {
+                try
+                {
+                    CurrentTasks.Remove(task);
+                }
+                catch(Exception e)
+                {
+                    Log.Debug(e);
+                }
+            }
+            PlayerTasks.Remove(ply);
+            Log.Debug(CurrentTasks.Count + " Tasks Left");
         }
 
         public void HandleTaskCompletion(Player player, Task task)

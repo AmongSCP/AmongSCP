@@ -5,6 +5,7 @@ using MEC;
 using Exiled.API.Extensions;
 using Interactables.Interobjects.DoorUtils;
 using UnityEngine;
+using Exiled.API.Enums;
 
 namespace AmongSCP
 {
@@ -32,7 +33,7 @@ namespace AmongSCP
 
             foreach (var ply in Player.List)
             {
-                ply.Position = votePos;
+                if(ply.GetInfo().IsAlive) ply.Position = votePos;
             }
 
             while (meetingStarted)
@@ -96,6 +97,8 @@ namespace AmongSCP
                 {
                     MirrorExtensions.SendFakeSyncVar(target, ply.ReferenceHub.networkIdentity, typeof(CharacterClassManager), nameof(CharacterClassManager.NetworkCurClass), (sbyte)ply.Role);
                 }
+                target.NoClipEnabled = false;
+                target.IsInvisible = false;
             }
         }
 
@@ -127,9 +130,29 @@ namespace AmongSCP
             Timing.CallDelayed(AmongSCP.Singleton.Config.NukeCooldown, () => CanNuke = true);
         }
 
-        public static void RemoveAllItems()
+        public static void GhostMode(Player player)
         {
-            
+            /*
+            foreach(Player ply in Player.List)
+            {
+                if (!ply.GetInfo().IsAlive)
+                {
+                    try
+                    {
+                        MirrorExtensions.SendFakeSyncVar(ply, player.ReferenceHub.networkIdentity, typeof(PlayerEffectsController), nameof(PlayerEffectsController.EnableEffect), EffectType.Scp268);
+                    }
+                    catch (Exception e)
+                    {
+                        Log.Debug(e);
+                    }
+                }     
+            }
+            */
+            player.IsInvisible = true;
+            player.Inventory.AddNewItem(ItemType.Adrenaline);
+            player.NoClipEnabled = true;
+            player.ShowHint("Left click on adrenaline to teleport back to the default area.", 10f);
+            Log.Debug("No clip enabled");
         }
         
         public static IEnumerator<float> Levitate(Pickup pickup, float heightMultiplier, float speedMultiplier)

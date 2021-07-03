@@ -44,6 +44,8 @@ namespace AmongSCP
         public static void OnDying(DyingEventArgs ev)
         {
             ev.Target.Items.Clear();
+            if (ev.Target.GetInfo().Role == global::AmongSCP.PlayerManager.Role.Imposter) return;
+            TaskManager.DeletePlayerTasks(ev.Target);
         }
         
         public static void OnDied(DiedEventArgs ev)
@@ -58,9 +60,9 @@ namespace AmongSCP
 
             if (EventHandlers.PlayerManager.Crewmates.Count <= EventHandlers.PlayerManager.Imposters.Count || EventHandlers.PlayerManager.Imposters.Count == 0)
             {
+                Exiled.API.Features.Map.ShowHint("Imposters win!", 5f);
                 Round.ForceEnd();
             }
-            Log.Debug(TaskManager.CurrentTasks.Count.ToString());
         }
 
         public static void OnRagdollSpawn(SpawningRagdollEventArgs ev)
@@ -72,7 +74,6 @@ namespace AmongSCP
 
         public static void OnRoleChanging(ChangingRoleEventArgs ev)
         {
-            Log.Debug("OnRoleChanging() invoked.");
             if (ev.NewRole == RoleType.Tutorial || ev.NewRole == RoleType.Spectator)
             {
                 var plyinfo = ev.Player.GetInfo();
@@ -101,11 +102,9 @@ namespace AmongSCP
         public static void OnGameStart()
         {
             _starting = true;
-            Log.Debug("Round has started now.");
             Timing.CallDelayed(.1f, () =>
             {
                 Util.SetUpDoors();
-                Util.RemoveAllItems();
                 SpawnInteractables = new SpawnInteractables();
                 TaskManager = new TaskManager();
                 PlayerManager.UpdateQueueNoWait();
@@ -150,7 +149,7 @@ namespace AmongSCP
                         imposter.Inventory.AddNewItem(ItemType.GrenadeFlash);
                         imposter.Inventory.AddNewItem(ItemType.GrenadeFrag);
                     }
-
+                    
                     Timing.CallDelayed(.1f, () =>
                     {
                         PointManager.SpawnPlayers(players);
@@ -186,6 +185,9 @@ namespace AmongSCP
                 case ItemType.GrenadeFrag when Util.CanNuke:
                     //Log.Debug("Warhead is being called.");
                     Util.RunDetonateWarhead();
+                    break;
+                case ItemType.Adrenaline:
+                    ev.Player.Position = new UnityEngine.Vector3(77.2f, -998.67f, 199.3183f);
                     break;
             }
 
@@ -264,11 +266,7 @@ namespace AmongSCP
         //Task Event Handlers
         public static void OnOpeningGenerator(UnlockingGeneratorEventArgs ev)
         {
-            if (!TaskManager.TryCompletingTask(ev.Player, TaskType.Generator))
-            {
-                Log.Debug("Task not valid");
-                return;
-            }
+            if (!TaskManager.TryCompletingTask(ev.Player, TaskType.Generator)) return;
 
             MirrorExtensions.SendFakeSyncVar(ev.Player, ev.Generator.netIdentity, typeof(Generator079), nameof(Generator079.NetworkisDoorUnlocked), true);
             MirrorExtensions.SendFakeSyncVar(ev.Player, ev.Generator.netIdentity, typeof(Generator079), nameof(Generator079.NetworkisDoorOpen), true);

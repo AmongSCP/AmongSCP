@@ -44,7 +44,7 @@ namespace AmongSCP.PlayerManager
         public int votes = 0;
 
         public bool hasVoted = false;
-        
+
         public PlayerInfo(PlayerManager manager)
         {
             _manager = manager;
