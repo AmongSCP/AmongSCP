@@ -29,7 +29,7 @@ namespace AmongSCP
 
         public void AddPossibleTasks()
         {
-            AddMultipleInstance(45, new Task("Load weapon Manager Tablet into Generator", TaskType.Generator));
+            AddMultipleInstance(40, new Task("Load weapon Manager Tablet into Generator", TaskType.Generator));
         }
 
         public void SplitTasks()
@@ -43,11 +43,6 @@ namespace AmongSCP
                 PlayerTasks[EventHandlers.PlayerManager.Crewmates[i]] = tasks.ToList();
             }
             Log.Debug(CurrentTasks.Count);
-        }
-
-        public void ShowPlayerTasks(Player ply)
-        {
-            
         }
 
         public List<Task> GetPlayerTasks(Player ply)

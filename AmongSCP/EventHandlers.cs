@@ -55,12 +55,15 @@ namespace AmongSCP
             var plyinfo = ev.Target.GetInfo();
             plyinfo.IsAlive = false;
             plyinfo.Role = global::AmongSCP.PlayerManager.Role.None;
-            
-            if (ev.Target.Role == RoleType.ChaosInsurgency) return;
 
-            if (EventHandlers.PlayerManager.Crewmates.Count <= EventHandlers.PlayerManager.Imposters.Count || EventHandlers.PlayerManager.Imposters.Count == 0)
+            if (EventHandlers.PlayerManager.Crewmates.Count <= EventHandlers.PlayerManager.Imposters.Count)
             {
                 Exiled.API.Features.Map.ShowHint("Imposters win!", 5f);
+                Round.ForceEnd();
+            }
+            else if(TaskManager.AllTasksCompleted() || EventHandlers.PlayerManager.Imposters.Count == 0)
+            {
+                Exiled.API.Features.Map.ShowHint("Crewmates Win!!", 5f);
                 Round.ForceEnd();
             }
         }
@@ -130,6 +133,7 @@ namespace AmongSCP
                         info.Role = global::AmongSCP.PlayerManager.Role.Crewmate;
                         players[i].Role = AmongSCP.Singleton.Config.CrewmateRole;
                         players[i].ShowHint("You are a crewmate!");
+                        players[i].ShowHint("Interact with all 5 generators to complete your tasks.", 15);
                     }
                 }
 

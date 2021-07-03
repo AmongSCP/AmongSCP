@@ -122,6 +122,7 @@
     <Compile Include="Map\Task.cs" />
     <Compile Include="Map\TaskType.cs" />
     <Compile Include="Patches\ImposterLightsPatch.cs" />
+    <Compile Include="Patches\MapSeedPatch.cs" />
     <Compile Include="Patches\SyncCurItemPatch.cs" />
     <Compile Include="Patches\SyncCurItemUniqPatch.cs" />
     <Compile Include="Patches\SyncPlayerClassPatch.cs" />
