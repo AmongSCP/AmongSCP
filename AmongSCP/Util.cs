@@ -130,7 +130,7 @@ namespace AmongSCP
                 {
                     foreach(var ply in EventHandlers.PlayerManager.Imposters)
                     {
-                        ply.Position = Exiled.API.Features.Map.GetRandomSpawnPoint(RoleType.ChaosInsurgency);
+                        ply.Position = Exiled.API.Extensions.Role.GetRandomSpawnPoint(RoleType.ChaosInsurgency);
                     }
                     break;
                 }
