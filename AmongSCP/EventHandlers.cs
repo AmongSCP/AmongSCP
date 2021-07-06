@@ -58,12 +58,12 @@ namespace AmongSCP
 
             if (EventHandlers.PlayerManager.Crewmates.Count <= EventHandlers.PlayerManager.Imposters.Count)
             {
-                Exiled.API.Features.Map.ShowHint("Imposters win!", 5f);
+                Exiled.API.Features.Map.Broadcast((ushort)5f, "Imposters win!");
                 Round.ForceEnd();
             }
             else if(TaskManager.AllTasksCompleted() || EventHandlers.PlayerManager.Imposters.Count == 0)
             {
-                Exiled.API.Features.Map.ShowHint("Crewmates Win!!", 5f);
+                Exiled.API.Features.Map.Broadcast((ushort)5f, "Crewmates Win!!");
                 Round.ForceEnd();
             }
         }
@@ -126,14 +126,14 @@ namespace AmongSCP
                     {
                         info.Role = global::AmongSCP.PlayerManager.Role.Imposter;
                         players[i].Role = AmongSCP.Singleton.Config.ImposterRole;
-                        players[i].ShowHint("You are an Imposter!");
+                        players[i].Broadcast((ushort)3f,"You are an Imposter!");
                     }
                     else
                     {
                         info.Role = global::AmongSCP.PlayerManager.Role.Crewmate;
                         players[i].Role = AmongSCP.Singleton.Config.CrewmateRole;
-                        players[i].ShowHint("You are a crewmate!");
-                        players[i].ShowHint("Interact with all 5 generators to complete your tasks.", 15);
+                        players[i].Broadcast((ushort)3f, "You are a crewmate!");
+                        players[i].Broadcast((ushort)15f, "Interact with all 5 generators to complete your tasks.");
                     }
                 }
 
@@ -221,7 +221,7 @@ namespace AmongSCP
             }
 
             ev.IsAllowed = false;
-            ev.Shooter.ShowHint("You are still on cooldown. " + (AmongSCP.Singleton.Config.KillCooldown - seconds) + " seconds left.");
+            ev.Shooter.Broadcast((ushort)3f, "You are still on cooldown. " + (AmongSCP.Singleton.Config.KillCooldown - seconds) + " seconds left.");
         }
 
         public static void OnPlayerShoot(ShotEventArgs ev)
@@ -270,8 +270,9 @@ namespace AmongSCP
         //Task Event Handlers
         public static void OnOpeningGenerator(UnlockingGeneratorEventArgs ev)
         {
+            if (ev.Player.GetInfo().InteractedGenerators.Contains(ev.Generator)) return;
             if (!TaskManager.TryCompletingTask(ev.Player, TaskType.Generator)) return;
-
+            ev.Player.GetInfo().InteractedGenerators.Add(ev.Generator);
             MirrorExtensions.SendFakeSyncVar(ev.Player, ev.Generator.netIdentity, typeof(Generator079), nameof(Generator079.NetworkisDoorUnlocked), true);
             MirrorExtensions.SendFakeSyncVar(ev.Player, ev.Generator.netIdentity, typeof(Generator079), nameof(Generator079.NetworkisDoorOpen), true);
         }

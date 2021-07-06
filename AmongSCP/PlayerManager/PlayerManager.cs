@@ -126,7 +126,7 @@ namespace AmongSCP.PlayerManager
             //If there are no votes or first is tied or there are >= skips to first
             if (votes.Count < 1 || first <= second || skips >= first) return false;
 
-            votes[0].SetRole(RoleType.Spectator);
+            votes[0].Kill();
             return true;
         }
     }

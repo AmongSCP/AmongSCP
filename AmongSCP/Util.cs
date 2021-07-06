@@ -29,7 +29,7 @@ namespace AmongSCP
 
             var votePos = AmongSCP.Singleton.Config.VotePosition.ToVector3;
 
-            Exiled.API.Features.Map.ShowHint(message, 5f);
+            Exiled.API.Features.Map.Broadcast((ushort)5f, message);
 
             foreach (var ply in Player.List)
             {
@@ -38,10 +38,10 @@ namespace AmongSCP
 
             while (meetingStarted)
             {
-                Exiled.API.Features.Map.ShowHint(
+                Exiled.API.Features.Map.Broadcast((ushort)1f,
                     $"Meeting ends in {meetingTime} seconds. " +
                     $"\n {VoteAmount} Votes " +
-                    $"\n Alive Players: {EventHandlers.PlayerManager.AlivePlayers.Count}", 1);
+                    $"\n Alive Players: {EventHandlers.PlayerManager.AlivePlayers.Count}");
                 //$" \n Dead Players: {EventHandlers.PlayerManager.DeadPlayer.Count}", 1);
 
                 yield return Timing.WaitForSeconds(1f);
@@ -70,9 +70,19 @@ namespace AmongSCP
                 curLightIntensity = intensity;
             }
             
-            
-            CanTurnOffLights = false;
-            Timing.CallDelayed(AmongSCP.Singleton.Config.LightsCooldown, () => CanTurnOffLights = true);
+            foreach(Player ply in EventHandlers.PlayerManager.AlivePlayers)
+            {
+                if(ply.GetInfo().Role == PlayerManager.Role.Imposter)
+                {
+                    ply.Broadcast((ushort)5f,"Lights are off!");
+                }
+                else
+                {
+                    ply.Broadcast((ushort)5f,"Fix Lights in Micro!");
+                }
+            }
+            if(intensity == 0) CanTurnOffLights = false;
+            if(intensity == 1) Timing.CallDelayed(AmongSCP.Singleton.Config.LightsCooldown, () => CanTurnOffLights = true);
         }
 
         public static void SetUpDoors()
@@ -151,7 +161,7 @@ namespace AmongSCP
             player.IsInvisible = true;
             player.Inventory.AddNewItem(ItemType.Adrenaline);
             player.NoClipEnabled = true;
-            player.ShowHint("Left click on adrenaline to teleport back to the default area.", 10f);
+            player.Broadcast((ushort)10f,"Left click on adrenaline to teleport back to the default area.");
             Log.Debug("No clip enabled");
         }
         

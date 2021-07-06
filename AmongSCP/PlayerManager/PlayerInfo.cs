@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace AmongSCP.PlayerManager
@@ -44,6 +45,8 @@ namespace AmongSCP.PlayerManager
         public int votes = 0;
 
         public bool hasVoted = false;
+
+        public List<Generator079> InteractedGenerators = new List<Generator079>();
 
         public PlayerInfo(PlayerManager manager)
         {
