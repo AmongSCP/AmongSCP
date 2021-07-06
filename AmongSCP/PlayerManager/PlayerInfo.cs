@@ -46,7 +46,7 @@ namespace AmongSCP.PlayerManager
 
         public bool hasVoted = false;
 
-        public List<Generator079> InteractedGenerators = new List<Generator079>();
+        public List<object> CompletedTasks = new List<object>();
 
         public PlayerInfo(PlayerManager manager)
         {

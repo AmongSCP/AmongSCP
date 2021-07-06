@@ -270,9 +270,10 @@ namespace AmongSCP
         //Task Event Handlers
         public static void OnOpeningGenerator(UnlockingGeneratorEventArgs ev)
         {
-            if (ev.Player.GetInfo().InteractedGenerators.Contains(ev.Generator)) return;
-            if (!TaskManager.TryCompletingTask(ev.Player, TaskType.Generator)) return;
-            ev.Player.GetInfo().InteractedGenerators.Add(ev.Generator);
+            if (ev.Player.GetInfo().CompletedTasks.Contains(ev.Generator) || !TaskManager.TryCompletingTask(ev.Player, TaskType.Generator)) return;
+
+            ev.Player.GetInfo().CompletedTasks.Add(ev.Generator);
+
             MirrorExtensions.SendFakeSyncVar(ev.Player, ev.Generator.netIdentity, typeof(Generator079), nameof(Generator079.NetworkisDoorUnlocked), true);
             MirrorExtensions.SendFakeSyncVar(ev.Player, ev.Generator.netIdentity, typeof(Generator079), nameof(Generator079.NetworkisDoorOpen), true);
         }
