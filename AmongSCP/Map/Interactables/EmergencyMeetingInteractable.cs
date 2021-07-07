@@ -25,7 +25,7 @@ namespace AmongSCP.Map.Interactables
 
                 if(player.GetInfo().EmergencyMeetings == 0)
                 {
-                    player.ShowHint("You have used all of your emergency Meetings!");
+                    player.ShowHint("You have used all of your emergency meetings!");
                     return;
                 }
 
