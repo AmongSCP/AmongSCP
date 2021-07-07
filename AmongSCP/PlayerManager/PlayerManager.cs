@@ -105,7 +105,6 @@ namespace AmongSCP.PlayerManager
 
         public void ClearAllPlayersVotes()
         {
-            Log.Debug("Method ClearAllPlayersVotes() invoked.");
             foreach (var ply in AlivePlayers)
             {
                 var info = ply.GetInfo();

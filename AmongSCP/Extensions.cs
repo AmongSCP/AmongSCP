@@ -9,7 +9,6 @@ namespace AmongSCP
         public static PlayerInfo GetInfo(this Player p)
         {
             if (EventHandlers.PlayerManager.Players.TryGetValue(p, out var info)) return info;
-            Log.Debug("GetInfo is being called.");
 
             EventHandlers.PlayerManager.UpdateQueueNoWait();
 

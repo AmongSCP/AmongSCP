@@ -57,20 +57,11 @@ namespace AmongSCP
 
         public bool AllTasksCompleted()
         {
-            try
-            {
-                Log.Debug(CurrentTasks.Count);
-                if(CurrentTasks.Count == 0)
-                {
-                    Exiled.API.Features.Map.ShowHint("Crewmates win!", 5f);
-                }
-                return CurrentTasks.Count == 0;
-            }
-            catch(Exception e)
-            {
-                Log.Debug(e);
-                return false;
-            }
+             if(CurrentTasks.Count == 0)
+             {
+                Exiled.API.Features.Map.Broadcast((ushort)5f,"Crewmates win!");
+             }
+             return CurrentTasks.Count == 0;
         }
 
         public void AddMultipleInstance(int num, Task task)
@@ -94,13 +85,12 @@ namespace AmongSCP
                 {
                     CurrentTasks.Remove(task);
                 }
-                catch(Exception e)
+                catch
                 {
-                    Log.Debug(e);
+
                 }
             }
             PlayerTasks.Remove(ply);
-            Log.Debug(CurrentTasks.Count + " Tasks Left");
         }
 
         public void HandleTaskCompletion(Player player, Task task)
@@ -110,9 +100,9 @@ namespace AmongSCP
                 PlayerTasks[player].Remove(task);
                 CurrentTasks.Remove(task);
             }
-            catch (Exception e)
+            catch 
             {
-                Log.Debug(e);
+
             }
             if (AllTasksCompleted())
             {
