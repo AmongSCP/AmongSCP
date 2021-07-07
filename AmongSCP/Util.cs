@@ -126,7 +126,7 @@ namespace AmongSCP
 
             while(Warhead.IsInProgress)
             {
-                if(Warhead.DetonationTimer <= 9f)
+                if(Warhead.DetonationTimer <= 9.4f)
                 {
                     foreach(var ply in EventHandlers.PlayerManager.Imposters)
                     {
