@@ -24,6 +24,7 @@ namespace AmongSCP
 
         public void SpawnDeadBodyInteractable(Vector3 pos, string playerName)
         {
+            Log.Debug(playerName + "interactable");
             var deadBodyInteractable = new DeadBodyInteractable(pos, playerName);
         }
 

@@ -38,10 +38,10 @@ namespace AmongSCP
 
             while (meetingStarted)
             {
-                Exiled.API.Features.Map.Broadcast((ushort)1f,
-                    $"Meeting ends in {meetingTime} seconds. " +
+                Exiled.API.Features.Map.ShowHint(
+                    $"Voting ends in {meetingTime} seconds. " +
                     $"\n {VoteAmount} Votes " +
-                    $"\n Alive Players: {EventHandlers.PlayerManager.AlivePlayers.Count}");
+                    $"\n Alive Players: {EventHandlers.PlayerManager.AlivePlayers.Count}", (ushort)1f);
                 //$" \n Dead Players: {EventHandlers.PlayerManager.DeadPlayer.Count}", 1);
 
                 yield return Timing.WaitForSeconds(1f);
@@ -62,7 +62,7 @@ namespace AmongSCP
 
         public static void ModifyLightIntensity(float intensity)
         {
-            //if ((!CanTurnOffLights && intensity == 0) || Warhead.IsInProgress || meetingStarted) return;
+            if ((!CanTurnOffLights && intensity == 0) || Warhead.IsInProgress || meetingStarted) return;
            
             foreach (Room room in Exiled.API.Features.Map.Rooms)
             {
@@ -72,11 +72,11 @@ namespace AmongSCP
             
             foreach(Player ply in EventHandlers.PlayerManager.AlivePlayers)
             {
-                if(ply.GetInfo().Role == PlayerManager.Role.Imposter)
+                if(ply.GetInfo().Role == PlayerManager.Role.Imposter && intensity == 0)
                 {
                     ply.Broadcast((ushort)5f,"Lights are off!");
                 }
-                else
+                else if(intensity == 0)
                 {
                     ply.Broadcast((ushort)5f,"Fix Lights in Micro!");
                 }
@@ -114,12 +114,21 @@ namespace AmongSCP
 
         public static void RunDetonateWarhead()
         {
-            if (Warhead.IsInProgress || curLightIntensity != 1 || meetingStarted) return;
+            if (Warhead.IsInProgress || curLightIntensity != 1 || meetingStarted || !Util.CanNuke) return;
             Timing.RunCoroutine(DetonateWarhead());
+            Log.Debug("Started Detonate warhead");
         }
 
         public static IEnumerator<float> DetonateWarhead()
         {
+            try
+            {
+                Log.Debug("DetonateWarhead invoked.");
+            }
+            catch (Exception e)
+            {
+                Log.Debug(e);
+            }
             Warhead.DetonationTimer = 90;
             Warhead.Start();
             Warhead.LeverStatus = true;

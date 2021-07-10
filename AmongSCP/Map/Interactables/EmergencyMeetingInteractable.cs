@@ -1,5 +1,6 @@
 ﻿using MEC;
 using Exiled.API.Features;
+using System;
 
 namespace AmongSCP.Map.Interactables
 {
@@ -11,27 +12,35 @@ namespace AmongSCP.Map.Interactables
         {
             _interactable = new Interactable(data, player =>
             {
-                if (Warhead.IsInProgress)
+                if (Warhead.IsInProgress || Util.curLightIntensity == 0)
                 {
-                    player.ShowHint("Warhead is in progress!");
+                    player.ShowHint("Warhead is in progress!", 1f);
                     return;
                 }
 
                 if (player.GetInfo().CalledEmergencyMeeting)
                 {
-                    player.ShowHint("You have already called an emergency meeting!");
+                    player.ShowHint("You have already called an emergency meeting!", 1f);
                     return;
                 }
 
                 if(player.GetInfo().EmergencyMeetings == 0)
                 {
-                    player.ShowHint("You have used all of your emergency meetings!");
+                    player.ShowHint("You have used all of your emergency meetings!", 1f);
                     return;
                 }
 
-                player.GetInfo().CalledEmergencyMeeting = true;
-                Timing.RunCoroutine(Util.CallEmergencyMeeting(player, player.Nickname + " has called an emergency meeting!", false));
-                player.GetInfo().EmergencyMeetings--;
+                try
+                {
+                    player.GetInfo().CalledEmergencyMeeting = true;
+                    Timing.RunCoroutine(Util.CallEmergencyMeeting(player, player.Nickname + " has called an emergency meeting!", false));
+                    player.GetInfo().EmergencyMeetings--;
+                }
+                catch (Exception e)
+                {
+                    Log.Debug(e);
+                }
+                
             }, false, true);
         }
     }

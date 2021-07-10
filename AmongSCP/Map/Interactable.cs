@@ -46,7 +46,7 @@ namespace AmongSCP.Map
             _interactable = gameObject.AddComponent<InteractableBehavior>();
             _interactable.Interactable = this;
 
-           if(levitate) Timing.RunCoroutine(Util.Levitate(pickup, levitateHeight, levitateSpeed));
+           //if(levitate) Timing.RunCoroutine(Util.Levitate(pickup, levitateHeight, levitateSpeed));
         }
 
         public bool OnInteract(Player p)
@@ -62,10 +62,6 @@ namespace AmongSCP.Map
             }
 
             if (!_pickupOnInteract) return false;
-
-            _interactable.Interactable = null;
-            Object.Destroy(_interactable);
-            _interactable = null;
 
             return true;
         }

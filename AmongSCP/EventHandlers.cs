@@ -70,11 +70,10 @@ namespace AmongSCP
 
         public static void OnRagdollSpawn(SpawningRagdollEventArgs ev)
         {
-            if (ev.Owner?.Nickname == null) return;
-
-            SpawnInteractables.SpawnDeadBodyInteractable(ev.Position, ev.Owner.Nickname);
+            if (ev.Owner?.Nickname == null || ev.RoleType == RoleType.ChaosInsurgency) return;
+            SpawnInteractables.SpawnDeadBodyInteractable(ev.Position, ev.PlayerNickname);
         }
-
+ 
         public static void OnRoleChanging(ChangingRoleEventArgs ev)
         {
             if (ev.NewRole == RoleType.Tutorial || ev.NewRole == RoleType.Spectator)
@@ -186,8 +185,8 @@ namespace AmongSCP
                     //Log.Debug("Grenade Flash is being called.");
                     Util.ModifyLightIntensity(0);
                     break;
-                case ItemType.GrenadeFrag when Util.CanNuke:
-                    //Log.Debug("Warhead is being called.");
+                case ItemType.GrenadeFrag:
+                    Log.Debug("Warhead is being called.");
                     Util.RunDetonateWarhead();
                     break;
                 case ItemType.Adrenaline:
