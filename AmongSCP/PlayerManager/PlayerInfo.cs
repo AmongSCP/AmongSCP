@@ -48,6 +48,8 @@ namespace AmongSCP.PlayerManager
 
         public List<object> CompletedTasks = new List<object>();
 
+        public bool skipped = false;
+
         public PlayerInfo(PlayerManager manager)
         {
             _manager = manager;

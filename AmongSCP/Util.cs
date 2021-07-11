@@ -29,7 +29,7 @@ namespace AmongSCP
 
             var votePos = AmongSCP.Singleton.Config.VotePosition.ToVector3;
 
-            Exiled.API.Features.Map.Broadcast((ushort)5f, message);
+            Exiled.API.Features.Map.Broadcast((ushort)5f, message + "\n Interact with a persons hat to vote for them or drop your flashlight to skip!");
 
             foreach (var ply in Player.List)
             {
@@ -60,10 +60,26 @@ namespace AmongSCP
             }
         }
 
-        public static void ModifyLightIntensity(float intensity)
+        public static void ModifyLightIntensity(float intensity, Player play)
         {
-            if ((!CanTurnOffLights && intensity == 0) || Warhead.IsInProgress || meetingStarted) return;
-           
+            if (Warhead.IsInProgress)
+            {
+                play.Broadcast((ushort)2f, "Nuke is active!");
+                return;
+            }
+
+            if (!CanTurnOffLights && intensity == 0)
+            {
+                play.Broadcast((ushort)2f, "You are on cooldown!");
+                return;
+            }
+
+            if (meetingStarted)
+            {
+                play.Broadcast((ushort)2f, "Nuke is already active!");
+                return;
+            }
+
             foreach (Room room in Exiled.API.Features.Map.Rooms)
             {
                 room.SetLightIntensity(intensity);
@@ -112,11 +128,33 @@ namespace AmongSCP
             }
         }
 
-        public static void RunDetonateWarhead()
+        public static void RunDetonateWarhead(Player ply)
         {
-            if (Warhead.IsInProgress || curLightIntensity != 1 || meetingStarted || !Util.CanNuke) return;
+            if (Warhead.IsInProgress)
+            {
+                ply.Broadcast((ushort)2f, "Nuke is already active!");
+                return;
+            }
+
+            if (curLightIntensity != 1)
+            {
+                ply.Broadcast((ushort)2f, "Lights are off!");
+                return;
+            }
+
+            if (meetingStarted)
+            {
+               ply.Broadcast((ushort)2f, "You are in a meeting!");
+               return;
+            }
+
+            if (!Util.CanNuke)
+            {
+                ply.Broadcast((ushort)2f, "You are in a meeting!");
+                return;
+            }
+
             Timing.RunCoroutine(DetonateWarhead());
-            Log.Debug("Started Detonate warhead");
         }
 
         public static IEnumerator<float> DetonateWarhead()
@@ -170,8 +208,18 @@ namespace AmongSCP
             player.IsInvisible = true;
             player.Inventory.AddNewItem(ItemType.Adrenaline);
             player.NoClipEnabled = true;
-            player.Broadcast((ushort)10f,"Left click on adrenaline to teleport back to the default area.");
-            Log.Debug("No clip enabled");
+            if (player.GetInfo().Role == PlayerManager.Role.Imposter)
+            {
+                player.Broadcast((ushort)10f, "You are a ghost!" +
+                                               "\n You can noclip and still sabatoge" +
+                                               "\n If you get lost, try dropping the adrenaline.");
+            }
+            else
+            {
+                player.Broadcast((ushort)10f, "You are a ghost!" +
+                               "\n You can noclip and still complete tasks" +
+                               "\n If you get lost, try dropping the adrenaline.");
+            }
         }
         
         public static IEnumerator<float> Levitate(Pickup pickup, float heightMultiplier, float speedMultiplier)

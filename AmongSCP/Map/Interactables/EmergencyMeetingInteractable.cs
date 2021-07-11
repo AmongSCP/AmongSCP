@@ -12,9 +12,15 @@ namespace AmongSCP.Map.Interactables
         {
             _interactable = new Interactable(data, player =>
             {
-                if (Warhead.IsInProgress || Util.curLightIntensity == 0)
+                if (Warhead.IsInProgress)
                 {
                     player.ShowHint("Warhead is in progress!", 1f);
+                    return;
+                }
+
+                if (Util.curLightIntensity == 0)
+                {
+                    player.ShowHint("Go fix Lights!", 1f);
                     return;
                 }
 

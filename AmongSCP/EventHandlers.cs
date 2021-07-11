@@ -125,14 +125,16 @@ namespace AmongSCP
                     {
                         info.Role = global::AmongSCP.PlayerManager.Role.Imposter;
                         players[i].Role = AmongSCP.Singleton.Config.ImposterRole;
-                        players[i].Broadcast((ushort)3f,"You are an Imposter!");
+                        players[i].Broadcast((ushort)3f,"You are an Imposter! +" +
+                                                        "\n Kill all Crewmates to win!");
+                        players[i].ShowHint("You have a gun with a cooldown and two grendades which when thrown turn off lights and turn on the nuke.", 5f);
                     }
                     else
                     {
                         info.Role = global::AmongSCP.PlayerManager.Role.Crewmate;
                         players[i].Role = AmongSCP.Singleton.Config.CrewmateRole;
-                        players[i].Broadcast((ushort)3f, "You are a crewmate!");
-                        players[i].Broadcast((ushort)15f, "Interact with all 5 generators to complete your tasks.");
+                        players[i].Broadcast((ushort)3f, "You are a crewmate! +" +
+                                                         "\n Interact with all 5 generators to complete your tasks.");
                     }
                 }
 
@@ -145,12 +147,18 @@ namespace AmongSCP
                         player.Inventory.Clear();
                     }
                     
+                    foreach (var player in PlayerManager.Crewmates)
+                    {
+                        player.Inventory.AddNewItem(ItemType.Flashlight);
+                    }
+
                     foreach (var imposter in PlayerManager.Imposters)
                     {
                         imposter.Ammo[(int) AmmoType.Nato9] = 999;
                         imposter.Inventory.AddNewItem(ItemType.GunUSP);
                         imposter.Inventory.AddNewItem(ItemType.GrenadeFlash);
                         imposter.Inventory.AddNewItem(ItemType.GrenadeFrag);
+                        imposter.Inventory.AddNewItem(ItemType.Flashlight);
                     }
                     
                     Timing.CallDelayed(.1f, () =>
@@ -177,26 +185,6 @@ namespace AmongSCP
             PlayerManager.UpdateQueue();
         }
 
-        public static void OnItemDrop(DroppingItemEventArgs ev)
-        {
-            switch (ev.Item.id)
-            {
-                case ItemType.GrenadeFlash:
-                    //Log.Debug("Grenade Flash is being called.");
-                    Util.ModifyLightIntensity(0);
-                    break;
-                case ItemType.GrenadeFrag:
-                    Log.Debug("Warhead is being called.");
-                    Util.RunDetonateWarhead();
-                    break;
-                case ItemType.Adrenaline:
-                    ev.Player.Position = new UnityEngine.Vector3(77.2f, -998.67f, 199.3183f);
-                    break;
-            }
-
-            ev.IsAllowed = false;
-        }
-        
         public static void OnGameEnd(RoundEndedEventArgs ev)
         {
             TaskManager.EndGame();
@@ -251,22 +239,21 @@ namespace AmongSCP
             ev.IsTriggerable = false;
         }
 
-        public static void OnChangingLeverStatusEvent(ChangingLeverStatusEventArgs ev)
-        {
-            /*
-            if(!Warhead.LeverStatus)
-            {
-                Util.StopWarhead();
-            }
-            */
-        }
-
         public static void OnThrowingGrenade(ThrowingGrenadeEventArgs ev)
         {
+            switch (ev.Type)
+            {
+                case GrenadeType.Flashbang:
+                    //Log.Debug("Grenade Flash is being called.");
+                    Util.ModifyLightIntensity(0, ev.Player);
+                    break;
+                case GrenadeType.FragGrenade:
+                    Util.RunDetonateWarhead(ev.Player);
+                    break;
+            }
             ev.IsAllowed = false;
         }
 
-        //Task Event Handlers
         public static void OnOpeningGenerator(UnlockingGeneratorEventArgs ev)
         {
             var info = ev.Player.GetInfo();
@@ -277,6 +264,21 @@ namespace AmongSCP
 
             MirrorExtensions.SendFakeSyncVar(ev.Player, ev.Generator.netIdentity, typeof(Generator079), nameof(Generator079.NetworkisDoorUnlocked), true);
             MirrorExtensions.SendFakeSyncVar(ev.Player, ev.Generator.netIdentity, typeof(Generator079), nameof(Generator079.NetworkisDoorOpen), true);
+        }
+
+        public static void OnItemDrop(DroppingItemEventArgs ev)
+        {
+            if (Util.meetingStarted)
+            {
+                if (ev.Item.id == ItemType.Flashlight)
+                {
+                    ev.Player.GetInfo().hasVoted = true;
+                    Util.VoteAmount++;
+                    ev.Player.Broadcast((ushort)5f, "You have Skipped!");
+                    ev.Player.GetInfo().skipped = true;
+                }
+            }
+            ev.IsAllowed = false;
         }
     }
 }

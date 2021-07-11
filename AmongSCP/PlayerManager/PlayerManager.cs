@@ -114,19 +114,23 @@ namespace AmongSCP.PlayerManager
             }
         }
 
-        public bool KillMostVotedPlayer()
+        public void KillMostVotedPlayer()
         {
             var votes = EventHandlers.PlayerManager.AlivePlayers.OrderByDescending(ply => ply.GetInfo().votes).ToList();
-            var skips = EventHandlers.PlayerManager.AlivePlayers.Count(ply => !ply.GetInfo().hasVoted);
+            var skips = EventHandlers.PlayerManager.AlivePlayers.Count(ply => ply.GetInfo().skipped || !ply.GetInfo().hasVoted);
 
             var first = votes.Count > 0 ? votes[0].GetInfo().votes : 0;
             var second = votes.Count > 1 ? votes[1].GetInfo().votes : 0;
             
             //If there are no votes or first is tied or there are >= skips to first
-            if (votes.Count < 1 || first <= second || skips >= first) return false;
+            if (votes.Count < 1 || first <= second || skips >= first)
+            {
+                Exiled.API.Features.Map.Broadcast((ushort)3f, "No one was Ejected.");
+                return;
+            }
 
+            Exiled.API.Features.Map.Broadcast((ushort)3f, votes[0].Nickname + "was a " + votes[0].GetInfo().Role);
             votes[0].Kill();
-            return true;
         }
     }
 }

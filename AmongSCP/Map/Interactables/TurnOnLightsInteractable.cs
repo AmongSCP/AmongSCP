@@ -10,7 +10,7 @@ namespace AmongSCP.Map.Interactables
         {
             var pos = position;
             var itemData = new ItemData(item, position, Quaternion.identity, new Vector3(2, 2, 2));
-            _interactable = new Interactable(itemData, player => Util.ModifyLightIntensity(1));
+            _interactable = new Interactable(itemData, player => Util.ModifyLightIntensity(1, player));
         }
     }
 }

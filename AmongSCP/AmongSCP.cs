@@ -67,7 +67,6 @@ namespace AmongSCP
             PlayerEvent.SpawningRagdoll += EventHandlers.OnRagdollSpawn;
             PlayerEvent.TriggeringTesla += EventHandlers.OnTriggeringTeslaEvent;
             PlayerEvent.ThrowingGrenade += EventHandlers.OnThrowingGrenade;
-            Warhead.ChangingLeverStatus += EventHandlers.OnChangingLeverStatusEvent;
         }
 
         private void UnRegisterEvents()
@@ -90,7 +89,6 @@ namespace AmongSCP
             PlayerEvent.SpawningRagdoll -= EventHandlers.OnRagdollSpawn;
             PlayerEvent.TriggeringTesla -= EventHandlers.OnTriggeringTeslaEvent;
             PlayerEvent.ThrowingGrenade -= EventHandlers.OnThrowingGrenade;
-            Warhead.ChangingLeverStatus -= EventHandlers.OnChangingLeverStatusEvent;
         }
     }
 }

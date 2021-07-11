@@ -23,9 +23,9 @@ namespace AmongSCP.Map.Interactables
                 Log.Debug((!player.GetInfo().hasVoted).ToString());
 
                 if (!Util.meetingStarted || player.GetInfo().hasVoted) return;
-                Log.Debug("voted");
                 Player.GetInfo().votes++;
                 player.GetInfo().hasVoted = true;
+                player.Broadcast((ushort)5f, "You have voted for " + Player.Nickname);
                 Util.VoteAmount++;
             });
             SCPStats.API.API.SpawnHat(Player, interactable.Pickup, new UnityEngine.Vector3(0f, .1f, 0f), UnityEngine.Quaternion.identity);
