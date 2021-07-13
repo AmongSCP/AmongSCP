@@ -2,6 +2,7 @@
 {
     public enum TaskType
     {
-        Generator
+        Generator,
+        DogRoom
     }
 }

@@ -46,9 +46,15 @@ namespace AmongSCP.PlayerManager
 
         public bool hasVoted = false;
 
+        public bool skipped = false;
+
         public List<object> CompletedTasks = new List<object>();
 
-        public bool skipped = false;
+        public int dogTaskInteractions = 0;
+
+
+
+
 
         public PlayerInfo(PlayerManager manager)
         {

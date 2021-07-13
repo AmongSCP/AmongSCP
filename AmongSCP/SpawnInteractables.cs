@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using AmongSCP.Map.Interactables;
 using Exiled.API.Features;
+using AmongSCP.Map.TaskInteractables;
 
 namespace AmongSCP
 {
@@ -14,6 +15,7 @@ namespace AmongSCP
             SpawnEmergencyMeetingInteractable();
             SpawnVentInteractables(PointManager.Vents);
             SpawnLightsInteractable(PointManager.LightsSpawn);
+            SpawnDogRoomTask();
         }
 
         public void SpawnEmergencyMeetingInteractable()
@@ -24,7 +26,6 @@ namespace AmongSCP
 
         public void SpawnDeadBodyInteractable(Vector3 pos, string playerName)
         {
-            Log.Debug(playerName + "interactable");
             var deadBodyInteractable = new DeadBodyInteractable(pos, playerName);
         }
 
@@ -40,6 +41,11 @@ namespace AmongSCP
         public void SpawnLightsInteractable(Vector3 pos)
         {
             var lightsInteractable = new TurnOnLightsInteractable(pos, ItemType.GrenadeFlash);
+        }
+
+        public void SpawnDogRoomTask()
+        {
+            var task = new DogRoomTaskInteractable();
         }
 
         public void SpawnHats(Player[] players)

@@ -6,33 +6,30 @@ using System.Linq;
 
 namespace AmongSCP
 {
-    public class TaskManager
+    public static class TaskManager
     {
-        private readonly List<Task> _possibleTasks = new List<Task>();
+        private static List<Task> _possibleTasks = new List<Task>();
 
-        public readonly List<Task> CurrentTasks = new List<Task>();
+        public static List<Task> CurrentTasks = new List<Task>();
 
-        public readonly Dictionary<Player, List<Task>> PlayerTasks = new Dictionary<Player, List<Task>>();
+        public static Dictionary<Player, List<Task>> PlayerTasks = new Dictionary<Player, List<Task>>();
 
-        public int TasksCompleted;
+        public static int TasksCompleted;
 
-        public TaskManager()
-        {
-            AddPossibleTasks();
-        }
-
-        public void EndGame()
+        public static void EndGame()
         {
             CurrentTasks.Clear();
             PlayerTasks.Clear();
+            _possibleTasks.Clear();
         }
 
-        public void AddPossibleTasks()
+        public static void AddPossibleTasks()
         {
-            AddMultipleInstance(40, new Task("Load weapon Manager Tablet into Generator", TaskType.Generator));
+            AddMultipleInstance(20, new Task("Load weapon Manager Tablet into Generator", TaskType.Generator));
+            AddMultipleInstance(20, new Task("Interactable in Dogs Room", TaskType.DogRoom));
         }
 
-        public void SplitTasks()
+        public static void SplitTasks()
         {
             _possibleTasks.ShuffleListSecure();
 
@@ -45,17 +42,17 @@ namespace AmongSCP
             Log.Debug(CurrentTasks.Count);
         }
 
-        public List<Task> GetPlayerTasks(Player ply)
+        public static List<Task> GetPlayerTasks(Player ply)
         {
             return PlayerTasks[ply];
         }
 
-        public bool PlayerCompletedAllTasks(Player ply)
+        public static bool PlayerCompletedAllTasks(Player ply)
         {
             return PlayerTasks[ply].Count == 0;
         }
 
-        public bool AllTasksCompleted()
+        public static bool AllTasksCompleted()
         {
              if(CurrentTasks.Count == 0)
              {
@@ -64,7 +61,7 @@ namespace AmongSCP
              return CurrentTasks.Count == 0;
         }
 
-        public void AddMultipleInstance(int num, Task task)
+        public static void AddMultipleInstance(int num, Task task)
         {
             for(var i = 0; i < num; i++)
             {
@@ -72,12 +69,12 @@ namespace AmongSCP
             }
         }
 
-        public Task GetPlayerTask(Player player, TaskType taskType)
+        public static Task GetPlayerTask(Player player, TaskType taskType)
         {
             return PlayerTasks.TryGetValue(player, out var arr) ? arr.FirstOrDefault(task => task.TaskType == taskType) : null;
         }
 
-        public void DeletePlayerTasks(Player ply)
+        public static void DeletePlayerTasks(Player ply)
         {
             foreach(Task task in GetPlayerTasks(ply))
             {
@@ -93,16 +90,17 @@ namespace AmongSCP
             PlayerTasks.Remove(ply);
         }
 
-        public void HandleTaskCompletion(Player player, Task task)
+        public static void HandleTaskCompletion(Player player, Task task)
         {
             try
             {
                 PlayerTasks[player].Remove(task);
                 CurrentTasks.Remove(task);
+                player.Broadcast((ushort)3f, "Completed the " + task.Name + " task.");
             }
-            catch 
+            catch (Exception e)
             {
-
+                throw e;
             }
             if (AllTasksCompleted())
             {
@@ -110,7 +108,7 @@ namespace AmongSCP
             }
         }
 
-        public bool TryCompletingTask(Player ply, TaskType taskType)
+        public static bool TryCompletingTask(Player ply, TaskType taskType)
         {
             var task = GetPlayerTask(ply, taskType);
 

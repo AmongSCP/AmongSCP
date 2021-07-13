@@ -11,8 +11,6 @@ namespace AmongSCP
 {
     public static class EventHandlers
     {
-        internal static TaskManager TaskManager = new TaskManager();
-        
         internal static PlayerManager.PlayerManager PlayerManager = new PlayerManager.PlayerManager();
 
         internal static SpawnInteractables SpawnInteractables;
@@ -23,7 +21,6 @@ namespace AmongSCP
 
         public static void Reset()
         {
-            TaskManager = new TaskManager();
             PlayerManager = new PlayerManager.PlayerManager();
         }
         
@@ -108,7 +105,7 @@ namespace AmongSCP
             {
                 Util.SetUpDoors();
                 SpawnInteractables = new SpawnInteractables();
-                TaskManager = new TaskManager();
+                TaskManager.AddPossibleTasks();
                 PlayerManager.UpdateQueueNoWait();
 
                 var players = PlayerManager.PickPlayers(AmongSCP.Singleton.Config.MaxPlayers);
