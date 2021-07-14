@@ -88,7 +88,7 @@
       <HintPath>lib\Mirror.Components.dll</HintPath>
     </Reference>
     <Reference Include="SCPStats %283%29">
-      <HintPath>..\..\..\..\Downloads\SCPStats (3).dll</HintPath>
+      <HintPath>lib\SCPStats.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
