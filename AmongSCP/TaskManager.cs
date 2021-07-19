@@ -25,8 +25,7 @@ namespace AmongSCP
 
         public static void AddPossibleTasks()
         {
-            AddMultipleInstance(20, new Task("Load weapon Manager Tablet into Generator", TaskType.Generator));
-            AddMultipleInstance(20, new Task("Interactable in Dogs Room", TaskType.DogRoom));
+            AddMultipleInstance(45, new Task("Load weapon Manager Tablet into Generator", TaskType.Generator));
         }
 
         public static void SplitTasks()
