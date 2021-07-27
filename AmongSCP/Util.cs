@@ -64,7 +64,7 @@ namespace AmongSCP
         {
             if (Warhead.IsInProgress)
             {
-                play.Broadcast((ushort)2f, "Nuke is active!");
+                play.Broadcast((ushort)2f, AmongSCP.Singleton.Config.NukeActiveMessage);
                 return;
             }
 
@@ -76,7 +76,7 @@ namespace AmongSCP
 
             if (meetingStarted)
             {
-                play.Broadcast((ushort)2f, "Nuke is already active!");
+                play.Broadcast((ushort)2f, AmongSCP.Singleton.Config.NukeActiveMessage);
                 return;
             }
 
@@ -144,13 +144,13 @@ namespace AmongSCP
 
             if (meetingStarted)
             {
-               ply.Broadcast((ushort)2f, "You are in a meeting!");
+               ply.Broadcast((ushort)2f, AmongSCP.Singleton.Config.InMeetingMessage);
                return;
             }
 
             if (!Util.CanNuke)
             {
-                ply.Broadcast((ushort)2f, "You are in a meeting!");
+                ply.Broadcast((ushort)2f, AmongSCP.Singleton.Config.InMeetingMessage);
                 return;
             }
 

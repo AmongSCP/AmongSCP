@@ -55,13 +55,16 @@ namespace AmongSCP
 
             if (EventHandlers.PlayerManager.Crewmates.Count <= EventHandlers.PlayerManager.Imposters.Count)
             {
-                Exiled.API.Features.Map.Broadcast((ushort)5f, "Imposters win!");
+                Exiled.API.Features.Map.Broadcast((ushort)5f, AmongSCP.Singleton.Config.ImpostersWinMessage);
                 Round.ForceEnd();
+                return;
             }
-            else if(TaskManager.AllTasksCompleted() || EventHandlers.PlayerManager.Imposters.Count == 0)
+
+            if(TaskManager.AllTasksCompleted() || EventHandlers.PlayerManager.Imposters.Count == 0)
             {
-                Exiled.API.Features.Map.Broadcast((ushort)5f, "Crewmates Win!!");
+                Exiled.API.Features.Map.Broadcast((ushort)5f, AmongSCP.Singleton.Config.CrewmateWinMessage);
                 Round.ForceEnd();
+                return;
             }
         }
 
@@ -103,6 +106,7 @@ namespace AmongSCP
             _starting = true;
             Timing.CallDelayed(.1f, () =>
             {
+                Timing.KillCoroutines();
                 Util.SetUpDoors();
                 SpawnInteractables = new SpawnInteractables();
                 TaskManager.AddPossibleTasks();
@@ -122,16 +126,14 @@ namespace AmongSCP
                     {
                         info.Role = global::AmongSCP.PlayerManager.Role.Imposter;
                         players[i].Role = AmongSCP.Singleton.Config.ImposterRole;
-                        players[i].Broadcast((ushort)3f,"You are an Imposter! +" +
-                                                        "\n Kill all Crewmates to win!");
-                        players[i].ShowHint("You have a gun with a cooldown and two grendades which when thrown turn off lights and turn on the nuke.", 5f);
+                        players[i].Broadcast((ushort)3f, AmongSCP.Singleton.Config.ImposterSpawnMessage);
+                        players[i].ShowHint(AmongSCP.Singleton.Config.ImposterItemsHint, 5f);
                     }
                     else
                     {
                         info.Role = global::AmongSCP.PlayerManager.Role.Crewmate;
                         players[i].Role = AmongSCP.Singleton.Config.CrewmateRole;
-                        players[i].Broadcast((ushort)3f, "You are a crewmate! +" +
-                                                         "\n Interact with all 5 generators to complete your tasks.");
+                        players[i].Broadcast((ushort)3f, AmongSCP.Singleton.Config.CrewmteSpawnMessage);
                     }
                 }
 
@@ -205,7 +207,7 @@ namespace AmongSCP
             }
 
             ev.IsAllowed = false;
-            ev.Shooter.Broadcast((ushort)3f, "You are still on cooldown. " + (AmongSCP.Singleton.Config.KillCooldown - seconds) + " seconds left.");
+            ev.Shooter.Broadcast((ushort)3f, (AmongSCP.Singleton.Config.KillCooldown - seconds) + AmongSCP.Singleton.Config.CoolDownMessage);
         }
 
         public static void OnPlayerShoot(ShotEventArgs ev)
@@ -271,7 +273,7 @@ namespace AmongSCP
                 {
                     ev.Player.GetInfo().hasVoted = true;
                     Util.VoteAmount++;
-                    ev.Player.Broadcast((ushort)5f, "You have Skipped!");
+                    ev.Player.Broadcast((ushort)5f, AmongSCP.Singleton.Config.SkipMessage);
                     ev.Player.GetInfo().skipped = true;
                 }
             }

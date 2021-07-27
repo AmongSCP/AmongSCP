@@ -75,16 +75,17 @@ namespace AmongSCP
 
         public static void DeletePlayerTasks(Player ply)
         {
-            foreach(Task task in GetPlayerTasks(ply))
+            try
             {
-                try
-                {
-                    CurrentTasks.Remove(task);
-                }
-                catch
-                {
-
-                }
+                var playerTasks = GetPlayerTasks(ply);
+            }
+            catch
+            {
+                return;
+            }
+            foreach (Task task in GetPlayerTasks(ply))
+            {
+                CurrentTasks.Remove(task);
             }
             PlayerTasks.Remove(ply);
         }
