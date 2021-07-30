@@ -70,7 +70,7 @@ namespace AmongSCP
 
             if (!CanTurnOffLights && intensity == 0)
             {
-                play.Broadcast((ushort)2f, "You are on cooldown!");
+                play.Broadcast((ushort)2f, AmongSCP.Singleton.Config.CoolDownNoCountMessage);
                 return;
             }
 
@@ -90,11 +90,11 @@ namespace AmongSCP
             {
                 if(ply.GetInfo().Role == PlayerManager.Role.Imposter && intensity == 0)
                 {
-                    ply.Broadcast((ushort)5f,"Lights are off!");
+                    ply.Broadcast((ushort)5f, AmongSCP.Singleton.Config.LightsOffMessage);
                 }
                 else if(intensity == 0)
                 {
-                    ply.Broadcast((ushort)5f,"Fix Lights in Micro!");
+                    ply.Broadcast((ushort)5f, AmongSCP.Singleton.Config.FixLightsMessage);
                 }
             }
             if(intensity == 0) CanTurnOffLights = false;
@@ -132,13 +132,13 @@ namespace AmongSCP
         {
             if (Warhead.IsInProgress)
             {
-                ply.Broadcast((ushort)2f, "Nuke is already active!");
+                ply.Broadcast((ushort)2f, AmongSCP.Singleton.Config.NukeActiveMessage);
                 return;
             }
 
             if (curLightIntensity != 1)
             {
-                ply.Broadcast((ushort)2f, "Lights are off!");
+                ply.Broadcast((ushort)2f, AmongSCP.Singleton.Config.LightsOffMessage);
                 return;
             }
 
@@ -159,14 +159,6 @@ namespace AmongSCP
 
         public static IEnumerator<float> DetonateWarhead()
         {
-            try
-            {
-                Log.Debug("DetonateWarhead invoked.");
-            }
-            catch (Exception e)
-            {
-                Log.Debug(e);
-            }
             Warhead.DetonationTimer = 90;
             Warhead.Start();
             Warhead.LeverStatus = true;
