@@ -45,6 +45,8 @@ namespace AmongSCP.Map
             Pickup = pickup;
             _interactable = gameObject.AddComponent<InteractableBehavior>();
             _interactable.Interactable = this;
+
+           //if(levitate) Timing.RunCoroutine(Util.Levitate(pickup, levitateHeight, levitateSpeed));
         }
 
         public bool OnInteract(Player p)
