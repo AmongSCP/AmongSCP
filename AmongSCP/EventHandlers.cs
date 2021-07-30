@@ -68,7 +68,7 @@ namespace AmongSCP
         public static void OnRagdollSpawn(SpawningRagdollEventArgs ev)
         {
             if (ev.Owner?.Nickname == null || ev.RoleType == RoleType.ChaosInsurgency) return;
-            SpawnInteractables.SpawnDeadBodyInteractable(ev.Position, ev.PlayerNickname);ww
+            SpawnInteractables.SpawnDeadBodyInteractable(ev.Position, ev.PlayerNickname);
         }
  
         public static void OnRoleChanging(ChangingRoleEventArgs ev)
