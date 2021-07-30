@@ -33,7 +33,7 @@ namespace AmongSCP
 
             foreach (var ply in Player.List)
             {
-                if(ply.GetInfo().IsAlive) ply.Position = votePos;
+                if (ply.GetInfo().IsAlive) ply.Position = votePos;
             }
 
             while (meetingStarted)
@@ -48,7 +48,7 @@ namespace AmongSCP
 
                 meetingTime--;
 
-                if (meetingTime >= 1 && VoteAmount!=EventHandlers.PlayerManager.AlivePlayers.Count) continue;
+                if (meetingTime >= 1 && VoteAmount != EventHandlers.PlayerManager.AlivePlayers.Count) continue;
 
                 meetingStarted = false;
                 PointManager.SpawnPlayers(EventHandlers.PlayerManager.AlivePlayers.ToArray());
@@ -70,7 +70,7 @@ namespace AmongSCP
 
             if (!CanTurnOffLights && intensity == 0)
             {
-                play.Broadcast((ushort)2f, AmongSCP.Singleton.Config.CoolDownNoCountMessage);
+                play.Broadcast((ushort)2f, "You are on cooldown!");
                 return;
             }
 
@@ -85,20 +85,20 @@ namespace AmongSCP
                 room.SetLightIntensity(intensity);
                 curLightIntensity = intensity;
             }
-            
-            foreach(Player ply in EventHandlers.PlayerManager.AlivePlayers)
+
+            foreach (Player ply in EventHandlers.PlayerManager.AlivePlayers)
             {
-                if(ply.GetInfo().Role == PlayerManager.Role.Imposter && intensity == 0)
+                if (ply.GetInfo().Role == PlayerManager.Role.Imposter && intensity == 0)
                 {
-                    ply.Broadcast((ushort)5f, AmongSCP.Singleton.Config.LightsOffMessage);
+                    ply.Broadcast((ushort)5f, "Lights are off!");
                 }
-                else if(intensity == 0)
+                else if (intensity == 0)
                 {
-                    ply.Broadcast((ushort)5f, AmongSCP.Singleton.Config.FixLightsMessage);
+                    ply.Broadcast((ushort)5f, "Fix Lights in Micro!");
                 }
             }
-            if(intensity == 0) CanTurnOffLights = false;
-            if(intensity == 1) Timing.CallDelayed(AmongSCP.Singleton.Config.LightsCooldown, () => CanTurnOffLights = true);
+            if (intensity == 0) CanTurnOffLights = false;
+            if (intensity == 1) Timing.CallDelayed(AmongSCP.Singleton.Config.LightsCooldown, () => CanTurnOffLights = true);
         }
 
         public static void SetUpDoors()
@@ -132,20 +132,20 @@ namespace AmongSCP
         {
             if (Warhead.IsInProgress)
             {
-                ply.Broadcast((ushort)2f, AmongSCP.Singleton.Config.NukeActiveMessage);
+                ply.Broadcast((ushort)2f, "Nuke is already active!");
                 return;
             }
 
             if (curLightIntensity != 1)
             {
-                ply.Broadcast((ushort)2f, AmongSCP.Singleton.Config.LightsOffMessage);
+                ply.Broadcast((ushort)2f, "Lights are off!");
                 return;
             }
 
             if (meetingStarted)
             {
-               ply.Broadcast((ushort)2f, "You are in a meeting!");
-               return;
+                ply.Broadcast((ushort)2f, "You are in a meeting!");
+                return;
             }
 
             if (!Util.CanNuke)
@@ -159,15 +159,23 @@ namespace AmongSCP
 
         public static IEnumerator<float> DetonateWarhead()
         {
+            try
+            {
+                Log.Debug("DetonateWarhead invoked.");
+            }
+            catch (Exception e)
+            {
+                Log.Debug(e);
+            }
             Warhead.DetonationTimer = 90;
             Warhead.Start();
             Warhead.LeverStatus = true;
 
-            while(Warhead.IsInProgress)
+            while (Warhead.IsInProgress)
             {
-                if(Warhead.DetonationTimer <= 9.4f)
+                if (Warhead.DetonationTimer <= 9.4f)
                 {
-                    foreach(var ply in EventHandlers.PlayerManager.Imposters)
+                    foreach (var ply in EventHandlers.PlayerManager.Imposters)
                     {
                         ply.Position = Exiled.API.Extensions.Role.GetRandomSpawnPoint(RoleType.ChaosInsurgency);
                     }
@@ -181,22 +189,6 @@ namespace AmongSCP
 
         public static void GhostMode(Player player)
         {
-            /*
-            foreach(Player ply in Player.List)
-            {
-                if (!ply.GetInfo().IsAlive)
-                {
-                    try
-                    {
-                        MirrorExtensions.SendFakeSyncVar(ply, player.ReferenceHub.networkIdentity, typeof(PlayerEffectsController), nameof(PlayerEffectsController.EnableEffect), EffectType.Scp268);
-                    }
-                    catch (Exception e)
-                    {
-                        Log.Debug(e);
-                    }
-                }     
-            }
-            */
             player.IsInvisible = true;
             player.Inventory.AddNewItem(ItemType.Adrenaline);
             player.NoClipEnabled = true;
@@ -213,7 +205,7 @@ namespace AmongSCP
                                "\n If you get lost, try dropping the adrenaline.");
             }
         }
-        
+
         public static IEnumerator<float> Levitate(Pickup pickup, float heightMultiplier, float speedMultiplier)
         {
             var transform = pickup.transform;
