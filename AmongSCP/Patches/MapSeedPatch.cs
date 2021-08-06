@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using HarmonyLib;
 using MapGeneration;
+using System.Reflection.Emit;
 
 namespace AmongSCP.Patches
 {

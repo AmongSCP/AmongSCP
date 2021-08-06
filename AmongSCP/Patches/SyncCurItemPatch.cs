@@ -7,7 +7,6 @@ namespace AmongSCP.Patches
     {
         public static bool Prefix(Inventory __instance, ItemType value)
         {
-            //Log.Debug("SyncCurItemPatch");
             __instance._curItemSynced = value;
             return false;
         }

@@ -42,17 +42,21 @@ namespace AmongSCP
         {
             ev.Target.Items.Clear();
             if (ev.Target.GetInfo().Role == global::AmongSCP.PlayerManager.Role.Imposter) return;
-            TaskManager.DeletePlayerTasks(ev.Target);
+            if(Player.List.Contains(ev.Target))
+            {
+                TaskManager.DeletePlayerTasks(ev.Target);
+            }
+            
         }
         
         public static void OnDied(DiedEventArgs ev)
         {
-            Log.Debug($"{ev.Target} died at: {ev.Target.Position.x}, {ev.Target.Position.y}, {ev.Target.Position.z}. Role was {ev.Target.Role}");
+            Log.Debug($"{ev.Target} died at: {ev.Target.Position.x}, {ev.Target.Position.y}, {ev.Target.Position.z}. Role was {ev.Target.Role}", AmongSCP.Singleton.Config.showLogs);
 
             var plyinfo = ev.Target.GetInfo();
             plyinfo.IsAlive = false;
             plyinfo.Role = global::AmongSCP.PlayerManager.Role.None;
-
+            PlayerManager.ReloadLists();
             if (EventHandlers.PlayerManager.Crewmates.Count <= EventHandlers.PlayerManager.Imposters.Count)
             {
                 Exiled.API.Features.Map.Broadcast((ushort)5f, "Imposters win!");
@@ -103,6 +107,9 @@ namespace AmongSCP
             _starting = true;
             Timing.CallDelayed(.1f, () =>
             {
+                Util.initialCooldownOn = true;
+                Timing.CallDelayed(AmongSCP.Singleton.Config.initialCooldown, () => Util.initialCooldownOn = false);
+
                 Util.SetUpDoors();
                 SpawnInteractables = new SpawnInteractables();
                 TaskManager.AddPossibleTasks();
@@ -190,8 +197,9 @@ namespace AmongSCP
 
         public static void OnPlayerShooting(ShootingEventArgs ev)
         {
-            if (!PlayerManager.Imposters.Contains(ev.Shooter))
+            if (!PlayerManager.Imposters.Contains(ev.Shooter) || Util.initialCooldownOn)
             {
+                ev.Shooter.ShowHint("Wait a second!");
                 ev.IsAllowed = false;
                 return;
             }
@@ -210,7 +218,6 @@ namespace AmongSCP
 
         public static void OnPlayerShoot(ShotEventArgs ev)
         {
-            //Anything > HEAD is non-player.
             if (!PlayerManager.Imposters.Contains(ev.Shooter) || ev.HitboxTypeEnum > HitBoxType.HEAD || Util.meetingStarted)
             {
                 ev.Damage = 0;
@@ -238,6 +245,12 @@ namespace AmongSCP
 
         public static void OnThrowingGrenade(ThrowingGrenadeEventArgs ev)
         {
+            if (Util.initialCooldownOn)
+            {
+                ev.Player.ShowHint("Wait a sec!");
+                return;
+            }
+
             switch (ev.Type)
             {
                 case GrenadeType.Flashbang:
@@ -265,6 +278,12 @@ namespace AmongSCP
 
         public static void OnItemDrop(DroppingItemEventArgs ev)
         {
+            if(ev.Player.GetInfo().skipped)
+            {
+                ev.Player.Broadcast(1, "You have already skipped!");
+                ev.IsAllowed = false;
+                return;
+            }
             if (Util.meetingStarted)
             {
                 if (ev.Item.id == ItemType.Flashlight)

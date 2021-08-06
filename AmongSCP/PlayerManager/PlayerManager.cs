@@ -111,6 +111,7 @@ namespace AmongSCP.PlayerManager
                 
                 info.votes = 0;
                 info.hasVoted = false;
+                info.skipped = false;
             }
         }
 

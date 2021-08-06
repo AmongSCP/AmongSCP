@@ -12,6 +12,12 @@ namespace AmongSCP.Map.Interactables
         {
             _interactable = new Interactable(data, player =>
             {
+                if (!Util.globalCanCallEmergencyMeeting || Util.initialCooldownOn)
+                {
+                    player.ShowHint($"You must wait a little bit!", 1f);
+                    return;
+                }
+
                 if (Warhead.IsInProgress)
                 {
                     player.ShowHint("Warhead is in progress!", 1f);
@@ -44,7 +50,7 @@ namespace AmongSCP.Map.Interactables
                 }
                 catch (Exception e)
                 {
-                    Log.Debug(e);
+                    Log.Debug(e, AmongSCP.Singleton.Config.showLogs);
                 }
                 
             }, false, true);

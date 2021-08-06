@@ -21,6 +21,10 @@ namespace AmongSCP
 
         public static float curLightIntensity = 1;
 
+        public static bool globalCanCallEmergencyMeeting = true;
+
+        public static bool initialCooldownOn = true;
+
         public static IEnumerator<float> CallEmergencyMeeting(Player caller, string message, bool isBodyReport)
         {
             Warhead.Stop();
@@ -57,6 +61,9 @@ namespace AmongSCP
 
                 EventHandlers.PlayerManager.KillMostVotedPlayer();
                 EventHandlers.PlayerManager.ClearAllPlayersVotes();
+
+                globalCanCallEmergencyMeeting = false;
+                Timing.CallDelayed(AmongSCP.Singleton.Config.globalEmergencyMeetingCooldown, () => globalCanCallEmergencyMeeting = false);
             }
         }
 
@@ -105,6 +112,7 @@ namespace AmongSCP
         {
             foreach (var door in Exiled.API.Features.Map.Doors)
             {
+                door.ServerChangeLock(DoorLockReason.SpecialDoorFeature, false);
                 door.NetworkTargetState = true;
                 door.ServerChangeLock(DoorLockReason.SpecialDoorFeature, true);
             }
@@ -161,11 +169,11 @@ namespace AmongSCP
         {
             try
             {
-                Log.Debug("DetonateWarhead invoked.");
+                Log.Debug("DetonateWarhead invoked.", AmongSCP.Singleton.Config.showLogs);
             }
             catch (Exception e)
             {
-                Log.Debug(e);
+                Log.Debug(e, AmongSCP.Singleton.Config.showLogs);
             }
             Warhead.DetonationTimer = 90;
             Warhead.Start();

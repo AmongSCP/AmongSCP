@@ -9,6 +9,9 @@ namespace AmongSCP
         [Description("Is the plugin enabled?")]
         public bool IsEnabled { get; set; } = true;
 
+        [Description("Should logs be shown?(Only enable if developing)")]
+        public bool showLogs = true;
+
         [Description("Number of imposters for every 5 people.")]
         public int ImposterRatio { get; set; } = 1;
 
@@ -23,9 +26,6 @@ namespace AmongSCP
 
         [Description("The number of emergncy meetings for each person.")]
         public int EmergencyMeetings { get; set; } = 5;
-
-        [Description("Item that when dropped will call an emergency meeting.")]
-        public ItemType EmergencyMeetingTrigger { get; set; } = ItemType.Disarmer;
 
         [Description("Length of time a player can vent for.")]
         public float VentTime { get; set; } = 10;
@@ -56,5 +56,11 @@ namespace AmongSCP
 
         [Description("Cooldown for the imposter to kill someone.")]
         public int KillCooldown { get; set; } = 30;
+
+        [Description("Cooldown for calling an emergency meeting.")]
+        public int globalEmergencyMeetingCooldown = 30;
+
+        [Description("Initial round cooldown before you can do most things")]
+        public int initialCooldown = 5;
     }
 }

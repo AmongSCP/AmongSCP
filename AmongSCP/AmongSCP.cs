@@ -2,10 +2,12 @@
 using System;
 using Exiled.API.Enums;
 using Exiled.API.Features;
+using Exiled.API.Interfaces;
 using PlayerEvent = Exiled.Events.Handlers.Player;
 using ServerEvent = Exiled.Events.Handlers.Server;
 using MapEvent = Exiled.Events.Handlers.Map;
 using Warhead = Exiled.Events.Handlers.Warhead;
+using System.Linq;
 
 namespace AmongSCP
 {
@@ -13,8 +15,8 @@ namespace AmongSCP
     {
         public override string Author { get; } = "Parkeymon, PintTheDragon, RedRanger26";
         public override string Name { get; } = "AmongSCP";
-        public override Version Version { get; } = new Version(1, 0, 0);
-        public override PluginPriority Priority { get; } = PluginPriority.First;
+        public override Version Version { get; } = new Version(1, 0, 1);
+        public override PluginPriority Priority { get; } = PluginPriority.Last;
         public override string Prefix { get; } = "among_scp";
 
         public static AmongSCP Singleton;
@@ -23,8 +25,9 @@ namespace AmongSCP
 
         public override void OnEnabled()
         {
+            DisableOtherPlugins();
             Singleton = this;
-         
+
             RegisterEvents();
 
             _harmony = new Harmony("AmongSCP");
@@ -89,6 +92,20 @@ namespace AmongSCP
             PlayerEvent.SpawningRagdoll -= EventHandlers.OnRagdollSpawn;
             PlayerEvent.TriggeringTesla -= EventHandlers.OnTriggeringTeslaEvent;
             PlayerEvent.ThrowingGrenade -= EventHandlers.OnThrowingGrenade;
+        }
+
+        private void DisableOtherPlugins()
+        {
+            /*
+            try
+            {
+                Exiled.Loader.Loader.Plugins.First(x => x.Name == "WaitAndChillReborn").OnDisabled();
+            }
+            catch (Exception e)
+            {
+                Log.Debug(e, AmongSCP.Singleton.Config.showLogs);
+            }
+            */
         }
     }
 }

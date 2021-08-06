@@ -38,7 +38,7 @@ namespace AmongSCP
                 CurrentTasks.AddRange(tasks);
                 PlayerTasks[EventHandlers.PlayerManager.Crewmates[i]] = tasks.ToList();
             }
-            Log.Debug(CurrentTasks.Count);
+            Log.Debug($"Amount of tasks left: {CurrentTasks.Count}", AmongSCP.Singleton.Config.showLogs);
         }
 
         public static List<Task> GetPlayerTasks(Player ply)
@@ -75,6 +75,7 @@ namespace AmongSCP
 
         public static void DeletePlayerTasks(Player ply)
         {
+            if (ply.GetInfo().Role != PlayerManager.Role.Crewmate) return;
             foreach(Task task in GetPlayerTasks(ply))
             {
                 try
@@ -87,6 +88,8 @@ namespace AmongSCP
                 }
             }
             PlayerTasks.Remove(ply);
+            Log.Debug($"{ply.Nickname}'s tasks removed succesfully!", AmongSCP.Singleton.Config.showLogs);
+            Log.Debug($"{TaskManager.CurrentTasks.Count()} total tasks left.", AmongSCP.Singleton.Config.showLogs);
         }
 
         public static void HandleTaskCompletion(Player player, Task task)
