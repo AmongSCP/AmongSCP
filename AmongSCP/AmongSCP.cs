@@ -5,9 +5,9 @@ using Exiled.API.Features;
 using Exiled.API.Interfaces;
 using PlayerEvent = Exiled.Events.Handlers.Player;
 using ServerEvent = Exiled.Events.Handlers.Server;
-using MapEvent = Exiled.Events.Handlers.Map;
-using Warhead = Exiled.Events.Handlers.Warhead;
+using System.Collections.Generic;
 using System.Linq;
+
 
 namespace AmongSCP
 {
@@ -25,9 +25,8 @@ namespace AmongSCP
 
         public override void OnEnabled()
         {
-            DisableOtherPlugins();
             Singleton = this;
-
+            DisableOtherPlugins();
             RegisterEvents();
 
             _harmony = new Harmony("AmongSCP");
@@ -96,16 +95,28 @@ namespace AmongSCP
 
         private void DisableOtherPlugins()
         {
-            /*
+            List<string> pluginsToDisable = new List<string>()
+            {
+                "WaitAndChillReborn"
+            };
+
+            foreach(var plugin in  pluginsToDisable)
+            {
+                DisablePlugin(plugin);
+            }
+        }
+
+        private void DisablePlugin(string name)
+        {
             try
             {
-                Exiled.Loader.Loader.Plugins.First(x => x.Name == "WaitAndChillReborn").OnDisabled();
+                Exiled.Loader.Loader.Plugins.First(x => x.Name == name).OnUnregisteringCommands();
+                Exiled.Loader.Loader.Plugins.First(x => x.Name == name).OnDisabled();
             }
             catch (Exception e)
             {
                 Log.Debug(e, AmongSCP.Singleton.Config.showLogs);
             }
-            */
         }
     }
 }
