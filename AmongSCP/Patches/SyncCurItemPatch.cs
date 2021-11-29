@@ -1,4 +1,5 @@
 ﻿using HarmonyLib;
+using InventorySystem;
 
 namespace AmongSCP.Patches
 {

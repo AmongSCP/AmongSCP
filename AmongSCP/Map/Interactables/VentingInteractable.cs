@@ -15,7 +15,7 @@ namespace AmongSCP.Map.Interactables
         {
             _roomPosition = roomPositon;
             _nextRoomPosition = nextRoomPosition;
-            var interactableData = new ItemData(ItemType.Disarmer, _roomPosition, Quaternion.identity, new Vector3(2, 2, 2));
+            var interactableData = new ItemData(ItemType.Radio, _roomPosition, Quaternion.identity, new Vector3(2, 2, 2));
             _interactable = new Interactable(interactableData, player =>
             {
                 var playerInfo = player.GetInfo();

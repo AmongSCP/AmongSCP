@@ -16,7 +16,7 @@ namespace AmongSCP.Map
 
         private bool _destroyOnInteract;
         private bool _pickupOnInteract;
-
+//ss
         public Interactable(ItemData data, Action<Player> onInteract, bool destroyOnInteract = false, bool pickupOnInteract = false, bool levitate = false, float levitateHeight = 1.5f, float levitateSpeed = 1)
         {
             _action = onInteract;
