@@ -22,16 +22,6 @@ namespace AmongSCP.Map.Interactables
 
                 if (playerInfo.Role != PlayerManager.Role.Imposter) return;
 
-                var lastVent = playerInfo.LastVent;
-                var seconds = lastVent == DateTime.MinValue ? (AmongSCP.Singleton.Config.VentTime + 1) : (int) DateTime.Now.Subtract(lastVent).TotalSeconds;
-
-                if(seconds <= AmongSCP.Singleton.Config.VentTime)
-                {
-                    player.ShowHint("You are still on cooldown. " + (AmongSCP.Singleton.Config.VentTime - seconds) + " seconds left.");
-                    return;
-                }
-
-                playerInfo.LastVent = DateTime.Now;
                 player.Position = _nextRoomPosition.GetRealPosition();
             });
         }

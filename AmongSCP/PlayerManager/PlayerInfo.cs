@@ -38,8 +38,6 @@ namespace AmongSCP.PlayerManager
 
         public DateTime LastShot = DateTime.MinValue;
 
-        public DateTime LastVent = DateTime.MinValue;
-
         public int EmergencyMeetings = AmongSCP.Singleton.Config.EmergencyMeetings;
 
         public int votes = 0;
