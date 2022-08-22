@@ -118,7 +118,7 @@ namespace AmongSCP
             }
         }
 
-        public static void ChangeOutfit(NetworkIdentity ply)
+        public static void ChangeOutfit(NetworkIdentity ply, RoleType role)
         {
             foreach (var target in Player.List)
             {
@@ -129,7 +129,7 @@ namespace AmongSCP
                 }
                 else
                 {
-                    MirrorExtensions.SendFakeSyncVar(target, ply, typeof(CharacterClassManager), nameof(CharacterClassManager.NetworkCurClass), (sbyte)AmongSCP.Singleton.Config.ImposterRole);
+                    MirrorExtensions.SendFakeSyncVar(target, ply, typeof(CharacterClassManager), nameof(CharacterClassManager.NetworkCurClass), (sbyte)role);
                 }
                 target.NoClipEnabled = false;
                 target.IsInvisible = false;

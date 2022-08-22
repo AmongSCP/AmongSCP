@@ -10,8 +10,9 @@ namespace AmongSCP.Patches
         public static bool Prefix(CharacterClassManager __instance, RoleType value)
         {
             if (value != AmongSCP.Singleton.Config.CrewmateRole && value != AmongSCP.Singleton.Config.ImposterRole) return true;
-            
-            Util.ChangeOutfit(__instance.netIdentity);
+
+            var player = Player.Get(__instance._hub);
+            Util.ChangeOutfit(__instance.netIdentity, player.Role.Type);
             
             __instance.CurClass = value;
             return false;

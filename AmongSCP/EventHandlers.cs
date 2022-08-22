@@ -153,7 +153,7 @@ namespace AmongSCP
                             SpawnInteractables.SpawnHats(players);
                             foreach (var player in players)
                             {
-                                Util.ChangeOutfit(player.NetworkIdentity);
+                                Util.ChangeOutfit(player.NetworkIdentity, player.Role.Type);
                                 player.ClearInventory();
                                 player.InfoArea = player.InfoArea & ~PlayerInfoArea.PowerStatus &
                                                   ~PlayerInfoArea.UnitName;
