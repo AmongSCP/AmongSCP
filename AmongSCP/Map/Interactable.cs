@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Exiled.API.Features;
+using Exiled.API.Features.Items;
 using Mirror;
 using UnityEngine;
 using Object = UnityEngine.Object;
@@ -23,27 +24,19 @@ namespace AmongSCP.Map
             _destroyOnInteract = destroyOnInteract;
             _pickupOnInteract = pickupOnInteract;
 
-            var gameObject = UnityEngine.Object.Instantiate<GameObject>(Server.Host.Inventory.pickupPrefab);
+            var itemObj = new Item(Server.Host.Inventory.CreateItemInstance(data.item, false)) {Scale = data.scale};
 
-            gameObject.transform.localScale = data.scale;
+            var pickup = itemObj.Spawn(data.pos, data.rot);
 
             if (!data.hasPhysics)
             {
-                var rb = gameObject.GetComponent<Rigidbody>();
+                var rb = pickup.Base.gameObject.GetComponent<Rigidbody>();
                 rb.useGravity = false;
                 rb.isKinematic = true;
-
-                var collider = gameObject.GetComponent<Collider>();
-                collider.enabled = false;
             }
-            
-            NetworkServer.Spawn(gameObject);
-            
-            var pickup = gameObject.GetComponent<Pickup>();
-            pickup.SetupPickup(data.item, 0, Server.Host.Inventory.gameObject, new Pickup.WeaponModifiers(true, 0, 0, 0), data.pos, data.rot);
 
             Pickup = pickup;
-            _interactable = gameObject.AddComponent<InteractableBehavior>();
+            _interactable = pickup.Base.gameObject.AddComponent<InteractableBehavior>();
             _interactable.Interactable = this;
 
            //if(levitate) Timing.RunCoroutine(Util.Levitate(pickup, levitateHeight, levitateSpeed));
@@ -56,7 +49,7 @@ namespace AmongSCP.Map
             {
                 _interactable.Interactable = null;
                 
-                Object.Destroy(Pickup.gameObject);
+                Object.Destroy(Pickup.Base.gameObject);
 
                 return false;
             }

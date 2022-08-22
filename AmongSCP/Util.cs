@@ -31,7 +31,7 @@ namespace AmongSCP
             meetingStarted = true;
             var meetingTime = isBodyReport ? AmongSCP.Singleton.Config.BodyReportedMeetingTime : AmongSCP.Singleton.Config.EmergencyTime;
 
-            var votePos = AmongSCP.Singleton.Config.VotePosition.ToVector3;
+            var votePos = AmongSCP.Singleton.Config.VotePosition;
 
             Exiled.API.Features.Map.Broadcast((ushort)5f, message + "\n Interact with a persons hat to vote for them or drop your flashlight to skip!");
 
@@ -87,9 +87,9 @@ namespace AmongSCP
                 return;
             }
 
-            foreach (Room room in Exiled.API.Features.Map.Rooms)
+            foreach (Room room in Exiled.API.Features.Room.List)
             {
-                room.SetLightIntensity(intensity);
+                room.LightIntensity = intensity;
                 curLightIntensity = intensity;
             }
 
@@ -110,11 +110,10 @@ namespace AmongSCP
 
         public static void SetUpDoors()
         {
-            foreach (var door in Exiled.API.Features.Map.Doors)
+            foreach (var door in Exiled.API.Features.Door.List)
             {
-                door.ServerChangeLock(DoorLockReason.SpecialDoorFeature, false);
-                door.NetworkTargetState = true;
-                door.ServerChangeLock(DoorLockReason.SpecialDoorFeature, true);
+                door.ChangeLock(DoorLockType.SpecialDoorFeature);
+                door.IsOpen = true;
             }
         }
 
@@ -129,7 +128,7 @@ namespace AmongSCP
                 }
                 else
                 {
-                    MirrorExtensions.SendFakeSyncVar(target, ply.ReferenceHub.networkIdentity, typeof(CharacterClassManager), nameof(CharacterClassManager.NetworkCurClass), (sbyte)ply.Role);
+                    MirrorExtensions.SendFakeSyncVar(target, ply.ReferenceHub.networkIdentity, typeof(CharacterClassManager), nameof(CharacterClassManager.NetworkCurClass), (sbyte)ply.Role.Type);
                 }
                 target.NoClipEnabled = false;
                 target.IsInvisible = false;
@@ -185,7 +184,7 @@ namespace AmongSCP
                 {
                     foreach (var ply in EventHandlers.PlayerManager.Imposters)
                     {
-                        ply.Position = Exiled.API.Extensions.Role.GetRandomSpawnPoint(RoleType.ChaosInsurgency);
+                        ply.Position = RoleType.ChaosConscript.GetRandomSpawnProperties().Item1;
                     }
                     break;
                 }
@@ -198,7 +197,7 @@ namespace AmongSCP
         public static void GhostMode(Player player)
         {
             player.IsInvisible = true;
-            player.Inventory.AddNewItem(ItemType.Adrenaline);
+            player.AddItem(ItemType.Adrenaline);
             player.NoClipEnabled = true;
             if (player.GetInfo().Role == PlayerManager.Role.Imposter)
             {
@@ -214,7 +213,7 @@ namespace AmongSCP
             }
         }
 
-        public static IEnumerator<float> Levitate(Pickup pickup, float heightMultiplier, float speedMultiplier)
+        /*public static IEnumerator<float> Levitate(Pickup pickup, float heightMultiplier, float speedMultiplier)
         {
             var transform = pickup.transform;
 
@@ -228,6 +227,6 @@ namespace AmongSCP
 
                 yield return Timing.WaitForOneFrame;
             }
-        }
+        }*/
     }
 }

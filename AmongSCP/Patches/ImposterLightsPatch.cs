@@ -4,16 +4,16 @@ using Exiled.API.Features;
 
 namespace AmongSCP.Patches
 {
-    [HarmonyPatch(typeof(FlickerableLightController), nameof(FlickerableLightController.RpcSetLightIntensity))]
+    [HarmonyPatch(typeof(FlickerableLightController), nameof(FlickerableLightController.Network_lightIntensityMultiplier), MethodType.Setter)]
     public static class ImposterLightsPatch
     {
-        public static bool Prefix(FlickerableLightController __instance, float intensityMultiplier)
+        public static bool Prefix(FlickerableLightController __instance, float value)
         {
             foreach (var ply in Player.List)
             {
                var playerInfo = ply.GetInfo();
 
-               MirrorExtensions.SendFakeTargetRpc(ply, __instance.netIdentity, typeof(FlickerableLightController), nameof(FlickerableLightController.RpcSetLightIntensity), playerInfo.Role == PlayerManager.Role.Imposter ? 1f : intensityMultiplier);
+               MirrorExtensions.SendFakeSyncVar(ply, __instance.netIdentity, typeof(FlickerableLightController), nameof(FlickerableLightController.Network_lightIntensityMultiplier), playerInfo.Role == PlayerManager.Role.Imposter ? 1f : value);
             }
             return false;
         }

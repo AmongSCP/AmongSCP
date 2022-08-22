@@ -1,6 +1,8 @@
 ﻿using System.ComponentModel;
 using Exiled.API.Interfaces;
 using Exiled.CustomItems.API.Features;
+using UnityEngine;
+using Utf8Json.Internal.DoubleConversion;
 
 namespace AmongSCP
 {
@@ -19,10 +21,10 @@ namespace AmongSCP
         public int MaxPlayers { get; set; } = 10;
         
         [Description("The role of the imposter.")]
-        public RoleType ImposterRole { get; set; } = RoleType.ChaosInsurgency;
+        public RoleType ImposterRole { get; set; } = RoleType.ChaosConscript;
         
         [Description("The role of the crewmate.")]
-        public RoleType CrewmateRole { get; set; } = RoleType.NtfCommander;
+        public RoleType CrewmateRole { get; set; } = RoleType.NtfCaptain;
 
         [Description("The number of emergncy meetings for each person.")]
         public int EmergencyMeetings { get; set; } = 5;
@@ -31,7 +33,7 @@ namespace AmongSCP
         public float VentTime { get; set; } = 10;
         
         [Description("Location when someone calls a emergency meeting or voting starts. Tutorial tower position is 54, 1020, -45.")]
-        public Vector VotePosition { get; set; } = new Vector(54, 1020, -45);
+        public Vector3 VotePosition { get; set; } = new Vector3(54, 1020, -45);
 
         [Description("The distance you have to be from a body to be able to trigger a report.")]
         public float MaxReportDistance { get; set; } = 2f;

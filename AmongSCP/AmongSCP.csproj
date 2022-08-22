@@ -37,55 +37,52 @@
     <Reference Include="0Harmony, Version=2.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Lib.Harmony.2.1.0\lib\net472\0Harmony.dll</HintPath>
     </Reference>
+    <Reference Include="Assembly-CSharp, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\EXILED.5.3.0-rc.1\lib\net472\Assembly-CSharp-Publicized.dll</HintPath>
+    </Reference>
     <Reference Include="Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
       <HintPath>lib\Assembly-CSharp-Publicized.dll</HintPath>
     </Reference>
     <Reference Include="Assembly-CSharp-firstpass, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
       <HintPath>lib\Assembly-CSharp-firstpass.dll</HintPath>
     </Reference>
-    <Reference Include="CommandSystem.Core, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>lib\CommandSystem.Core.dll</HintPath>
+    <Reference Include="CommandSystem.Core, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\EXILED.5.3.0-rc.1\lib\net472\CommandSystem.Core.dll</HintPath>
     </Reference>
-    <Reference Include="Exiled.API, Version=3.7.2.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\packages\EXILED.3.7.2\lib\net472\Exiled.API.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Exiled.API, Version=5.3.0.0, Culture=neutral, processorArchitecture=Amd64">
+      <HintPath>..\packages\EXILED.5.3.0-rc.1\lib\net472\Exiled.API.dll</HintPath>
     </Reference>
-    <Reference Include="Exiled.Bootstrap, Version=3.7.2.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\packages\EXILED.3.7.2\lib\net472\Exiled.Bootstrap.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Exiled.Bootstrap, Version=5.3.0.0, Culture=neutral, processorArchitecture=Amd64">
+      <HintPath>..\packages\EXILED.5.3.0-rc.1\lib\net472\Exiled.Bootstrap.dll</HintPath>
     </Reference>
-    <Reference Include="Exiled.CreditTags, Version=3.7.2.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\packages\EXILED.3.7.2\lib\net472\Exiled.CreditTags.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Exiled.CreditTags, Version=5.3.0.0, Culture=neutral, processorArchitecture=Amd64">
+      <HintPath>..\packages\EXILED.5.3.0-rc.1\lib\net472\Exiled.CreditTags.dll</HintPath>
     </Reference>
-    <Reference Include="Exiled.CustomItems, Version=3.7.2.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\packages\EXILED.3.7.2\lib\net472\Exiled.CustomItems.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Exiled.CustomItems, Version=5.3.0.0, Culture=neutral, processorArchitecture=Amd64">
+      <HintPath>..\packages\EXILED.5.3.0-rc.1\lib\net472\Exiled.CustomItems.dll</HintPath>
     </Reference>
-    <Reference Include="Exiled.CustomRoles, Version=3.7.2.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\packages\EXILED.3.7.2\lib\net472\Exiled.CustomRoles.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Exiled.CustomRoles, Version=5.3.0.0, Culture=neutral, processorArchitecture=Amd64">
+      <HintPath>..\packages\EXILED.5.3.0-rc.1\lib\net472\Exiled.CustomRoles.dll</HintPath>
     </Reference>
-    <Reference Include="Exiled.Events, Version=3.7.2.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\packages\EXILED.3.7.2\lib\net472\Exiled.Events.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Exiled.Events, Version=5.3.0.0, Culture=neutral, processorArchitecture=Amd64">
+      <HintPath>..\packages\EXILED.5.3.0-rc.1\lib\net472\Exiled.Events.dll</HintPath>
     </Reference>
-    <Reference Include="Exiled.Loader, Version=3.7.2.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\packages\EXILED.3.7.2\lib\net472\Exiled.Loader.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Exiled.Loader, Version=5.3.0.0, Culture=neutral, processorArchitecture=Amd64">
+      <HintPath>..\packages\EXILED.5.3.0-rc.1\lib\net472\Exiled.Loader.dll</HintPath>
     </Reference>
-    <Reference Include="Exiled.Permissions, Version=3.7.2.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\packages\EXILED.3.7.2\lib\net472\Exiled.Permissions.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Exiled.Permissions, Version=5.3.0.0, Culture=neutral, processorArchitecture=Amd64">
+      <HintPath>..\packages\EXILED.5.3.0-rc.1\lib\net472\Exiled.Permissions.dll</HintPath>
     </Reference>
-    <Reference Include="Exiled.Updater, Version=3.1.1.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\packages\EXILED.3.7.2\lib\net472\Exiled.Updater.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Exiled.Updater, Version=3.1.1.0, Culture=neutral, processorArchitecture=Amd64">
+      <HintPath>..\packages\EXILED.5.3.0-rc.1\lib\net472\Exiled.Updater.dll</HintPath>
     </Reference>
     <Reference Include="Mirror, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
       <HintPath>lib\Mirror.dll</HintPath>
     </Reference>
-    <Reference Include="SCPStats %283%29">
+    <Reference Include="NorthwoodLib, Version=1.2.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\EXILED.5.3.0-rc.1\lib\net472\NorthwoodLib.dll</HintPath>
+    </Reference>
+    <Reference Include="SCPStats">
       <HintPath>lib\SCPStats.dll</HintPath>
     </Reference>
     <Reference Include="System" />
@@ -129,9 +126,7 @@
     <Compile Include="Map\TaskType.cs" />
     <Compile Include="Patches\ImposterLightsPatch.cs" />
     <Compile Include="Patches\MapSeedPatch.cs" />
-    <Compile Include="Patches\SyncCurItemPatch.cs" />
     <Compile Include="Patches\SyncCurItemUniqPatch.cs" />
-    <Compile Include="Patches\SyncPlayerClassPatch.cs" />
     <Compile Include="Patches\NoDoorOpenerExtensionsPatch.cs" />
     <Compile Include="PlayerManager\PlayerInfo.cs" />
     <Compile Include="PlayerManager\PlayerManager.cs" />

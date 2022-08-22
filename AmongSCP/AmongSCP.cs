@@ -7,6 +7,7 @@ using PlayerEvent = Exiled.Events.Handlers.Player;
 using ServerEvent = Exiled.Events.Handlers.Server;
 using System.Collections.Generic;
 using System.Linq;
+using Exiled.Loader;
 
 
 namespace AmongSCP
@@ -68,7 +69,7 @@ namespace AmongSCP
             PlayerEvent.UnlockingGenerator += EventHandlers.OnOpeningGenerator;
             PlayerEvent.SpawningRagdoll += EventHandlers.OnRagdollSpawn;
             PlayerEvent.TriggeringTesla += EventHandlers.OnTriggeringTeslaEvent;
-            PlayerEvent.ThrowingGrenade += EventHandlers.OnThrowingGrenade;
+            PlayerEvent.UsingItem += EventHandlers.OnThrowingGrenade;
         }
 
         private void UnRegisterEvents()
@@ -90,32 +91,31 @@ namespace AmongSCP
             PlayerEvent.UnlockingGenerator -= EventHandlers.OnOpeningGenerator;
             PlayerEvent.SpawningRagdoll -= EventHandlers.OnRagdollSpawn;
             PlayerEvent.TriggeringTesla -= EventHandlers.OnTriggeringTeslaEvent;
-            PlayerEvent.ThrowingGrenade -= EventHandlers.OnThrowingGrenade;
+            PlayerEvent.UsingItem -= EventHandlers.OnThrowingGrenade;
         }
 
         private void DisableOtherPlugins()
         {
-            List<string> pluginsToDisable = new List<string>()
+            List<string> pluginsToEnable = new List<string>()
             {
-                "WaitAndChillReborn"
+                "AmongSCP",
+                "SCPStats",
+                "DiscordIntegration"
             };
 
-            foreach(var plugin in  pluginsToDisable)
+            foreach(var plugin in Loader.Plugins)
             {
-                DisablePlugin(plugin);
-            }
-        }
+                if (pluginsToEnable.Contains(plugin.Name) || plugin.Name.StartsWith("Exiled")) continue;
 
-        private void DisablePlugin(string name)
-        {
-            try
-            {
-                Exiled.Loader.Loader.Plugins.First(x => x.Name == name).OnUnregisteringCommands();
-                Exiled.Loader.Loader.Plugins.First(x => x.Name == name).OnDisabled();
-            }
-            catch (Exception e)
-            {
-                Log.Debug(e, AmongSCP.Singleton.Config.showLogs);
+                try
+                {
+                    plugin.OnUnregisteringCommands();
+                    plugin.OnDisabled();
+                }
+                catch (Exception e)
+                {
+                    Log.Error(e);
+                }
             }
         }
     }

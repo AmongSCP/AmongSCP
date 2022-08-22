@@ -26,14 +26,12 @@ namespace AmongSCP.Map.TaskInteractables
                     return;
                 }
 
-                if (__interactable.Pickup.transform.position.Equals(new Vector3(91.35767f, -1012.465f, 52.03667f)))
+                if (__interactable.Pickup.Position.Equals(new Vector3(91.35767f, -1012.465f, 52.03667f)))
                 {
-                    __interactable.Pickup.transform.position = new Vector3(91.35767f, -1012.465f, 57.9607f); 
-                    __interactable.Pickup.Networkposition = new Vector3(91.35767f, -1012.465f, 57.9607f);  
+                    __interactable.Pickup.Position = new Vector3(91.35767f, -1012.465f, 57.9607f); 
                     return;
                 }
-                __interactable.Pickup.transform.position = new Vector3(91.35767f, -1012.465f, 52.03667f);
-                __interactable.Pickup.Networkposition = new Vector3(91.35767f, -1012.465f, 52.03667f);
+                __interactable.Pickup.Position = new Vector3(91.35767f, -1012.465f, 52.03667f);
             });
         }
     }

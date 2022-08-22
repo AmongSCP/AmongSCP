@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Exiled.API.Enums;
 using Exiled.API.Features;
 using mattmc3.dotmore.Collections.Generic;
 using MEC;
@@ -82,7 +83,7 @@ namespace AmongSCP.PlayerManager
         {
             foreach (var key in Players.Keys.ToList())
             {
-                key.Role = RoleType.Spectator;
+                key.SetRole(RoleType.Spectator);
                 Players[key] = new PlayerInfo(this);
             }
         }
@@ -91,7 +92,7 @@ namespace AmongSCP.PlayerManager
         {
             foreach (var player in Imposters.ToList())
             {
-                player.Role = RoleType.Spectator;
+                player.SetRole(RoleType.Spectator);
             }
         }
         
@@ -99,7 +100,7 @@ namespace AmongSCP.PlayerManager
         {
             foreach (var player in Crewmates.ToList())
             {
-                player.Role = RoleType.Spectator;
+                player.SetRole(RoleType.Spectator);
             }
         }
 
@@ -131,7 +132,7 @@ namespace AmongSCP.PlayerManager
             }
 
             Exiled.API.Features.Map.Broadcast((ushort)3f, votes[0].Nickname + "was a " + votes[0].GetInfo().Role);
-            votes[0].Kill();
+            votes[0].Kill(DamageType.Asphyxiation);
         }
     }
 }

@@ -20,7 +20,7 @@ namespace AmongSCP
 
         public void SpawnEmergencyMeetingInteractable()
         {
-            var emergencyInteractableData = new ItemData(ItemType.Flashlight, new Vector3(79.77f, -1005.87f, 40.07f), new Quaternion(0, 0, 0, 0));
+            var emergencyInteractableData = new ItemData(ItemType.Flashlight, new Vector3(72.2f, -1005.87f, 159.2f), new Quaternion(0, 0, 0, 0));
             var emergencyInteractable = new EmergencyMeetingInteractable(emergencyInteractableData);
         }
 
@@ -60,7 +60,7 @@ namespace AmongSCP
                 ItemType.KeycardO5,
                 ItemType.KeycardNTFLieutenant,
                 ItemType.KeycardScientist,
-                ItemType.KeycardSeniorGuard,
+                ItemType.KeycardNTFOfficer,
                 ItemType.KeycardZoneManager
             };
 
