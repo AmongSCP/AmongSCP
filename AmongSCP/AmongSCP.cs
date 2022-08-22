@@ -8,6 +8,7 @@ using ServerEvent = Exiled.Events.Handlers.Server;
 using System.Collections.Generic;
 using System.Linq;
 using Exiled.Loader;
+using MEC;
 
 
 namespace AmongSCP
@@ -27,7 +28,7 @@ namespace AmongSCP
         public override void OnEnabled()
         {
             Singleton = this;
-            DisableOtherPlugins();
+            Timing.RunCoroutine(DisableOtherPlugins());
             RegisterEvents();
 
             _harmony = new Harmony("AmongSCP");
@@ -94,23 +95,45 @@ namespace AmongSCP
             PlayerEvent.UsingItem -= EventHandlers.OnThrowingGrenade;
         }
 
-        private void DisableOtherPlugins()
+        private IEnumerator<float> DisableOtherPlugins()
         {
-            List<string> pluginsToEnable = new List<string>()
+            yield return Timing.WaitForSeconds(1f);
+            
+            // First, disable every plugin but AmongSCP.
+            foreach (var plugin in Loader.Plugins.ToList())
             {
-                "AmongSCP",
-                "SCPStats",
-                "DiscordIntegration"
-            };
-
-            foreach(var plugin in Loader.Plugins)
-            {
-                if (pluginsToEnable.Contains(plugin.Name) || plugin.Name.StartsWith("Exiled")) continue;
-
+                if (plugin.Name == "AmongSCP") continue;
+                
                 try
                 {
                     plugin.OnUnregisteringCommands();
                     plugin.OnDisabled();
+                }
+                catch (Exception e)
+                {
+                    Log.Error(e);
+                }
+            }
+            
+            yield return Timing.WaitForSeconds(1f);
+
+            // Now, re-enable every plugin.
+            List<string> pluginsToEnable = new List<string>()
+            {
+                "SCPStats",
+                "DiscordIntegration"
+            };
+
+            foreach(var plugin in Loader.Plugins.ToList())
+            {
+                if (!pluginsToEnable.Contains(plugin.Name) && !plugin.Name.StartsWith("Exiled") &&
+                    !plugin.Prefix.StartsWith("exiled") &&
+                    !plugin.Assembly.GetName().Name.StartsWith("Exiled")) continue;
+                
+                try
+                {
+                    plugin.OnEnabled();
+                    plugin.OnRegisteringCommands();
                 }
                 catch (Exception e)
                 {
