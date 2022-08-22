@@ -127,6 +127,7 @@
     <Compile Include="Map\TaskType.cs" />
     <Compile Include="Patches\ImposterLightsPatch.cs" />
     <Compile Include="Patches\MapSeedPatch.cs" />
+    <Compile Include="Patches\SCPStatsHatPatch.cs" />
     <Compile Include="Patches\SyncCurItemUniqPatch.cs" />
     <Compile Include="Patches\NoDoorOpenerExtensionsPatch.cs" />
     <Compile Include="Patches\SyncPlayerCurClassPatch.cs" />

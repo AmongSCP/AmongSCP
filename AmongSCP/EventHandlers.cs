@@ -6,6 +6,7 @@ using MEC;
 using Exiled.API.Extensions;
 using Exiled.API.Features;
 using System.Linq;
+using Exiled.Loader;
 using MapGeneration.Distributors;
 using RoundRestarting;
 
@@ -101,6 +102,8 @@ namespace AmongSCP
 
         public static void OnGameStart()
         {
+            Loader.Plugins.FirstOrDefault(pl => pl.Name == "ScpStats")?.Assembly?.GetType("SCPStats.EventHandler")?.GetField("PauseRound")?.SetValue(null, true);
+            
             _starting = true;
             Timing.CallDelayed(.2f, () =>
             {
