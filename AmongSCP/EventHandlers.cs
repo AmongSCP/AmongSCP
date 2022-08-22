@@ -63,12 +63,12 @@ namespace AmongSCP
             if (EventHandlers.PlayerManager.Crewmates.Count <= EventHandlers.PlayerManager.Imposters.Count)
             {
                 Exiled.API.Features.Map.Broadcast((ushort)5f, "Imposters win!");
-                RoundRestart.InitiateRoundRestart();
+                Timing.CallDelayed(5f, RoundRestart.InitiateRoundRestart);
             }
             else if(TaskManager.AllTasksCompleted() || EventHandlers.PlayerManager.Imposters.Count == 0)
             {
                 Exiled.API.Features.Map.Broadcast((ushort)5f, "Crewmates Win!!");
-                RoundRestart.InitiateRoundRestart();
+                Timing.CallDelayed(5f, RoundRestart.InitiateRoundRestart);
             }
         }
 
