@@ -152,6 +152,7 @@ namespace AmongSCP
                             {
                                 Util.ChangeOutfit(player.NetworkIdentity);
                                 player.ClearInventory();
+                                player.CustomInfo = "";
                             }
 
                             foreach (var player in PlayerManager.Crewmates)
