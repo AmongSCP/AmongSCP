@@ -16,7 +16,7 @@ namespace AmongSCP.Map.Interactables
 
             item = i;
 
-            var itemdata = new ItemData(item, new UnityEngine.Vector3(72.4817f,-1005.853f,34.69f), UnityEngine.Quaternion.identity, new UnityEngine.Vector3(4,8,4));
+            var itemdata = new ItemData(item, new MapPosition(0, 0, 0), UnityEngine.Quaternion.identity, new UnityEngine.Vector3(4,8,4));
             interactable = new Interactable(itemdata, player =>
             {
                 Log.Debug(Util.meetingStarted.ToString());

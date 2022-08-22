@@ -7,10 +7,13 @@ namespace AmongSCP.Map.Interactables
     {
         private Interactable _interactable;
 
-        public DeadBodyInteractable(Vector3 pos, string name)
+        public DeadBodyInteractable(MapPosition pos, string name)
         {
             var deadBodyPosition = pos;
-            deadBodyPosition.y++;
+
+            var position = deadBodyPosition.Position;
+            position.y++;
+            deadBodyPosition.Position = position;
 
             var deadBodyItemData = new ItemData(ItemType.SCP018, deadBodyPosition, Quaternion.identity, new Vector3(2, 2, 2));
 

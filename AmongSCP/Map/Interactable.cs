@@ -26,7 +26,7 @@ namespace AmongSCP.Map
 
             var itemObj = new Item(Server.Host.Inventory.CreateItemInstance(data.item, false)) {Scale = data.scale};
 
-            var pickup = itemObj.Spawn(data.pos, data.rot);
+            var pickup = itemObj.Spawn(data.pos.GetRealPosition(), data.rot);
 
             if (!data.hasPhysics)
             {

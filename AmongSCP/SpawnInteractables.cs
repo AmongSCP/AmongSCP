@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using AmongSCP.Map.Interactables;
 using Exiled.API.Features;
-using AmongSCP.Map.TaskInteractables;
+using Exiled.API.Enums;
 
 namespace AmongSCP
 {
@@ -15,21 +15,20 @@ namespace AmongSCP
             SpawnEmergencyMeetingInteractable();
             SpawnVentInteractables(PointManager.Vents);
             SpawnLightsInteractable(PointManager.LightsSpawn);
-            SpawnDogRoomTask();
         }
 
         public void SpawnEmergencyMeetingInteractable()
         {
-            var emergencyInteractableData = new ItemData(ItemType.Flashlight, new Vector3(72.2f, -1005.87f, 159.2f), new Quaternion(0, 0, 0, 0));
+            var emergencyInteractableData = new ItemData(ItemType.Flashlight, new MapPosition(-6.8f, -5.9f, -9.6f, RoomType.Hcz079), new Quaternion(0, 0, 0, 0));
             var emergencyInteractable = new EmergencyMeetingInteractable(emergencyInteractableData);
         }
 
-        public void SpawnDeadBodyInteractable(Vector3 pos, string playerName)
+        public void SpawnDeadBodyInteractable(MapPosition pos, string playerName)
         {
             var deadBodyInteractable = new DeadBodyInteractable(pos, playerName);
         }
 
-        public void SpawnVentInteractables(Dictionary<Vector3, Vector3> cordinates)
+        public void SpawnVentInteractables(Dictionary<MapPosition, MapPosition> cordinates)
         {
             for (int i = 0; i < cordinates.Count; i++)
             {
@@ -38,14 +37,9 @@ namespace AmongSCP
             }
         }
 
-        public void SpawnLightsInteractable(Vector3 pos)
+        public void SpawnLightsInteractable(MapPosition pos)
         {
             var lightsInteractable = new TurnOnLightsInteractable(pos, ItemType.GrenadeFlash);
-        }
-
-        public void SpawnDogRoomTask()
-        {
-            var task = new DogRoomTaskInteractable();
         }
 
         public void SpawnHats(Player[] players)

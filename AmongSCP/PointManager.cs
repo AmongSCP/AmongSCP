@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using AmongSCP.Map;
+using Exiled.API.Enums;
 using Exiled.API.Features;
 using UnityEngine;
 
@@ -7,26 +9,26 @@ namespace AmongSCP
 {
     public static class PointManager
     {
-        public static Dictionary<Vector3, Vector3> Vents = new Dictionary<Vector3, Vector3>()
+        public static Dictionary<MapPosition, MapPosition> Vents = new Dictionary<MapPosition, MapPosition>()
         {
-            {new Vector3(77.2f, -998.67f, 199.3183f), new Vector3(153.8845f, -998.672f, 199.3856f)},//096 to 106
-            {new Vector3(153.8845f, -998.672f, 199.3856f), new Vector3(131.0797f, -998.67f, 116.5661f) },//106 to elevB
-            {new Vector3(131.0797f, -998.67f, 116.5661f), new Vector3(129.7677f, -998.67f, 75.77992f) },//elevB to elevA
-            {new Vector3(129.7677f, -998.67f, 75.77992f), new Vector3(76.71812f, -1003.175f, 17.77227f) },//elevA to 079
-            {new Vector3(76.71812f, -1003.175f, 17.77227f), new Vector3(73.29224f, -998.67f, 75.03807f) },//079 to Checkpoint
-            {new Vector3(73.29224f, -998.67f, 75.03807f), new Vector3(71.74154f, -998.6702f, 144.5681f) },//Checkpoint to servers
-            {new Vector3(71.74154f, -998.6702f, 144.5681f), new Vector3(77.2f, -998.67f, 199.3183f) },//servers to 096
+            {new MapPosition(-2f, 1.3f, .2f, RoomType.Hcz096), new MapPosition(30.2f, 1.2f, -6.6f, RoomType.Hcz106)},//096 to 106
+            {new MapPosition(30.7f, 1.2f, -20f, RoomType.Hcz106), new MapPosition(1.4f, 1.3f, -.1f, RoomType.HczChkpB) },//106 to elevB
+            {new MapPosition(-7.3f, 1.3f, -.2f, RoomType.HczChkpB), new MapPosition(.6f, 1.3f, .3f, RoomType.HczChkpA) },//elevB to elevA
+            {new MapPosition(-7.6f, 1.3f, .2f, RoomType.HczChkpA), new MapPosition(-.6f, -5.9f, -21.1f, RoomType.Hcz079) },//elevA to 079
+            {new MapPosition(17.1f, -3.3f, -.1f, RoomType.Hcz079), new MapPosition(-5.5f, 1.3f, -4.2f, RoomType.HczEzCheckpoint) },//079 to Checkpoint
+            {new MapPosition(-6.1f, 1.3f, 7.3f, RoomType.HczEzCheckpoint), new MapPosition(-2.1f, -6.6f, 4.6f, RoomType.HczServers) },//Checkpoint to servers
+            {new MapPosition(-7.6f, 1.3f, 4.1f, RoomType.HczServers), new MapPosition(-8.5f, 1.3f, .1f, RoomType.Hcz096) },//servers to 096
         };
 
-        public static Vector3 LightsSpawn = new Vector3(80.66904f, -998.67f, 179.4948f);
+        public static MapPosition LightsSpawn = new MapPosition(-6.5f, 401.3f, 12.1f, RoomType.HczNuke);
 
         //Seed 1378514975
-        public static List<Vector3> PlayerSpawns = new List<Vector3>()
+        public static List<MapPosition> PlayerSpawns = new List<MapPosition>()
         {
-            new Vector3(79.70f, -1005.883f, 163.9f) //Inside 079 chamber
+            new MapPosition(-2f, -5.9f, -7.7f, RoomType.Hcz079)
         };
 
-        public static Dictionary<Type, Vector3> InteractableSpawns = new Dictionary<Type, Vector3>()
+        public static Dictionary<Type, MapPosition> InteractableSpawns = new Dictionary<Type, MapPosition>()
         {
 
         };
@@ -35,7 +37,7 @@ namespace AmongSCP
         {
             for (var i = 0; i < players.Length; i++)
             {
-                players[i].Position = PlayerSpawns[i % PlayerSpawns.Count];
+                players[i].Position = PlayerSpawns[i % PlayerSpawns.Count].GetRealPosition();
             }
         }
     }

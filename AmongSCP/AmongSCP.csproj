@@ -101,6 +101,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AmongSCP.cs" />
+    <Compile Include="Commands\MapPositionCommand.cs" />
     <Compile Include="Config.cs" />
     <Compile Include="DotMore\Comparer2.cs" />
     <Compile Include="DotMore\DictionaryEnumerator.cs" />
@@ -121,8 +122,8 @@
     <Compile Include="Map\Interactables\TurnOnLightsInteractable.cs" />
     <Compile Include="Map\Interactables\VentingInteractable.cs" />
     <Compile Include="Map\ItemData.cs" />
+    <Compile Include="Map\MapPosition.cs" />
     <Compile Include="Map\Task.cs" />
-    <Compile Include="Map\TaskInteractables\DogRoomTaskInteractable.cs" />
     <Compile Include="Map\TaskType.cs" />
     <Compile Include="Patches\ImposterLightsPatch.cs" />
     <Compile Include="Patches\MapSeedPatch.cs" />
@@ -141,7 +142,6 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
          Other similar extension points exist, see Microsoft.Common.targets.

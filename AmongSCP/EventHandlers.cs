@@ -74,7 +74,7 @@ namespace AmongSCP
         public static void OnRagdollSpawn(SpawningRagdollEventArgs ev)
         {
             if (ev.Owner?.Nickname == null || ev.Role.GetTeam() == Team.CHI) return;
-            SpawnInteractables.SpawnDeadBodyInteractable(ev.Position, ev.Nickname);
+            SpawnInteractables.SpawnDeadBodyInteractable(new MapPosition(ev.Position), ev.Nickname);
         }
  
         public static void OnRoleChanging(ChangingRoleEventArgs ev)
@@ -91,10 +91,7 @@ namespace AmongSCP
             //if newrole == crewmate && player is crewmate OR newrole == imposter && player is imposter, return
             if ((ev.NewRole == AmongSCP.Singleton.Config.CrewmateRole && PlayerManager.Crewmates.Contains(ev.Player)) || (ev.NewRole == AmongSCP.Singleton.Config.ImposterRole && PlayerManager.Imposters.Contains(ev.Player))) return;
 
-            ev.NewRole = ev.Player.Role;
-
-            ev.Items.Clear();
-            ev.Items.AddRange(ev.Player.Items.Select(item => item.Type));
+            ev.IsAllowed = false;
         }
 
         public static void OnRoundEnding(EndingRoundEventArgs ev)

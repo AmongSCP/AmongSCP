@@ -7,11 +7,11 @@ namespace AmongSCP.Map.Interactables
     {
         private Interactable _interactable;
 
-        private Vector3 _roomPosition;
+        private MapPosition _roomPosition;
 
-        private Vector3 _nextRoomPosition;
+        private MapPosition _nextRoomPosition;
 
-        public VentingInteractable(Vector3 roomPositon, Vector3 nextRoomPosition)
+        public VentingInteractable(MapPosition roomPositon, MapPosition nextRoomPosition)
         {
             _roomPosition = roomPositon;
             _nextRoomPosition = nextRoomPosition;
@@ -32,7 +32,7 @@ namespace AmongSCP.Map.Interactables
                 }
 
                 playerInfo.LastVent = DateTime.Now;
-                player.Position = _nextRoomPosition;
+                player.Position = _nextRoomPosition.GetRealPosition();
             });
         }
     }

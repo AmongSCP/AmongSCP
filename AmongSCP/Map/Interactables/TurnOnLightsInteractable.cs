@@ -6,7 +6,7 @@ namespace AmongSCP.Map.Interactables
     {
         Interactable _interactable;
 
-        public TurnOnLightsInteractable(Vector3 position, ItemType item)
+        public TurnOnLightsInteractable(MapPosition position, ItemType item)
         {
             var pos = position;
             var itemData = new ItemData(item, position, Quaternion.identity, new Vector3(2, 2, 2));
