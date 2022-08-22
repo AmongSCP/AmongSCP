@@ -20,7 +20,7 @@ namespace AmongSCP
             {new MapPosition(-7.6f, 1.3f, 4.1f, RoomType.HczServers), new MapPosition(-8.5f, 1.3f, .1f, RoomType.Hcz096) },//servers to 096
         };
 
-        public static MapPosition LightsSpawn = new MapPosition(-6.5f, 401.3f, 12.1f, RoomType.HczNuke);
+        public static MapPosition LightsSpawn = new MapPosition(0f, 1.3f, -9.1f, RoomType.HczHid);
 
         //Seed 1378514975
         public static List<MapPosition> PlayerSpawns = new List<MapPosition>()
