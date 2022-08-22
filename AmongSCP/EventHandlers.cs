@@ -174,6 +174,18 @@ namespace AmongSCP
                                 {
                                     PointManager.SpawnPlayers(players);
                                     TaskManager.SplitTasks();
+                                }
+                                catch (Exception e)
+                                {
+                                    Log.Error(e);
+                                }
+                            });
+                            
+                            Timing.CallDelayed(1f, () =>
+                            {
+                                try
+                                {
+                                    PointManager.SpawnPlayers(players);
                                     _starting = false;
                                 }
                                 catch (Exception e)
