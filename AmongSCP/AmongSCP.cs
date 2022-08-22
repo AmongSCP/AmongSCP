@@ -41,7 +41,7 @@ namespace AmongSCP
         {
             UnRegisterEvents();
             
-            _harmony.UnpatchAll();
+            _harmony.UnpatchAll("AmongSCP");
             _harmony = null;
 
             EventHandlers.Reset();
@@ -140,6 +140,9 @@ namespace AmongSCP
                     Log.Error(e);
                 }
             }
+            
+            // Re-patch in-case a plugin un-patched our patches.
+            _harmony.PatchAll();
         }
     }
 }
