@@ -6,6 +6,7 @@ using Exiled.API.Extensions;
 using Interactables.Interobjects.DoorUtils;
 using UnityEngine;
 using Exiled.API.Enums;
+using Mirror;
 
 namespace AmongSCP
 {
@@ -117,18 +118,18 @@ namespace AmongSCP
             }
         }
 
-        public static void ChangeOutfit(Player ply, RoleType type, PlayerManager.PlayerManager playerManager)
+        public static void ChangeOutfit(NetworkIdentity ply)
         {
             foreach (var target in Player.List)
             {
                 //If the target is not an imposter, show the fake role, otherwise show the true role.
-                if (!playerManager.Imposters.Contains(target))
+                if (!EventHandlers.PlayerManager.Imposters.Contains(target))
                 {
-                    MirrorExtensions.SendFakeSyncVar(target, ply.ReferenceHub.networkIdentity, typeof(CharacterClassManager), nameof(CharacterClassManager.NetworkCurClass), (sbyte)type);
+                    MirrorExtensions.SendFakeSyncVar(target, ply, typeof(CharacterClassManager), nameof(CharacterClassManager.NetworkCurClass), (sbyte)AmongSCP.Singleton.Config.CrewmateRole);
                 }
                 else
                 {
-                    MirrorExtensions.SendFakeSyncVar(target, ply.ReferenceHub.networkIdentity, typeof(CharacterClassManager), nameof(CharacterClassManager.NetworkCurClass), (sbyte)ply.Role.Type);
+                    MirrorExtensions.SendFakeSyncVar(target, ply, typeof(CharacterClassManager), nameof(CharacterClassManager.NetworkCurClass), (sbyte)AmongSCP.Singleton.Config.ImposterRole);
                 }
                 target.NoClipEnabled = false;
                 target.IsInvisible = false;

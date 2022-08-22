@@ -128,6 +128,7 @@
     <Compile Include="Patches\MapSeedPatch.cs" />
     <Compile Include="Patches\SyncCurItemUniqPatch.cs" />
     <Compile Include="Patches\NoDoorOpenerExtensionsPatch.cs" />
+    <Compile Include="Patches\SyncPlayerCurClassPatch.cs" />
     <Compile Include="PlayerManager\PlayerInfo.cs" />
     <Compile Include="PlayerManager\PlayerManager.cs" />
     <Compile Include="PlayerManager\Role.cs" />
