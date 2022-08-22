@@ -70,7 +70,7 @@ namespace AmongSCP
             PlayerEvent.UnlockingGenerator += EventHandlers.OnOpeningGenerator;
             PlayerEvent.SpawningRagdoll += EventHandlers.OnRagdollSpawn;
             PlayerEvent.TriggeringTesla += EventHandlers.OnTriggeringTeslaEvent;
-            PlayerEvent.UsingItem += EventHandlers.OnThrowingGrenade;
+            PlayerEvent.ThrowingItem += EventHandlers.OnThrowingGrenade;
         }
 
         private void UnRegisterEvents()
@@ -92,7 +92,7 @@ namespace AmongSCP
             PlayerEvent.UnlockingGenerator -= EventHandlers.OnOpeningGenerator;
             PlayerEvent.SpawningRagdoll -= EventHandlers.OnRagdollSpawn;
             PlayerEvent.TriggeringTesla -= EventHandlers.OnTriggeringTeslaEvent;
-            PlayerEvent.UsingItem -= EventHandlers.OnThrowingGrenade;
+            PlayerEvent.ThrowingItem -= EventHandlers.OnThrowingGrenade;
         }
 
         private IEnumerator<float> DisableOtherPlugins()

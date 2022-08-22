@@ -266,7 +266,7 @@ namespace AmongSCP
             ev.IsTriggerable = false;
         }
 
-        public static void OnThrowingGrenade(UsingItemEventArgs ev)
+        public static void OnThrowingGrenade(ThrowingItemEventArgs ev)
         {
             if (ev.Item.Type != ItemType.GrenadeFlash && ev.Item.Type != ItemType.GrenadeHE) return;
             
