@@ -102,7 +102,7 @@ namespace AmongSCP
         public static void OnGameStart()
         {
             _starting = true;
-            Timing.CallDelayed(.1f, () =>
+            Timing.CallDelayed(.2f, () =>
             {
                 try
                 {
