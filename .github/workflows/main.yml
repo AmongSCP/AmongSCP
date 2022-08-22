@@ -32,7 +32,7 @@ jobs:
 
     - uses: carlosperate/download-file-action@v1.0.3
       with:
-        file-url: 'https://github.com/SCPStats/Plugin/releases/download/1.2.5/SCPStats.dll'
+        file-url: 'https://github.com/SCPStats/Plugin/releases/download/1.5.4/SCPStats.dll'
         file-name: 'SCPStats.dll'
 
     - name: Download 7zip
