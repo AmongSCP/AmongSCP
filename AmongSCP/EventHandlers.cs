@@ -279,6 +279,8 @@ namespace AmongSCP
 
         public static void OnThrowingGrenade(ThrowingItemEventArgs ev)
         {
+            ev.IsAllowed = false;
+            
             if (ev.Item.Type != ItemType.GrenadeFlash && ev.Item.Type != ItemType.GrenadeHE) return;
             
             if (Util.initialCooldownOn)
@@ -297,7 +299,6 @@ namespace AmongSCP
                     Util.RunDetonateWarhead(ev.Player);
                     break;
             }
-            ev.IsAllowed = false;
         }
 
         public static void OnOpeningGenerator(UnlockingGeneratorEventArgs ev)
