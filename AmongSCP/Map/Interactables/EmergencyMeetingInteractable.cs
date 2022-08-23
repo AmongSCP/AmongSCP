@@ -61,7 +61,7 @@ namespace AmongSCP.Map.Interactables
     
     public class MeetingEffect : PlayerEffect, IMovementSpeedEffect
     {
-        public float GetMovementSpeed(float currentSpeed) => .2f * currentSpeed;
+        public float GetMovementSpeed(float currentSpeed) => .1f * currentSpeed;
 
         public bool DisableSprint => true;
     }
