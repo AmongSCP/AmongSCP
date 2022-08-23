@@ -35,14 +35,30 @@ namespace AmongSCP
 
             var votePos = AmongSCP.Singleton.Config.VotePosition;
 
-            Exiled.API.Features.Map.Broadcast((ushort)5f, message + "\n Interact with a persons hat to vote for them or drop your flashlight to skip!");
+            Exiled.API.Features.Map.Broadcast((ushort)5f, message + "\n Interact with a persons hat to vote for them or\n drop your flashlight to skip!");
 
             foreach (var ply in Player.List)
             {
                 if (ply.GetInfo().IsAlive)
                 {
                     ply.Position = votePos;
-                    ply.EnableEffect<MeetingEffect>(meetingTime);
+
+                    try
+                    {
+                        MeetingEffect effect;
+                        if (!ply.ReferenceHub.playerEffectsController.effectsGameObject.TryGetComponent(out effect))
+                        {
+                            effect = ply.ReferenceHub.playerEffectsController.effectsGameObject
+                                .AddComponent<MeetingEffect>();
+                        }
+
+                        ply.ReferenceHub.playerEffectsController.AllEffects[effect.GetType()] = effect;
+                        ply.EnableEffect<MeetingEffect>(meetingTime);
+                    }
+                    catch (Exception e)
+                    {
+                        Log.Error(e);
+                    }
                 }
             }
 
@@ -51,7 +67,7 @@ namespace AmongSCP
                 Exiled.API.Features.Map.ShowHint(
                     $"Voting ends in {meetingTime} seconds. " +
                     $"\n {VoteAmount} Votes " +
-                    $"\n Alive Players: {EventHandlers.PlayerManager.AlivePlayers.Count}", (ushort)1f);
+                    $"\n Alive Players: {EventHandlers.PlayerManager.AlivePlayers.Count}" + "\n Vote by picking up your target player's hat.", (ushort)1f);
                 //$" \n Dead Players: {EventHandlers.PlayerManager.DeadPlayer.Count}", 1);
 
                 yield return Timing.WaitForSeconds(1f);
