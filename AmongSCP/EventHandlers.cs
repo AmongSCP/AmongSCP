@@ -131,18 +131,19 @@ namespace AmongSCP
                         {
                             info.Role = global::AmongSCP.PlayerManager.Role.Imposter;
                             players[i].SetRole(AmongSCP.Singleton.Config.ImposterRole);
-                            players[i].Broadcast((ushort) 3f, "You are an Imposter! +" +
+                            players[i].Broadcast((ushort) 20f, "You are an Imposter!" +
                                                               "\n Kill all Crewmates to win!");
                             players[i].ShowHint(
-                                "You have a gun with a cooldown and two grendades which when thrown turn off lights and turn on the nuke.",
-                                5f);
+                                "You have a gun with a cooldown and two grenades which when thrown turn off lights (flashbang) and turn on the nuke.\nYou can also use radios around the map to vent.",
+                                20f);
                         }
                         else
                         {
                             info.Role = global::AmongSCP.PlayerManager.Role.Crewmate;
                             players[i].SetRole(AmongSCP.Singleton.Config.CrewmateRole);
-                            players[i].Broadcast((ushort) 3f, "You are a crewmate! +" +
-                                                              "\n Interact with all 5 generators to complete your tasks.");
+                            players[i].Broadcast((ushort) 20f, "You are a crewmate! +" +
+                                                              "\n Complete your tasks and kill all imposters to win!");
+                            players[i].ShowHint("Interact with all 5 generators to complete your tasks.\nUse the flashlight at spawn to call an emergency meeting.", 20f);
                         }
                     }
 
