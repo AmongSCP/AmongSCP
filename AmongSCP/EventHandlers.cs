@@ -102,7 +102,7 @@ namespace AmongSCP
 
         public static void OnGameStart()
         {
-            Loader.Plugins.FirstOrDefault(pl => pl.Name == "ScpStats")?.Assembly?.GetType("SCPStats.EventHandler")?.GetField("PauseRound")?.SetValue(null, true);
+            Loader.Plugins.FirstOrDefault(pl => pl.Name == "SCPStats")?.Assembly?.GetType("SCPStats.EventHandler")?.GetField("PauseRound")?.SetValue(null, true);
             
             _starting = true;
             Timing.CallDelayed(.2f, () =>
