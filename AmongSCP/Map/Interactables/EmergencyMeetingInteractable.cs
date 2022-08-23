@@ -1,6 +1,8 @@
 ﻿using MEC;
 using Exiled.API.Features;
 using System;
+using CustomPlayerEffects;
+using UnityEngine;
 
 namespace AmongSCP.Map.Interactables
 {
@@ -55,5 +57,12 @@ namespace AmongSCP.Map.Interactables
                 
             }, false, true);
         }
+    }
+    
+    public class MeetingEffect : PlayerEffect, IMovementSpeedEffect
+    {
+        public float GetMovementSpeed(float currentSpeed) => .2f * currentSpeed;
+
+        public bool DisableSprint => true;
     }
 }

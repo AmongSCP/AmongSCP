@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using CustomPlayerEffects;
+using AmongSCP.Map.Interactables;
 using Exiled.API.Features;
 using MEC;
 using Exiled.API.Extensions;
@@ -42,7 +42,7 @@ namespace AmongSCP
                 if (ply.GetInfo().IsAlive)
                 {
                     ply.Position = votePos;
-                    ply.EnableEffect<SinkHole>(meetingTime);
+                    ply.EnableEffect<MeetingEffect>(meetingTime);
                 }
             }
 
