@@ -162,16 +162,30 @@ namespace AmongSCP
 
                             foreach (var player in PlayerManager.Crewmates)
                             {
-                                player.AddItem(ItemType.Flashlight);
+                                try
+                                {
+                                    player.AddItem(ItemType.Flashlight);
+                                }
+                                catch (Exception e)
+                                {
+                                    Log.Error(e);
+                                }
                             }
 
                             foreach (var imposter in PlayerManager.Imposters)
                             {
-                                imposter.Ammo[ItemType.Ammo9x19] = 10;
-                                imposter.AddItem(ItemType.GunCOM18);
-                                imposter.AddItem(ItemType.GrenadeFlash);
-                                imposter.AddItem(ItemType.GrenadeHE);
-                                imposter.AddItem(ItemType.Flashlight);
+                                try
+                                {
+                                    imposter.Ammo[ItemType.Ammo9x19] = 10;
+                                    imposter.AddItem(ItemType.GunCOM18);
+                                    imposter.AddItem(ItemType.GrenadeFlash);
+                                    imposter.AddItem(ItemType.GrenadeHE);
+                                    imposter.AddItem(ItemType.Flashlight);
+                                }
+                                catch (Exception e)
+                                {
+                                    Log.Error(e);
+                                }
                             }
 
                             Timing.CallDelayed(.3f, () =>
