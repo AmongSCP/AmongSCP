@@ -166,7 +166,7 @@ namespace AmongSCP
 
                             foreach (var imposter in PlayerManager.Imposters)
                             {
-                                imposter.Ammo[ItemType.Ammo9x19] = 999;
+                                imposter.Ammo[ItemType.Ammo9x19] = 10;
                                 imposter.AddItem(ItemType.GunCOM18);
                                 imposter.AddItem(ItemType.GrenadeFlash);
                                 imposter.AddItem(ItemType.GrenadeHE);
@@ -255,6 +255,8 @@ namespace AmongSCP
 
         public static void OnPlayerShoot(ShotEventArgs ev)
         {
+            ev.Shooter.Ammo[ItemType.Ammo9x19] = 10;
+            
             if (!PlayerManager.Imposters.Contains(ev.Shooter) || Util.meetingStarted)
             {
                 ev.Damage = 0;
