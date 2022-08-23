@@ -39,7 +39,7 @@ namespace AmongSCP
         public float MaxReportDistance { get; set; } = 2f;
 
         [Description("Number of tasks each crewmate gets.")]
-        public int CrewmateTasks { get; set; } = 5;
+        public int CrewmateTasks { get; set; } = 3;
 
         [Description("The amount of time an emergency meeting lasts for.")]
         public int EmergencyTime { get; set; } = 30; 
