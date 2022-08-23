@@ -10,6 +10,7 @@ namespace AmongSCP
     {
         private static List<Task> _possibleTasks = new List<Task>();
 
+        public static int TaskCount;
         public static List<Task> CurrentTasks = new List<Task>();
 
         public static Dictionary<Player, List<Task>> PlayerTasks = new Dictionary<Player, List<Task>>();
@@ -18,6 +19,7 @@ namespace AmongSCP
 
         public static void EndGame()
         {
+            TaskCount = 0;
             CurrentTasks.Clear();
             PlayerTasks.Clear();
             _possibleTasks.Clear();
@@ -38,6 +40,9 @@ namespace AmongSCP
                 CurrentTasks.AddRange(tasks);
                 PlayerTasks[EventHandlers.PlayerManager.Crewmates[i]] = tasks.ToList();
             }
+
+            TaskCount = CurrentTasks.Count;
+            
             Log.Debug($"Amount of tasks left: {CurrentTasks.Count}", AmongSCP.Singleton.Config.showLogs);
         }
 
@@ -53,11 +58,13 @@ namespace AmongSCP
 
         public static bool AllTasksCompleted()
         {
-             if(CurrentTasks.Count == 0)
+             if(CurrentTasks.Count < TaskCount / 6)
              {
                 Exiled.API.Features.Map.Broadcast((ushort)5f,"Crewmates win!");
+                return true;
              }
-             return CurrentTasks.Count == 0;
+
+             return false;
         }
 
         public static void AddMultipleInstance(int num, Task task)
@@ -76,6 +83,8 @@ namespace AmongSCP
         public static void DeletePlayerTasks(Player ply)
         {
             if (ply.GetInfo().Role != PlayerManager.Role.Crewmate) return;
+
+            TaskCount -= (int) (GetPlayerTasks(ply).Count * .75);
             foreach(Task task in GetPlayerTasks(ply))
             {
                 try
@@ -87,6 +96,7 @@ namespace AmongSCP
 
                 }
             }
+            
             PlayerTasks.Remove(ply);
             Log.Debug($"{ply.Nickname}'s tasks removed succesfully!", AmongSCP.Singleton.Config.showLogs);
             Log.Debug($"{TaskManager.CurrentTasks.Count()} total tasks left.", AmongSCP.Singleton.Config.showLogs);
