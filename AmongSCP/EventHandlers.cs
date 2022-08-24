@@ -300,9 +300,14 @@ namespace AmongSCP
         public static void OnThrowingGrenade(ThrowingItemEventArgs ev)
         {
             ev.IsAllowed = false;
-            
+
+            ev.Player.RemoveItem(ev.Player.CurrentItem);
+            Timing.CallDelayed(.1f, () => {
+                ev.Player.AddItem(ev.Item.Type);
+            });
+
             if (ev.Item.Type != ItemType.GrenadeFlash && ev.Item.Type != ItemType.GrenadeHE) return;
-            
+
             if (Util.initialCooldownOn)
             {
                 ev.Player.ShowHint("Wait a sec!");
